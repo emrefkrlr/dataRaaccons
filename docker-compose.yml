@@ -2,6 +2,7 @@ version: '3.9'
 
 services:
   app:
+    container_name: app
     build:
       context: .
     command: >
@@ -24,14 +25,45 @@ services:
       - db
       - redis
       - selenium
+      - mongo
 
   db:
+    container_name: postgres
     image: postgres:13-alpine
     environment:
       - POSTGRES_DB=devdb
       - POSTGRES_USER=devuser
       - POSTGRES_PASSWORD=changeme
+  
+  mongo:
+    image: mongo
+    container_name: mongo
+    hostname: dataRaccoonsMongo
+    environment:
+      - MONGO_INITDB_DATABASE=dataRaccoons
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    restart: always
+    volumes:
+      - ${PWD}/_data/mongo:/data/db
+      - ${PWD}/docker/_mongo/fixtures:/import
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo-js:ro
+    ports:
+      - 27017:27017
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    restart: unless-stopped
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=root
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      
   celery:
+    container_name: celery
     build: .
     command: celery -A app worker -l INFO
     volumes:
@@ -44,10 +76,13 @@ services:
     depends_on:
       - app
       - redis
+  
   redis:
+    container_name: redis
     image: "redis:alpine"
   
   selenium:
+    container_name: selnium
     image: selenium/standalone-chrome
     ports:
       - 4444:4444

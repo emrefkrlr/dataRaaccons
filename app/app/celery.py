@@ -9,15 +9,20 @@ app = Celery("app")
 
 app.config_from_object("django.conf:settings", namespace="CELERY")
 
+app.conf.timezone = 'Europe/Istanbul'
+
+app.autodiscover_tasks()
+
 app.conf.beat_schedule = {
     # Executes every Monday morning at 7:30 a.m.
-    'add-every-5-seccond-helloTask': {
+    'add-every-15-minute-helloTask': {
         'task': 'core.tasks.helloTask',
-        'schedule': 5,
+        'schedule': crontab(minute='*/15'),
     },
+    
 
 }
 
-app.autodiscover_tasks()
+
 
 

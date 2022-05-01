@@ -10,4 +10,4 @@ logger = logging.getLogger(__name__)
 @shared_task
 def helloTask():
     print('Hello Celery Crontab')
-    logger.info("Task executable...")
+    
