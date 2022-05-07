@@ -1,5 +1,6 @@
 from pymongo import MongoClient, errors
 import logging
+
 logger = logging.getLogger(__name__)
 
 
@@ -14,6 +15,20 @@ class MongoService(object):
 		
 			return db_handle, client
 		
+		except Exception as e:
+			print("\nExeption: \n{}".format(e))
+
+
+	def insert_one(self, db_name, host, port, username, password, collection, document):
+		
+		try:
+			my_client = MongoService().get_db_handle(db_name, host, port, username, password)
+			dbname = my_client[0]
+			collection_name = dbname[collection]
+			insert = collection_name.insert_one(document)
+			
+			return insert.inserted_id
+
 		except Exception as e:
 			print("\nExeption: \n{}".format(e))
 

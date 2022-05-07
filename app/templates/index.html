@@ -12,6 +12,19 @@
 
 <body>
     <h1>Anasayfa</h1>
+
+
+    
+    {% for url in urls %}
+    <p> {{ url.company}} </p>
+    <p> {{ url.activity}} </p>
+    <p> {{ url.demand}} </p>
+    <p> {{ url.page_name}} </p>
+    <p> {{ url}} </p>
+    <p> {{ url.css_selector}} </p>
+    <p>---------------</p>
+    {% endfor %}
+    
 </body>
 
 </html>

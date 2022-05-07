@@ -19,6 +19,10 @@ app.conf.beat_schedule = {
         'task': 'core.tasks.helloTask',
         'schedule': crontab(minute='*/15'),
     },
+    'add-every-45-minute-helloTask': {
+        'task': 'crawlers.tasks.getir_getir_crawler_task',
+        'schedule': crontab(minute='*/45'),
+    },
     
 
 }
