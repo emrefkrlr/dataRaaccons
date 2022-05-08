@@ -50,10 +50,11 @@ class GetirCrawler(object):
 
                     product_detail = {
                         'product_id': str(uuid.uuid4().hex),
-                        'category': category.text if category else first_category[1].text,
+                        'sub_category': category.text if category else first_category[1].text,
                         'product_name': articleName.text if articleName.text != "" else None,
+                        'product_url': None,
                         'measurement_value': articleMeas.text if articleMeas.text != "" else None,
-                        'currenct_unit': 'tl',
+                        'currency_unit': 'tl',
                         'price': float(articlePrice if articlePrice != "" else None),
                         'image': articleImage['src'] if articleImage else None
                     }

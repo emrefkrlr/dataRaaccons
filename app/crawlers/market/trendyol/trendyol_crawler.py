@@ -42,7 +42,7 @@ class TrendyolCrawler(object):
             
 
     
-    def html_parser(self, html):
+    def html_parser(self, html, category):
 
         try:
             
@@ -78,7 +78,7 @@ class TrendyolCrawler(object):
                 
                 product_detail = {
                     'product_id': str(uuid.uuid4().hex),
-                    'category': 'None',
+                    'category': category,
                     'brand': articleBrand.text.strip() if articleBrand.text != "" else None,
                     'product_name': articleName.strip() if articleName != "" else None,
                     'measurement_value': articleMeas if articleMeas != "" else None,

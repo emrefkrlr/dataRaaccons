@@ -6,7 +6,7 @@ from crawlers.models import Crawlers
 @admin.register(Crawlers)
 class CrawlersAdmin(admin.ModelAdmin):
 
-  list_display = ['company', 'activity', 'demand', 'page_name']
+  list_display = ['company', 'activity', 'demand', 'page_name', 'category']
   list_filter = ['company', 'activity', 'demand', 'page_name']
 
     

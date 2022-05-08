@@ -13,7 +13,7 @@ class Crawlers(models.Model):
 	demand = models.ForeignKey(Demands, null=None, related_name='demands_name', on_delete=models.CASCADE)
 	page_name = models.CharField(max_length=120, null=False, blank=None, verbose_name='Page Name')
 	page_url = models.CharField(max_length=120, null=False, blank=None, verbose_name='Page Url')
-	categor = models.CharField(max_length=120, null=True, blank=True, verbose_name='Category')
+	category = models.CharField(max_length=120, null=True, blank=True, verbose_name='Category')
 	css_selector = models.CharField(max_length=120, null=True, blank=True, verbose_name='Css Selector')
 	page_numbers = models.IntegerField(default= 0, null=True, blank=True, verbose_name='Page Numbers')
 	schedule = models.CharField(max_length=120, null=True, blank=True, verbose_name='Schedule Config')

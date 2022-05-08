@@ -15,8 +15,9 @@ def index(request):
 	
 	#fetch urls to crawl
 
-	filter = {'status': 1, 'activity': 1}
-	urls = CrawlerServices.fetch_urls_to_crawl(filter=filter)
+	filter = {'status': 1, 'activity': 1, 'company__name':'iste_gelsin'}
+	
+	urls = CrawlerServices().fetch_urls_to_crawl(filter=filter)
 	
 	for url in urls:
 		now = datetime.now()

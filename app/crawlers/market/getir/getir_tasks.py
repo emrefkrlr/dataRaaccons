@@ -8,11 +8,11 @@ class GetirTasks(object):
 
     def getir_getir_crawler(self):
         
-        print("Task getir_getir_crawler.....", datetime.now())
+        print("Task getir_getir_crawler started.....", datetime.now())
         
         try:
             #fetch urls to crawl
-            filter = {'status': 1, 'activity': 1}
+            filter = {'status': 1, 'activity': 1, 'company__name': 'getir_getir'}
             urls = CrawlerServices().fetch_urls_to_crawl(filter=filter)
             
             for url in urls:
@@ -25,6 +25,7 @@ class GetirTasks(object):
                         'demand': str(url.demand),
                         'page_name': str(url.page_name),
                         'page_url': str(url.page_url),
+                        'category': str(url.category),
                         'crawled_time': str(now)
                     },
                 }
@@ -41,7 +42,7 @@ class GetirTasks(object):
 
                     print("Document saved mongodb...", now)
 
-                time.sleep(5)
+                time.sleep(3)
                 
         except Exception as e:
             print("\nException: {}".format(e))

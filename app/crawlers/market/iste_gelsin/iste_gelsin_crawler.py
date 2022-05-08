@@ -37,7 +37,7 @@ class IsteGelsinCrawler(object):
             
 
     
-    def html_parser(self, html):
+    def html_parser(self, html, category):
 
         try:
             
@@ -59,7 +59,7 @@ class IsteGelsinCrawler(object):
                 
                 product_detail = {
                     'product_id': str(uuid.uuid4().hex),
-                    'category': 'None',
+                    'sub_category': category,
                     'product_name': articleName.text.strip() if articleName.text != "" else None,
                     'product_url': articleURL['href'] if articleURL else None,
                     'measurement_value': articleMeas if articleMeas != "" else None,

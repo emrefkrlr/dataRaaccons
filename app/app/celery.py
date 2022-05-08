@@ -19,9 +19,13 @@ app.conf.beat_schedule = {
         'task': 'core.tasks.helloTask',
         'schedule': crontab(minute='*/15'),
     },
-    'add-every-45-minute-helloTask': {
+    'add-every-45-minute-getir_getir_crawler_task': {
         'task': 'crawlers.tasks.getir_getir_crawler_task',
         'schedule': crontab(minute='*/45'),
+    },
+    'add-every-20-minute-iste_gelsin_crawler_task': {
+        'task': 'crawlers.tasks.iste_gelsin_crawler_task',
+        'schedule': crontab(minute='*/20'),
     },
     
 

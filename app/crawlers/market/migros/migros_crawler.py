@@ -26,7 +26,7 @@ class MigrosCrawler(object):
             
 
     
-    def html_parser(self, html):
+    def html_parser(self, html, category):
 
         try:
             
@@ -46,7 +46,7 @@ class MigrosCrawler(object):
                 
                 product_detail = {
                     'product_id': str(uuid.uuid4().hex),
-                    'category': 'None',
+                    'category': category,
                     'product_name': articleName.text.strip() if articleName.text != "" else None,
                     'measurement_value': articleMeas if articleMeas != "" else None,
                     'currenct_unit': 'tl',
