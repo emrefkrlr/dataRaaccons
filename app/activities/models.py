@@ -16,3 +16,17 @@ class Activities(models.Model):
 	
 	def __str__(self):
 		return "%s" % self.name
+
+
+class ActivityCategory(models.Model):
+
+	activity = models.ForeignKey(Activities, null=None, related_name='activitiy_categories_relation_activitiy', on_delete=models.CASCADE, default=1)
+	name = models.CharField(max_length=120, null=False, blank=None, verbose_name='Activity Category Name')
+	status = models.BooleanField(default=1)
+
+	class Meta:
+		verbose_name = 'ActivityCategories'
+		verbose_name_plural = 'ActivityCategory'
+	
+	def __str__(self):
+		return "%s" % self.name

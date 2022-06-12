@@ -13,6 +13,7 @@ class SokMarketCrawler(object):
         driver = webdriver.Remote(web_driver_config.REMOTE_URL, desired_capabilities=DesiredCapabilities.FIREFOX)
         
         try:
+            
             driver.get(url)
             time.sleep(5)
             get_content = driver.find_element_by_css_selector(css_selector)
@@ -21,11 +22,11 @@ class SokMarketCrawler(object):
             return result
         
         except Exception as e:
-            print("\nget_innerHTML Exeption: \n{}".format(e))
+            print("\nSokMarketCrawler get_innerHTML Exeption: \n{}\nURL: {}".format(e, url))
             
 
     
-    def html_parser(self, html, category):
+    def html_parser(self, html, page_category):
 
         try:
             
@@ -36,6 +37,7 @@ class SokMarketCrawler(object):
             for product in product_list:
                 
                 articleName = product.find("strong", {"class": "content-title"})
+                articleURL = product.find("a")
                 articleMeas_get = articleName.text.strip().split(" ")
                 articleMeas = articleMeas_get[-2] + " " + articleMeas_get[-1]
 
@@ -58,8 +60,9 @@ class SokMarketCrawler(object):
                 
                 product_detail = {
                     'product_id': str(uuid.uuid4().hex),
-                    'category': category,
+                    'sub_category': page_category,
                     'product_name': articleName.text.strip() if articleName.text != "" else None,
+                    'product_url': 'https://www.sokmarket.com.tr' + articleURL['href'] if articleURL else None,
                     'measurement_value': articleMeas if articleMeas != "" else None,
                     'currenct_unit': 'tl',
                     'price': float(articlePrice if articlePrice != "" else None),
@@ -73,4 +76,4 @@ class SokMarketCrawler(object):
             return products_and_price
 
         except Exception as e:
-            print("\nHTML PARSER Exeption: \n{}".format(e))
+            print("\nSokMarketCrawler html_parser Exeption: \n{}".format(e))

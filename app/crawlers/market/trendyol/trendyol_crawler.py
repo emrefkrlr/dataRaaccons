@@ -8,15 +8,18 @@ import uuid
 
 class TrendyolCrawler(object):
 
-    def get_innerHTML(self, url, css_selector, page):
+    def get_innerHTML(self, url, css_selector, page=None):
         
         driver = webdriver.Remote(web_driver_config.REMOTE_URL, desired_capabilities=DesiredCapabilities.CHROME)
         # Hızlı Teslimat
         # https://www.trendyol.com/sr?wc=103809&rd=true&pi=1
-        url = url.format(page)
+        if page is not None:
+            url = url.format(page)
+        
         try:
+            
             driver.get(url)
-            time.sleep(5)
+            time.sleep(2)
 
             """
             previous_height = driver.execute_script(' return document.body.scrollHeight')
@@ -34,15 +37,16 @@ class TrendyolCrawler(object):
             """
             get_content = driver.find_element_by_css_selector(css_selector)
             result = get_content.get_attribute('innerHTML')
+            print(url)
             driver.quit()
             return result
         
         except Exception as e:
-            print("\nget_innerHTML Exeption: \n{}".format(e))
+            print("\nTrendyolCrawler get_innerHTML Exeption: \n{}\nURL: {}".format(e, url))
             
 
     
-    def html_parser(self, html, category):
+    def html_parser(self, html, page_category):
 
         try:
             
@@ -55,7 +59,13 @@ class TrendyolCrawler(object):
                 
                 articleBrand = product.find("span", {"class": "prdct-desc-cntnr-ttl"})
                 articleName = product.find("div", {"class": "prdct-desc-cntnr-ttl-w"})
+                articleURL = product.find("a")
                 
+                print("""
+                articleBrand : {}
+                articleName  : {}
+                articleURL   : {}
+                """.format(articleBrand, articleName, articleURL))
                 
                 name = ''
                 if len(articleName)>1:
@@ -78,9 +88,10 @@ class TrendyolCrawler(object):
                 
                 product_detail = {
                     'product_id': str(uuid.uuid4().hex),
-                    'category': category,
+                    'sub_category': page_category,
                     'brand': articleBrand.text.strip() if articleBrand.text != "" else None,
                     'product_name': articleName.strip() if articleName != "" else None,
+                    'product_url': 'https://www.trendyol.com' + articleURL['href'] if articleURL else None,
                     'measurement_value': articleMeas if articleMeas != "" else None,
                     'currenct_unit': 'tl',
                     'price': float(articlePrice if articlePrice != "" else None),
@@ -94,4 +105,4 @@ class TrendyolCrawler(object):
             return products_and_price
 
         except Exception as e:
-            print("\nHTML PARSER Exeption: \n{}".format(e))
+            print("\nTrendyolCrawler html_parser Exeption: \n{}".format(e))

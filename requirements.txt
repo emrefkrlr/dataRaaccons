@@ -8,5 +8,6 @@ selenium
 pymongo
 dnspython
 django-jazzmin
+django-smart-selects
 
 

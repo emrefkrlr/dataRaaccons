@@ -1,5 +1,5 @@
 from django.contrib import admin
-from activities.models import Activities
+from activities.models import Activities, ActivityCategory
 
 # Register your models here.
 
@@ -13,3 +13,14 @@ class ActivitiesAdmin(admin.ModelAdmin):
     
   class Meta:
     model = Activities
+
+
+@admin.register(ActivityCategory)
+class ActivityCategoryAdmin(admin.ModelAdmin):
+
+  list_display = ['name', 'status']
+  list_filter = ['name', 'status']
+
+    
+  class Meta:
+    model = ActivityCategory

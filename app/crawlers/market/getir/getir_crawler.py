@@ -13,6 +13,7 @@ class GetirCrawler(object):
         driver = webdriver.Remote(web_driver_config.REMOTE_URL, desired_capabilities=DesiredCapabilities.CHROME)
         
         try:
+            
             driver.get(url)
             time.sleep(7)
             get_content = driver.find_element_by_css_selector(css_selector)
@@ -21,7 +22,7 @@ class GetirCrawler(object):
             return result
         
         except Exception as e:
-            print("\nget_innerHTML Exeption: \n{}".format(e))
+            print("\nGetirCrawler get_innerHTML Exeption: \n{}\nURL: {}".format(e, url))
             
 
     
@@ -30,8 +31,8 @@ class GetirCrawler(object):
         try:
             
             soup = BeautifulSoup(html, 'html.parser')
-            first_category = soup.find_all("div", {"class": "style__Item-sc-__sc-v9v4ek-2 gLUDlv"})    
-            product_list = soup.find_all("div", {"class": "style__CategoryProducts-sc-1uiaodf-0"})
+            first_category = soup.find_all("div", {"class": "style__Item-sc-__sc-v9v4ek-2 gNQDii"})    
+            product_list = soup.find_all("div", {"class": "style__Wrapper-sc-__sc-sbxwka-15 fDGESZ sc-2e93b13-0 gTAifC"})
             products_and_price = []
             
             for product in product_list:
@@ -41,9 +42,9 @@ class GetirCrawler(object):
                 
                 for article in articles:
                     
-                    articleName = article.find("span", {"class": "style__Name-sc-1us2i3y-3"})
+                    articleName = article.find("span", {"class": "sc-bb7ebefc-3"})
                     articleMeas = article.find("p", {"class": "style__ParagraphText-sc-__sc-1nwjacj-9"})
-                    articlePrice = article.find("span", {"class": "style__Price-sc-1us2i3y-5"}).text
+                    articlePrice = article.find("span", {"class": "sc-bb7ebefc-5"}).text
                     articleImage = article.find('img')
                     # Replace key character with value character in string
                     articlePrice = functions.char_to_replace(articlePrice)
