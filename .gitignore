@@ -471,3 +471,6 @@ _data/mongo/diagnostic.data/metrics.2022-06-12T10-08-34Z-00000
 _data/mongo/diagnostic.data/metrics.interim
 _data/mongo/journal/WiredTigerLog.0000000005
 _data/mongo/journal/WiredTigerLog.0000000051
+_data/mongo/WiredTiger.turtle
+_data/mongo/WiredTiger.wt
+_data/mongo/diagnostic.data/metrics.interim
