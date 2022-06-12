@@ -7,6 +7,8 @@ from activities.models import Activities
 class Companies(models.Model):
 
 	name = models.CharField(max_length=120, null=False, blank=None, verbose_name='Company Name')
+	url = models.CharField(max_length=255, null=True, blank=True, verbose_name='Company Main Url')
+	logo = models.CharField(max_length=255, null=True, blank=True, verbose_name='Company Logo')
 	status = models.BooleanField(default=1)
 	created_at = models.DateTimeField(auto_created=True, verbose_name='Created Date', editable=False, null=True, blank=None)
 	updated_at = models.DateTimeField(auto_now_add=True, verbose_name='Updated Date', editable=False, null=True, blank=None)

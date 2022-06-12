@@ -16,12 +16,13 @@
 
     
     {% for url in urls %}
-    <p> {{ url.company}} </p>
-    <p> {{ url.activity}} </p>
-    <p> {{ url.demand}} </p>
-    <p> {{ url.page_name}} </p>
-    <p> {{ url}} </p>
-    <p> {{ url.css_selector}} </p>
+    <p><span> Company: </span> {{ url.company}} </p>
+    <p><span> Activity: </span> {{ url.activity}} </p>
+    <p><span> Demand: </span> {{ url.demand}} </p>
+    <p><span> Page Name: </span> {{ url.page_name}} </p>
+    <p><span> Category: </span> {{ url.category}} </p>
+    <p><span> Url: </span> {{ url}} </p>
+    <p><span> Css: </span> {{ url.css_selector}} </p>
     <p>---------------</p>
     {% endfor %}
     

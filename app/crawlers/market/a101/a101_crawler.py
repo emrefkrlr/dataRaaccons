@@ -8,25 +8,28 @@ import uuid
 
 class A101Crawler(object):
 
-    def get_innerHTML(self, url, css_selector, page):
+    def get_innerHTML(self, url, css_selector, page=None):
         
         driver = webdriver.Remote(web_driver_config.REMOTE_URL, desired_capabilities=DesiredCapabilities.FIREFOX)
         # https://www.a101.com.tr/market/cikolata-gofret/?page=2
-        url = url.format(page)
+        if page is not None:
+            url = url.format(page)
+            
+        print(url)
         try:
             driver.get(url)
-            time.sleep(5)
+            time.sleep(3)
             get_content = driver.find_element_by_css_selector(css_selector)
             result = get_content.get_attribute('innerHTML')
             driver.quit()
             return result
         
         except Exception as e:
-            print("\nget_innerHTML Exeption: \n{}".format(e))
+            print("\nA101Crawler get_innerHTML Exeption: \n{}\nURL: {}".format(e, url))
             
 
     
-    def html_parser(self, html, category):
+    def html_parser(self, html, page_category):
 
         try:
             
@@ -37,6 +40,7 @@ class A101Crawler(object):
             for product in product_list:
                 
                 articleName = product.find("h3", {"class": "name"})
+                articleURL = product.find("a")
                 articleMeas_get = articleName.text.strip().split(" ")
                 articleMeas = articleMeas_get[-2] + " " + articleMeas_get[-1]
                 articleImage = product.find("img")
@@ -46,9 +50,9 @@ class A101Crawler(object):
                 
                 product_detail = {
                     'product_id': str(uuid.uuid4().hex),
-                    'sub_category': category,
+                    'sub_category': page_category,
                     'product_name': articleName.text.strip() if articleName.text != "" else None,
-                    'product_url': None,
+                    'product_url': 'https://www.a101.com.tr' + articleURL['href'] if articleURL else None,
                     'measurement_value': articleMeas if articleMeas != "" else None,
                     'currenct_unit': 'tl',
                     'price': float(articlePrice if articlePrice != "" else None),
@@ -62,4 +66,4 @@ class A101Crawler(object):
             return products_and_price
 
         except Exception as e:
-            print("\nHTML PARSER Exeption: \n{}".format(e))
+            print("\nA101Crawler html_parser Exeption: \n{}".format(e))

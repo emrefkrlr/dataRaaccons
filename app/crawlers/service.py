@@ -15,3 +15,17 @@ class CrawlerServices(object):
 		
 		except Exception as e:
 			print("\nExeption: \n{}".format(e))
+
+	def get_unique_page_category(self, filter):
+
+		try:
+
+			if bool(filter):
+				results = Crawlers.objects.filter(**filter).distinct('page_category')
+				return results
+			else:
+				raise Exception('dictionary is null')
+		
+		except Exception as e:
+			print("\nExeption: \n{}".format(e))
+

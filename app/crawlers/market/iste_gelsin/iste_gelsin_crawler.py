@@ -33,11 +33,11 @@ class IsteGelsinCrawler(object):
             return result
         
         except Exception as e:
-            print("\nget_innerHTML Exeption: \n{}".format(e))
+            print("\nIsteGelsinCrawler get_innerHTML Exeption: \n{}\nURL: {}".format(e, url))
             
 
     
-    def html_parser(self, html, category):
+    def html_parser(self, html, page_category):
 
         try:
             
@@ -59,9 +59,9 @@ class IsteGelsinCrawler(object):
                 
                 product_detail = {
                     'product_id': str(uuid.uuid4().hex),
-                    'sub_category': category,
+                    'sub_category': page_category,
                     'product_name': articleName.text.strip() if articleName.text != "" else None,
-                    'product_url': articleURL['href'] if articleURL else None,
+                    'product_url': 'https://www.istegelsin.com/' + articleURL['href'] if articleURL else None,
                     'measurement_value': articleMeas if articleMeas != "" else None,
                     'currenct_unit': 'tl',
                     'price': float(articlePrice if articlePrice != "" else None),
@@ -75,4 +75,4 @@ class IsteGelsinCrawler(object):
             return products_and_price
 
         except Exception as e:
-            print("\nHTML PARSER Exeption: \n{}".format(e))
+            print("\nIsteGelsinCrawler html_parser Exeption: \n{}".format(e))
