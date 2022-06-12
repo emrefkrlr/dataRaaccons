@@ -1,0 +1,141 @@
+version: '3.9'
+
+services:
+  app:
+    container_name: app
+    build:
+      context: .
+    command: >
+      sh -c "python manage.py wait_for_db &&
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 8000:8000
+    volumes:
+      - ./app:/app
+      - ./data/web:/vol/web
+    environment:
+      - SECRET_KEY=devsecretkey
+      - DEBUG=1
+      - DB_HOST=db
+      - DB_NAME=devdb
+      - DB_USER=devuser
+      - DB_PASS=changeme
+    depends_on:
+      - db
+
+  db:
+    container_name: postgres
+    image: postgres:13-alpine
+    environment:
+      - POSTGRES_DB=devdb
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=changeme
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8
+    ports:
+      - "5432:5432"
+
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:80"
+  
+  mongo:
+    image: mongo
+    container_name: mongo
+    hostname: dataRaccoonsMongo
+    environment:
+      - MONGO_INITDB_DATABASE=dataRaccoons
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    volumes:
+      - ${PWD}/_data/mongo:/data/db
+      - ${PWD}/docker/_mongo/fixtures:/import
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo-js:ro
+    ports:
+      - 27017:27017
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    restart: unless-stopped
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=root
+      - ME_CONFIG_MONGODB_SERVER=mongo 
+  
+  celery:
+    container_name: celery
+    build: .
+    command: celery -A app worker -l INFO
+    volumes:
+      - ./app:/app
+    environment:
+      - DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/0
+      - DB_HOST=db
+      - BB_PORT=5432
+      - DB_NAME=devdb
+      - DB_USER=devuser
+      - DB_PASS=changeme 
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8
+
+    depends_on:
+      - app
+      - redis
+  
+  redis:
+    container_name: redis
+    image: "redis:alpine"
+  
+  selenium:
+    image: selenium/hub:4.1.4-20220427
+    container_name: selenium
+    ports:
+      - "4442:4442"
+      - "4443:4443"
+      - "4444:4444"
+
+  chrome:
+    image: selenium/node-chrome:4.1.4-20220427
+    shm_size: 2gb
+    depends_on:
+      - selenium
+    environment:
+      - SE_EVENT_BUS_HOST=selenium
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - HUB_PORT_4444_TCP_ADDR=selenium
+      - HUB_PORT_4444_TCP_PORT=4444
+      - NODE_MAX_INSTANCE=3
+      - NODE_MAX_SESSION=3
+    volumes:
+      - /dev/shm:/dev/shm
+
+  firefox:
+    image: selenium/node-firefox:4.1.4-20220427
+    shm_size: 2gb
+    depends_on:
+      - selenium
+    environment:
+      - SE_EVENT_BUS_HOST=selenium
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - HUB_PORT_4444_TCP_ADDR=selenium
+      - HUB_PORT_4444_TCP_PORT=4444
+      - NODE_MAX_INSTANCE=3
+      - NODE_MAX_SESSION=3
+    volumes:
+      - /dev/shm:/dev/shm
+  
+
+  
