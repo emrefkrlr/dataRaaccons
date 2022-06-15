@@ -6,16 +6,16 @@ from bs4 import BeautifulSoup
 import uuid
 
 
-class A101Crawler(object):
+class IstikbalCrawler(object):
 
     def get_innerHTML(self, url, css_selector, page=None):
-        
+
         driver = webdriver.Remote(web_driver_config.REMOTE_URL, desired_capabilities=DesiredCapabilities.FIREFOX)
         # https://www.a101.com.tr/market/cikolata-gofret/?page=2
+        
         if page is not None:
             url = url.format(page)
             
-        print(url)
         try:
             driver.get(url)
             time.sleep(3)
@@ -25,8 +25,7 @@ class A101Crawler(object):
             return result
         
         except Exception as e:
-            print("\n A101Crawler get_innerHTML Exeption: \n{}\nURL: {}".format(e, url))
-            
+            print("\IstikbalCrawler get_innerHTML Exeption: \n{}\nURL: {}".format(e, url))
 
     
     def html_parser(self, html, page_category):
@@ -34,17 +33,16 @@ class A101Crawler(object):
         try:
             
             soup = BeautifulSoup(html, 'html.parser')
-            product_list = soup.find_all("article")
+            product_list = soup.find_all("div", {"class": "col-sm-6 col-lg-4"})
             products_and_price = []
             
             for product in product_list:
                 
-                articleName = product.find("h3", {"class": "name"})
-                articleURL = product.find("a")
-                articleMeas_get = articleName.text.strip().split(" ")
-                articleMeas = articleMeas_get[-2] + " " + articleMeas_get[-1]
+                articleName = product.find("div", {"class": "showcase-title"})
+                articleURL = product.find("a", {"class": "showcase-label-container"})
+                articleMeas = None
                 articleImage = product.find("img")
-                articlePrice = product.find("span", {"class": "current"}).text.strip()
+                articlePrice = product.find("div", {"class": "showcase-price-new"}).text.strip()
                 # Replace key character with value character in string
                 articlePrice = functions.char_to_replace(articlePrice)
                 
@@ -52,7 +50,7 @@ class A101Crawler(object):
                     'product_id': str(uuid.uuid4().hex),
                     'sub_category': page_category,
                     'product_name': articleName.text.strip() if articleName.text != "" else None,
-                    'product_url': 'https://www.a101.com.tr' + articleURL['href'] if articleURL else None,
+                    'product_url': 'https://www.istikbal.com.tr' + articleURL['href'] if articleURL else None,
                     'measurement_value': articleMeas if articleMeas != "" else None,
                     'currenct_unit': 'tl',
                     'price': float(articlePrice if articlePrice != "" else None),

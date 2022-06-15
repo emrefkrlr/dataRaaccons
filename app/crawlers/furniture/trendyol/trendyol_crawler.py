@@ -10,9 +10,8 @@ class TrendyolCrawler(object):
 
     def get_innerHTML(self, url, css_selector, page=None):
         
-        driver = webdriver.Remote(web_driver_config.REMOTE_URL, desired_capabilities=DesiredCapabilities.CHROME)
+        driver = webdriver.Remote(web_driver_config.REMOTE_URL, desired_capabilities=DesiredCapabilities.FIREFOX)
         # Hızlı Teslimat
-        # https://www.trendyol.com/sr?wc=103809&rd=true&pi=1
         if page is not None:
             url = url.format(page)
         

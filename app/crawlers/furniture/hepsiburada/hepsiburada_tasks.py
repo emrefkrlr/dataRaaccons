@@ -1,19 +1,19 @@
 from crawlers.service import CrawlerServices
-from crawlers.market.trendyol import trendyol_crawler
+from crawlers.furniture.hepsiburada import hepsiburada_crawler
 from mongo.services import MongoService
 import datetime
 import time
 
 
-class TrendyolTasks(object):
+class HepsiburadaTasks(object):
 
-    def trendyol_crawler(self):
+    def hepsiburada_crawler(self):
 
-        print("Task trendyol_crawler starded.....", datetime.datetime.utcnow())
+        print("Task hepsiburada_crawler starded.....", datetime.datetime.utcnow())
         
         try:
             #fetch urls to crawl
-            filter = {'status': 1, 'activity': 1, 'company__name': 'trendyol'}
+            filter = {'status': 1, 'activity': 2, 'company__name': 'hepsiburada'}
             urls = CrawlerServices().fetch_urls_to_crawl(filter=filter)
             
             for url in urls:
@@ -38,19 +38,20 @@ class TrendyolTasks(object):
                 if url.page_numbers >= 1:
                     for page in range(1, url.page_numbers + 1):
 
-                        innerHTML = trendyol_crawler.TrendyolCrawler().get_innerHTML(url.page_url, css_selector, page)
-                        products_and_price = trendyol_crawler.TrendyolCrawler().html_parser(innerHTML, url.page_category)
+                        innerHTML = hepsiburada_crawler.HepsiburadaCrawler().get_innerHTML(url.page_url, css_selector, page)
+                        products_and_price = hepsiburada_crawler.HepsiburadaCrawler().html_parser(innerHTML, url.page_category)
 
                         data['products_and_price'].append(products_and_price)
+
                 else:
-                    innerHTML = trendyol_crawler.TrendyolCrawler().get_innerHTML(url.page_url, css_selector)
-                    products_and_price = trendyol_crawler.TrendyolCrawler().html_parser(innerHTML, url.page_category)
+                    innerHTML = hepsiburada_crawler.HepsiburadaCrawler().get_innerHTML(url.page_url, css_selector)
+                    products_and_price = hepsiburada_crawler.HepsiburadaCrawler().html_parser(innerHTML, url.page_category)
+
                     data['products_and_price'] = products_and_price
 
-                print(len(products_and_price))
                 
                 document_save = MongoService().insert_one(db_name='DataRaccoons', host='dataRaccoonsMongo', port='27017', 
-                username='root', password='root', collection='market', document=data)
+                username='root', password='root', collection='furniture', document=data)
 
                 if document_save:
 
@@ -59,4 +60,4 @@ class TrendyolTasks(object):
                 
                 
         except Exception as e:
-            print("\nTrendyolTasks trendyol_crawler Exception: \n{}\nURL: {} \nPAGE: {}".format(e, url.page_url, page))
+            print("\n HepsiburadaTasks hepsiburada_crawler Exception: \n{}\nURL: {} \nPAGE: {}".format(e, url.page_url, page))

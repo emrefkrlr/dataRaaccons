@@ -17,7 +17,7 @@ class Crawlers(models.Model):
 	activity_category = ChainedForeignKey(ActivityCategory, chained_field="activity", chained_model_field="activity", show_all=False, auto_choose=True)
 	
 	# PAGE INFO
-	page_url = models.CharField(max_length=120, null=False, blank=None, verbose_name='Page Url')
+	page_url = models.CharField(max_length=255, null=False, blank=None, verbose_name='Page Url')
 	page_numbers = models.IntegerField(default= 0, null=True, blank=True, verbose_name='Page Numbers')
 	page_name = models.CharField(max_length=120, null=False, blank=None, verbose_name='Page Name')
 	page_category = models.CharField(max_length=120, null=True, blank=True, verbose_name='Page Category')

@@ -1,5 +1,5 @@
 from crawlers.service import CrawlerServices
-from crawlers.market.trendyol import trendyol_crawler
+from crawlers.furniture.trendyol import trendyol_crawler
 from mongo.services import MongoService
 import datetime
 import time
@@ -13,7 +13,7 @@ class TrendyolTasks(object):
         
         try:
             #fetch urls to crawl
-            filter = {'status': 1, 'activity': 1, 'company__name': 'trendyol'}
+            filter = {'status': 1, 'activity': 2, 'company__name': 'trendyol'}
             urls = CrawlerServices().fetch_urls_to_crawl(filter=filter)
             
             for url in urls:
@@ -50,7 +50,7 @@ class TrendyolTasks(object):
                 print(len(products_and_price))
                 
                 document_save = MongoService().insert_one(db_name='DataRaccoons', host='dataRaccoonsMongo', port='27017', 
-                username='root', password='root', collection='market', document=data)
+                username='root', password='root', collection='furniture', document=data)
 
                 if document_save:
 
