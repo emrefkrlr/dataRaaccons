@@ -106,13 +106,14 @@ def index(request):
 	#print(IstikbalTasks().istikbal_crawler())
 	#print(BellonaTasks().bellona_crawler())
 	#print(FurnitureTrendyol().trendyol_crawler())
-	print(HepsiburadaTasks().hepsiburada_crawler())
-
+	#print(HepsiburadaTasks().hepsiburada_crawler())
+	
+	
 
 	z = "2.495,25"
 
 	#print(insert_new_products_task())
-	#print(product_matches_task())
+	print(product_matches_task())
 	#get() returned more than one Products -- it returned 2!
 
 	#print(float(char_to_replace(z)))
