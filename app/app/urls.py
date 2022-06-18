@@ -17,12 +17,17 @@ from django.contrib import admin
 from django.urls import path, re_path, include
 from django.conf.urls.static import static
 from django.conf import settings
-from core.views import index
+
+from home.views import index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', index, name='index'),
     re_path(r'^chaining/', include('smart_selects.urls')),
+
+    path('', index, name='index'),
+    path('dashboard/', include('dashboard.urls')),
+    path('auth/', include('authentication.urls')),
+    
 
 ]
 
