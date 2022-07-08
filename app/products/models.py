@@ -13,6 +13,7 @@ class Products(models.Model):
     activity = models.ForeignKey(Activities, null=None, related_name='product_activitiy_name', on_delete=models.CASCADE)
     activity_category = models.ForeignKey(ActivityCategory, null=None, related_name='product_main_category_name', on_delete=models.CASCADE)
     product_name = models.CharField(max_length=250, null=False, blank=None, verbose_name='Product Name')
+    price = models.FloatField(default=0, null=True, blank=True, verbose_name="Product Price")
     page_category = models.CharField(max_length=250, null=False, blank=None, verbose_name='Page Category Name')
     sub_category = models.CharField(max_length=250, null=False, blank=None, verbose_name='Sub Category')
     image = models.TextField(null=True, blank=True)

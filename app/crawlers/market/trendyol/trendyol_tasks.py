@@ -41,13 +41,13 @@ class TrendyolTasks(object):
                         innerHTML = trendyol_crawler.TrendyolCrawler().get_innerHTML(url.page_url, css_selector, page)
                         products_and_price = trendyol_crawler.TrendyolCrawler().html_parser(innerHTML, url.page_category)
 
-                        data['products_and_price'].append(products_and_price)
+                        data['products_and_price'] = data['products_and_price'] + products_and_price
                 else:
                     innerHTML = trendyol_crawler.TrendyolCrawler().get_innerHTML(url.page_url, css_selector)
                     products_and_price = trendyol_crawler.TrendyolCrawler().html_parser(innerHTML, url.page_category)
                     data['products_and_price'] = products_and_price
 
-                print(len(products_and_price))
+                
                 
                 document_save = MongoService().insert_one(db_name='DataRaccoons', host='dataRaccoonsMongo', port='27017', 
                 username='root', password='root', collection='market', document=data)

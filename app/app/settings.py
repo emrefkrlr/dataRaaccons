@@ -214,3 +214,13 @@ EMAIL_HOST_USER = "raccoonanalytic@gmail.com"
 EMAIL_HOST_PASSWORD = "-47712116"
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+
+# MONGO
+
+MONGO_HOST = "dataRaccoonsMongo"
+MONGO_PORT = "27017"
+MONGO_USER = "root"
+MONGO_PASSWORD = "root"
+MONGO_DB = "DataRaccoons"
+

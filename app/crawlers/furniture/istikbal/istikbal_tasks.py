@@ -41,7 +41,7 @@ class IstikbalTasks(object):
                         innerHTML = istikbal_crawler.IstikbalCrawler().get_innerHTML(url.page_url, css_selector, page)
                         products_and_price = istikbal_crawler.IstikbalCrawler().html_parser(innerHTML, url.page_category)
 
-                        data['products_and_price'].append(products_and_price)
+                        data['products_and_price'] = data['products_and_price'] + products_and_price
                 
                 else:
                     innerHTML = istikbal_crawler.IstikbalCrawler().get_innerHTML(url.page_url, css_selector)

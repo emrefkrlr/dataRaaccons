@@ -22,6 +22,9 @@ class Account(models.Model):
   phone = models.CharField(max_length=15, null=True, blank=True, verbose_name='Phone Number')
   is_online = models.BooleanField(default=0, verbose_name='Online ?')
   user_type = models.ForeignKey(UserType, null=True, related_name='account_user_type', on_delete=models.CASCADE)
+  form_company = models.CharField(max_length=255, null=True, blank=True, verbose_name='Form Company')
+  verified = models.BooleanField(default=0, verbose_name=' Hesap Doğrulandı')
+  verified_code = models.CharField(max_length=255, null=True, blank=True)
 
   class Meta:
     verbose_name = 'Account'
@@ -42,3 +45,15 @@ class AccountCompany(models.Model):
 
   def __str__(self):
   	return self.user.username
+
+## Sil ##
+class PersonalUserActivity(models.Model):
+  user = models.ForeignKey(Account, on_delete=models.CASCADE, related_name='personal_user_activity_user', null=True, limit_choices_to={"user_type": 2})
+  activity = models.ForeignKey(Activities, on_delete=models.CASCADE, related_name='personal_user_activity_activity', null=True)
+
+  class Meta:
+    verbose_name = 'Personal User Activity'
+    verbose_name_plural = 'Personal User Activity'
+
+  def __str__(self):
+  	return self.user

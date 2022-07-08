@@ -38,18 +38,6 @@ def insert_new_products_task():
 
                 get_mongo_data = MongoService().find_one(db_name='DataRaccoons', host='dataRaccoonsMongo', port='27017', 
                 username='root', password='root', collection=str(activity.name), query=query)
-
-                print("""
-
-                    ACTIVITY:       {}
-
-                        COMPANY:    {}
-                        P_CATEGORY: {}
-
-
-                        QUERY:      {}
-
-                """.format(activity.name, crawler.company, crawler.page_category, query))
                 
                 # get products on postgresql
                 products = ProductsService().get_products(filter={'company__name': str(crawler.company), 'activity': activity.id, 'activity_category': ActivityCategory.objects.get(name=crawler.activity_category).id, 'status': 1})
@@ -72,6 +60,7 @@ def insert_new_products_task():
                                         activity = Activities.objects.get(name=crawler.activity),
                                         activity_category = ActivityCategory.objects.get(name=crawler.activity_category),
                                         product_name = product_info["product_name"],
+                                        price = product_info["price"],
                                         page_category = str(crawler.page_category),
                                         sub_category = product_info["sub_category"] if product_info["sub_category"] else None,
                                         image = product_info["image"] if product_info["image"] else None
@@ -88,6 +77,7 @@ def insert_new_products_task():
                                         activity = Activities.objects.get(name=crawler.activity),
                                         activity_category = ActivityCategory.objects.get(name=crawler.activity_category),
                                         product_name = product_and_price["product_name"],
+                                        price = product_info["price"],
                                         page_category = str(crawler.page_category),
                                         sub_category = product_and_price["sub_category"] if product_and_price["sub_category"] else None,
                                         image = product_and_price["image"] if product_and_price["image"] else None
@@ -110,6 +100,7 @@ def insert_new_products_task():
                                             activity = Activities.objects.get(name=crawler.activity),
                                             activity_category = ActivityCategory.objects.get(name=crawler.activity_category),
                                             product_name = product_info["product_name"],
+                                            price = product_info["price"],
                                             page_category = str(crawler.page_category),
                                             sub_category = product_info["sub_category"] if product_info["sub_category"] else None,
                                             image = product_info["image"] if product_info["image"] else None
@@ -127,6 +118,7 @@ def insert_new_products_task():
                                             activity = Activities.objects.get(name=crawler.activity),
                                             activity_category = ActivityCategory.objects.get(name=crawler.activity_category),
                                             product_name = product_and_price["product_name"],
+                                            price = product_info["price"],
                                             page_category = str(crawler.page_category),
                                             sub_category = product_and_price["sub_category"] if product_and_price["sub_category"] else None,
                                             image = product_and_price["image"] if product_and_price["image"] else None

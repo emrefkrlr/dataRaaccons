@@ -40,7 +40,7 @@ class A101Tasks(object):
                         innerHTML = a101_crawler.A101Crawler().get_innerHTML(url.page_url, css_selector, page)
                         products_and_price = a101_crawler.A101Crawler().html_parser(innerHTML, url.page_category)
 
-                        data['products_and_price'].append(products_and_price)
+                        data['products_and_price'] = data['products_and_price'] + products_and_price
                 
                 else:
                     innerHTML = a101_crawler.A101Crawler().get_innerHTML(url.page_url, css_selector)

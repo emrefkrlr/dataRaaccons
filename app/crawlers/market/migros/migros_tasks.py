@@ -41,7 +41,7 @@ class MigrosTasks(object):
                         innerHTML = migros_crawler.MigrosCrawler().get_innerHTML(url.page_url, css_selector, page)
                         products_and_price = migros_crawler.MigrosCrawler().html_parser(innerHTML, url.page_category)
 
-                        data['products_and_price'].append(products_and_price)
+                        data['products_and_price'] = data['products_and_price'] + products_and_price
                 else:
                     innerHTML = migros_crawler.MigrosCrawler().get_innerHTML(url.page_url, css_selector)
                     products_and_price = migros_crawler.MigrosCrawler().html_parser(innerHTML, url.page_category)

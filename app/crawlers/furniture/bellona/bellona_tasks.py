@@ -41,7 +41,7 @@ class BellonaTasks(object):
                         innerHTML = bellona_crawler.BellonaCrawler().get_innerHTML(url.page_url, css_selector, page)
                         products_and_price = bellona_crawler.BellonaCrawler().html_parser(innerHTML, url.page_category)
 
-                        data['products_and_price'].append(products_and_price)
+                        data['products_and_price'] = data['products_and_price'] + products_and_price
                 
                 else:
                     innerHTML = bellona_crawler.BellonaCrawler().get_innerHTML(url.page_url, css_selector)
