@@ -56,6 +56,20 @@ class ActivitiesService(object):
         except Exception as e:
             print("ActivitiesService get_activity_category Exception: \n{}".format(e))
 
+    
+    def get_activity_category_by_name(self, activity_category):
+
+        try:
+            
+            activity_category = ActivityCategory.objects.get(status=1, name=activity_category)
+
+            # return activity category
+            return activity_category if activity_category else False
+
+        except Exception as e:
+            print("ActivitiesService get_activity_category Exception: \n{}".format(e))
+
+
 
 
 

@@ -23,6 +23,7 @@ class ActivityCategory(models.Model):
 
 	activity = models.ForeignKey(Activities, null=None, related_name='activitiy_categories_relation_activitiy', on_delete=models.CASCADE, default=1)
 	name = models.CharField(max_length=120, null=False, blank=None, verbose_name='Activity Category Name')
+	image = models.TextField(null=True, blank=True)
 	status = models.BooleanField(default=1)
 
 	class Meta:

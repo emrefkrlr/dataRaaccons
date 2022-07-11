@@ -27,7 +27,7 @@ def login(request, confirm = None):
             
             auth_login(request, user[1])
             menu = LayoutService().get_menues(user[1])
-            response = redirect('dashboard:activity', menu[0]["main_menu"])
+            response = redirect('dashboard:activity', menu[0]["menu"][0]["main_menu"])
             time.sleep(2)
             response.set_cookie('username', user[1].username)
             response.set_cookie('user_id', user[1].id)

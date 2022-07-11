@@ -10,7 +10,10 @@ class LayoutService(object):
         try:
 
             account_company = AccountService().get_user_company(user=user)
-            menues = []
+            menues = [{
+                "menu": [],
+                "products": []
+            }]
 
             if account_company:
 
@@ -25,23 +28,28 @@ class LayoutService(object):
                         "sub_menues": sub_menues
                     }
 
-                    menues.append(data)
+                    menues[0]["menu"].append(data)
+                    menues[0]["products"].append({"products_activity": main_menu.activity})
+                    
 
 
             else:
                 main_menues = ActivitiesService().get_personal_activities()
 
                 for main_menu in main_menues:
-                
+
                     sub_menues = ActivitiesService().get_activity_categories(main_menu)
 
                     data = {
                         "main_menu": main_menu,
                         "sub_menues": sub_menues
                     }
-               
 
-                    menues.append(data)
+                    menues[0]["menu"].append(data)
+                    menues[0]["products"].append({"products_activity": main_menu.activity})
+
+            
+                    
             return menues
         
         except Exception as e:

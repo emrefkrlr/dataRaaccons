@@ -25,7 +25,7 @@ class PackagePrice(models.Model):
     
     package = models.ForeignKey(Package, null=None, related_name='package_price_package', on_delete=models.CASCADE)
     days = models.IntegerField(default= 30, null=None, blank=False, verbose_name='Days')
-    price = models.IntegerField(default= 0, null=None, blank=False, verbose_name='False')
+    price = models.IntegerField(default= 0, null=None, blank=False, verbose_name='Price')
 
 
     class Meta:

@@ -17,6 +17,18 @@ class ProductsService(object):
         except Exception as e:
             print("\nget_products Exeption: \n{}".format(e))
 
+    
+    def get_product_by_id(self, id):
+
+        try:
+
+            results = Products.objects.get(pk=id)
+
+            return results if results else False
+
+        except Exception as e:
+            print("get_product_by_id Exeption: \n{}".format(e))
+
 
     def exclude(self, id):
 
@@ -40,6 +52,17 @@ class ProductsService(object):
 
         except Exception as e:
             print("\ninsert_new_products Exeption: \n{}".format(e))
+
+    def update_or_create_products(self, **params):
+
+        try:
+
+            update_or_create = Products.objects.update_or_create(**params)
+
+            return update_or_create if update_or_create else False
+
+        except Exception as e:
+            print("update_or_create_products Exeption: \n{}".format(e))
 
 
     def insert_product_matches(self, **params):
@@ -106,6 +129,25 @@ class ProductsService(object):
             print("ProductService get_companies_in_activity Exception: {} Activity: {}".format(e, activity))
 
 
+
+    def get_companies_by_activity_category(self, activity_category):
+
+        try:
+    
+            companies = Products.objects.filter(activity_category=activity_category).distinct("company").values("company")
+           
+
+            return companies if companies else False
+        
+        except Exception as e:
+
+            print("ProductService get_companies_in_activity Exception: {} Activity: {}".format(e, activity))
+
+
+
+
+
+
     def count_of_products_by_filter(self, year=False, month=False, week=False, **filter,):
 
         try:
@@ -149,6 +191,24 @@ class ProductsService(object):
 
         return last_update.updated_at
 
+    
+class ProductMatchesService(ProductsService):
 
-    
-    
+    def get_product_matches_products(self, id):
+        
+        try:
+            
+            matched_poducts = ProductMatches.objects.filter(first_product_id=id)
+
+            produts = []
+
+            for product in matched_poducts:
+
+                product = self.get_product_by_id(id=product.second_product_id)
+
+                produts.append(product)
+
+            return produts if len(produts) > 0 else False
+
+        except Exception as e:
+            print("get_product_matches_products Exeption: \n{}".format(e))

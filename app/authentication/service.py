@@ -117,7 +117,9 @@ class UserService(object):
                 company = CompaniesService().get_company_by_name(company=account_company.company)
             else:
                 company = False
-            package = PackageService().get_user_package_warning(user=user)
+
+            package_warning = PackageService().get_user_package_warning(user=user)
+
 
             user_info = {
 
@@ -128,8 +130,9 @@ class UserService(object):
                 "user_type_id": AccountService().get_user_type(account.user_type).id,
                 "user_type": account.user_type,
                 "profile": account.profile if account.profile else None,
-                "package_message": package[1] if package[1] else None,
-                "dashboard_status": package[0],
+                "package_type": package_warning[2],
+                "package_message": package_warning[1] if package_warning[1] else None,
+                "dashboard_status": package_warning[0],
                 "company": company.name if company else None,
                 "company_id": company.id if company else None,
             }

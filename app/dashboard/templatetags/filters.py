@@ -54,3 +54,9 @@ def timeline_data(main):
     return result
 
 
+@register.filter(name='replace_and_capitalize')
+def replace_and_capitalize(p1):
+    
+    return p1.replace("_", " ").capitalize()
+
+

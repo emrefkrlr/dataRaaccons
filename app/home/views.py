@@ -14,7 +14,7 @@ def index(request):
     if user:
         context['dashboard_url'] = True
         menu = LayoutService().get_menues(user)
-        context['menu'] = menu[0]["main_menu"]
+        context['menu'] = menu[0]["menu"][0]["main_menu"]
 
     response = render(request, 'raccoon_analytic/pages/index.html', context)
 

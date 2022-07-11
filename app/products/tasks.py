@@ -24,7 +24,7 @@ def insert_new_products_task():
         print("Celery insert_new_products_task started....", now)
 
         # get activities data on postgresql
-        activities = ActivitiesService().get_activities(filter={'status': 1})
+        activities = ActivitiesService().get_all_activities()
 
         for activity in activities:
             
@@ -38,7 +38,7 @@ def insert_new_products_task():
 
                 get_mongo_data = MongoService().find_one(db_name='DataRaccoons', host='dataRaccoonsMongo', port='27017', 
                 username='root', password='root', collection=str(activity.name), query=query)
-                
+
                 # get products on postgresql
                 products = ProductsService().get_products(filter={'company__name': str(crawler.company), 'activity': activity.id, 'activity_category': ActivityCategory.objects.get(name=crawler.activity_category).id, 'status': 1})
 
@@ -47,7 +47,7 @@ def insert_new_products_task():
                     
                     # If table is empty, add products without checking
                     if len(products) == 0:
-                        
+
                         for product_and_price in get_mongo_data["products_and_price"]:
                             
                             #for data from paging
@@ -55,7 +55,7 @@ def insert_new_products_task():
 
                                 for product_info in product_and_price:
 
-                                    insert = ProductsService().insert_new_products(
+                                    ProductsService().insert_new_products(
                                         company = Companies.objects.get(name=crawler.company),
                                         activity = Activities.objects.get(name=crawler.activity),
                                         activity_category = ActivityCategory.objects.get(name=crawler.activity_category),
@@ -63,6 +63,7 @@ def insert_new_products_task():
                                         price = product_info["price"],
                                         page_category = str(crawler.page_category),
                                         sub_category = product_info["sub_category"] if product_info["sub_category"] else None,
+                                        product_url = product_info["product_url"] if product_info["product_url"] else None,
                                         image = product_info["image"] if product_info["image"] else None
                                     )
 
@@ -72,14 +73,15 @@ def insert_new_products_task():
                                 if product_and_price is not None:
                                     
                                     # insert data
-                                    insert = ProductsService().insert_new_products(
+                                    ProductsService().insert_new_products(
                                         company = Companies.objects.get(name=crawler.company),
                                         activity = Activities.objects.get(name=crawler.activity),
                                         activity_category = ActivityCategory.objects.get(name=crawler.activity_category),
                                         product_name = product_and_price["product_name"],
-                                        price = product_info["price"],
+                                        price = product_and_price["price"],
                                         page_category = str(crawler.page_category),
                                         sub_category = product_and_price["sub_category"] if product_and_price["sub_category"] else None,
+                                        product_url = product_and_price["product_url"] if product_and_price["product_url"] else None,
                                         image = product_and_price["image"] if product_and_price["image"] else None
                                     )
 
@@ -95,7 +97,7 @@ def insert_new_products_task():
 
                                     if product_info["product_name"] not in products:
 
-                                        insert = ProductsService().insert_new_products(
+                                        ProductsService().insert_new_products(
                                             company = Companies.objects.get(name=crawler.company),
                                             activity = Activities.objects.get(name=crawler.activity),
                                             activity_category = ActivityCategory.objects.get(name=crawler.activity_category),
@@ -103,31 +105,36 @@ def insert_new_products_task():
                                             price = product_info["price"],
                                             page_category = str(crawler.page_category),
                                             sub_category = product_info["sub_category"] if product_info["sub_category"] else None,
+                                            product_url = product_info["product_url"] if product_info["product_url"] else None,
                                             image = product_info["image"] if product_info["image"] else None
                                         )
+                                    
+                                    else:
+
+                                        ProductsService().update_or_create_products(price = product_info["price"])   
 
                             # for data from not paging
                             else:
 
-                                if product_and_price is not None:
+                                if product_and_price is not None:                                  
 
                                     if product_and_price["product_name"] not in products:
 
-                                        insert = ProductsService().insert_new_products(
+                                        ProductsService().insert_new_products(
                                             company = Companies.objects.get(name=crawler.company),
                                             activity = Activities.objects.get(name=crawler.activity),
                                             activity_category = ActivityCategory.objects.get(name=crawler.activity_category),
                                             product_name = product_and_price["product_name"],
-                                            price = product_info["price"],
+                                            price = product_and_price["price"],
                                             page_category = str(crawler.page_category),
                                             sub_category = product_and_price["sub_category"] if product_and_price["sub_category"] else None,
+                                            product_url = product_and_price["product_url"] if product_and_price["product_url"] else None,
                                             image = product_and_price["image"] if product_and_price["image"] else None
                                         )
+                                    else:
 
+                                        ProductsService().update_or_create_products(price = product_and_price["price"])
                                     
-                            
-                    if insert is not True:
-                        raise Exception('insert_new_products_task Exception: Postgre insert failed \n Company: {} \n Activity: {} \n '.format(crawler.company, activity))
                 else:
                     continue
                     
@@ -147,7 +154,7 @@ def product_matches_task():
         print("Celery product_matches_task started....", now)
 
         # get activities data on postgresql
-        activities = ActivitiesService().get_activities(filter={'status': 1})
+        activities = ActivitiesService().get_all_activities()
 
         for activity in activities:
             # get products on postgresql

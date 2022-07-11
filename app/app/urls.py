@@ -25,8 +25,9 @@ urlpatterns = [
     re_path(r'^chaining/', include('smart_selects.urls')),
 
     path('', index, name='index'),
-    path('dashboard/', include('dashboard.urls')),
     path('auth/', include('authentication.urls')),
+    path('dashboard/', include('dashboard.urls')),
+    path('products/', include('products.urls')),
     
 
 ]

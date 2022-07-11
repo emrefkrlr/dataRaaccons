@@ -64,6 +64,8 @@ class PackageService(object):
             
             if package:
 
+                PACKAGE_TYPE = package.package
+
                 if self.now_date > package.expired_at:
                     
                     PACKAGE_MESSAGE = "Your defined package has expired, please renew."
@@ -78,7 +80,7 @@ class PackageService(object):
                     DASHBOARD_STATUS = True
                     PACKAGE_MESSAGE = None
 
-            return DASHBOARD_STATUS, PACKAGE_MESSAGE
+            return DASHBOARD_STATUS, PACKAGE_MESSAGE, PACKAGE_TYPE
 
         except Exception as e:
             print(" PackageService get_user_package_warning Exeption \n {} \n UserID {} \n PackageID {}".format(e, user, package))
