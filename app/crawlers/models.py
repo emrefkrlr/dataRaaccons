@@ -1,3 +1,4 @@
+from pyexpat import model
 from django.db import models
 from companies.models import Companies
 from activities.models import Activities, ActivityCategory
@@ -26,8 +27,8 @@ class Crawlers(models.Model):
 	# SCHEDULE INFO
 	schedule = models.CharField(max_length=120, null=True, blank=True, verbose_name='Schedule Config')
 	status = models.BooleanField(default=1)
-	created_at = models.DateTimeField(auto_created=True, verbose_name='Created Date', editable=False, null=True, blank=None)
-	updated_at = models.DateTimeField(auto_now_add=True, verbose_name='Updated Date', editable=False, null=True, blank=None)
+	created_at = models.DateTimeField(auto_now_add=True,  verbose_name='Created Date', editable=False,  null=True)
+	updated_at = models.DateTimeField(auto_now=True,  verbose_name='Update Date', editable=False, null=True)
 
 	class Meta:
 		
@@ -37,5 +38,53 @@ class Crawlers(models.Model):
 
 	def __str__(self):
 		return "%s" % self.activity_category
+
+
+class CrawlersConfig(models.Model):
+	
+	company = models.ForeignKey(Companies, null=None, related_name='crawler_config_company_name', on_delete=models.CASCADE)
+	demand = models.ForeignKey(Demands, null=None, related_name='crawler_config_demands_name', on_delete=models.CASCADE)
+	activity = models.ForeignKey(Activities, null=None, related_name='crawler_config_activitiy_name', on_delete=models.CASCADE)
+	css_selector = models.CharField(max_length=120, null=True, blank=True, verbose_name='Css Selector')
+	p1 = models.CharField(max_length=120, null=True, blank=True, verbose_name='p1')
+	p2 = models.CharField(max_length=120, null=True, blank=True, verbose_name='p2')
+	p3 = models.CharField(max_length=120, null=True, blank=True, verbose_name='p3')
+	p4 = models.CharField(max_length=120, null=True, blank=True, verbose_name='p4')
+	p5 = models.CharField(max_length=120, null=True, blank=True, verbose_name='p5')
+	p6 = models.CharField(max_length=120, null=True, blank=True, verbose_name='p6')
+	p7 = models.CharField(max_length=120, null=True, blank=True, verbose_name='p7')
+	p8 = models.CharField(max_length=120, null=True, blank=True, verbose_name='p8')
+	p9 = models.CharField(max_length=120, null=True, blank=True, verbose_name='p9')
+	p10 = models.CharField(max_length=120, null=True, blank=True, verbose_name='p10')
+	p11 = models.CharField(max_length=120, null=True, blank=True, verbose_name='p11')
+	p12 = models.CharField(max_length=120, null=True, blank=True, verbose_name='p12')
+	created_at = models.DateTimeField(auto_now_add=True,  verbose_name='Created Date', editable=False)
+	updated_at = models.DateTimeField(auto_now=True,  verbose_name='Update Date', editable=False)
+
+	class Meta:
+		
+		verbose_name = 'Crawler Config'
+		verbose_name_plural = 'Crawler Congig'
+	
+
+	def __str__(self):
+		return "%s" % self.activity
+
+
+class CrawlerError(models.Model):
+
+	crawler_id = models.IntegerField(default= 0, null=True, blank=True, verbose_name='Crawler ID')
+	error_message = models.TextField(null=True)
+	created_at = models.DateTimeField(auto_now_add=True,  verbose_name='Created Date', editable=False)
+	
+
+	class Meta:
+		
+		verbose_name = 'Crawler Err'
+		verbose_name_plural = 'Crawler Err'
+	
+
+	def __str__(self):
+		return "%s" % self.crawler_id
 
 

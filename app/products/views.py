@@ -78,12 +78,6 @@ def product_lists(request, activity_category):
                 company = CompaniesService().get_company_by_id(company=company_id["company"])
                 context["company_filter"].append(company.name)
 
-
-            print("\n\n\n-------------------------------> ", context["sub_category_filter"])
-            print("\n\n\n-------------------------------> ", context["company_filter"])
-
-
-
             page = render(request, 'raccoon_analytic/pages/product_lists.html', context)
 
         else:

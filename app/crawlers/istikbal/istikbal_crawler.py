@@ -10,7 +10,7 @@ class IstikbalCrawler(object):
 
     def get_innerHTML(self, url, css_selector, page=None):
 
-        driver = webdriver.Remote(web_driver_config.REMOTE_URL, desired_capabilities=DesiredCapabilities.FIREFOX)
+        driver = webdriver.Remote(web_driver_config.REMOTE_URL, desired_capabilities=DesiredCapabilities.CHROME)
         # https://www.a101.com.tr/market/cikolata-gofret/?page=2
         
         if page is not None:
@@ -22,27 +22,35 @@ class IstikbalCrawler(object):
             get_content = driver.find_element_by_css_selector(css_selector)
             result = get_content.get_attribute('innerHTML')
             driver.quit()
+            
             return result
         
         except Exception as e:
-            print("\IstikbalCrawler get_innerHTML Exeption: \n{}\nURL: {}".format(e, url))
+            print("IstikbalCrawler get_innerHTML Exeption: \n{}\nURL: {}".format(e, url))
 
     
-    def html_parser(self, html, page_category):
+    def html_parser(self, html, crawler_config, page_category):
 
         try:
             
             soup = BeautifulSoup(html, 'html.parser')
-            product_list = soup.find_all("div", {"class": "col-sm-6 col-lg-4"})
+            p1 = crawler_config.p1.split(",")
+            p2 = crawler_config.p2.split(",")
+            p3 = crawler_config.p3.split(",")
+            p4 = crawler_config.p4
+            p5 = crawler_config.p5.split(",")
+         
+
+            product_list = soup.find_all(eval(p1[0]), eval(p1[1]))
             products_and_price = []
             
             for product in product_list:
                 
-                articleName = product.find("div", {"class": "showcase-title"})
-                articleURL = product.find("a", {"class": "showcase-label-container"})
+                articleName = product.find(eval(p2[0]), eval(p2[1]))
+                articleURL = product.find(eval(p3[0]), eval(p3[1]))
                 articleMeas = None
-                articleImage = product.find("img")
-                articlePrice = product.find("div", {"class": "showcase-price-new"}).text.strip()
+                articleImage = product.find(eval(p4))
+                articlePrice = product.find(eval(p5[0]), eval(p5[1])).text.strip()
                 # Replace key character with value character in string
                 articlePrice = functions.char_to_replace(articlePrice)
                 
@@ -58,10 +66,8 @@ class IstikbalCrawler(object):
                     }
                 
                 products_and_price.append(product_detail)
-                                            
-                    
             
-            return products_and_price
+            return products_and_price if products_and_price else None
 
         except Exception as e:
-            print("\nA101Crawler html_parser Exeption: \n{}".format(e))
+            print("IstikbalCrawler html_parser Exeption: \n{}".format(e))

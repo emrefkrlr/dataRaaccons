@@ -19,12 +19,14 @@ from django.conf.urls.static import static
 from django.conf import settings
 
 from home.views import index
+from core.views import core_index
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^chaining/', include('smart_selects.urls')),
 
     path('', index, name='index'),
+    path('test', core_index, name='core_index'),
     path('auth/', include('authentication.urls')),
     path('dashboard/', include('dashboard.urls')),
     path('products/', include('products.urls')),

@@ -14,33 +14,96 @@ app.conf.timezone = 'Europe/Istanbul'
 app.autodiscover_tasks()
 
 app.conf.beat_schedule = {
-    # CHROME
-    #'add-every-0-18-21-hours-getir_getir_crawler_task': {
-    #    'task': 'crawlers.tasks.getir_getir_crawler_task',
-    #    'schedule': crontab(minute=0, hour='0,6,12,20,23'),
-    #},
-    'add-every-0-18-21-hours-migros_sanal_market_crawler_task': {
-        'task': 'crawlers.tasks.migros_sanal_market_crawler_task',
-        'schedule': crontab(minute=0, hour='1,8,15,18,21,22,23'),
-    },
-     'add-every-0-19-21-hours-trendyol_crawler_task': {
-        'task': 'crawlers.tasks.trendyol_crawler_task',
-        'schedule': crontab(minute=0, hour='4,9,12,16,21,22,23'),
+
+    ## Activity: Market
+
+    # Chrome Browser
+
+    'add-every-16-hours-market_migros_sanal_market_task': {
+        'task': 'crawlers.tasks.market_migros_sanal_market_task',
+        'schedule': crontab(minute=0, hour='16'),
     },
 
-    # FIREFOX
-    #'add-every-0-18-21-hours-iste_gelsin_crawler_task': {
-    #    'task': 'crawlers.tasks.iste_gelsin_crawler_task',
-    #    'schedule': crontab(minute=0, hour='1,3,9,13,22'),
-    #},
-    #'add-every-0-18-21-hours-sok_market_crawler_task': {
-    #    'task': 'crawlers.tasks.sok_market_crawler_task',
-    #    'schedule': crontab(minute=0, hour='2,6,8,15,23'),
-    #},
-    'add-every-0-18-21-hours-a101_crawler_task': {
-        'task': 'crawlers.tasks.a101_crawler_task',
-        'schedule': crontab(minute=0, hour='0,5,12,17,21,22,23'),
+    'add-every-19-hours-market_iste_gelsin_task': {
+        'task': 'crawlers.tasks.market_iste_gelsin_task',
+        'schedule': crontab(minute=0, hour='19'),
     },
+
+    'add-every-20-hours-market_getir_getir_task': {
+        'task': 'crawlers.tasks.market_getir_getir_task',
+        'schedule': crontab(minute=0, hour='20'),
+    },
+
+    'add-every-21-hours-market_trendyol_task': {
+        'task': 'crawlers.tasks.market_trendyol_task',
+        'schedule': crontab(minute=0, hour='21'),
+    },
+
+    # Firefox Browser
+
+    'add-every-22-hours-market_hepsiburada_task': {
+        'task': 'crawlers.tasks.market_hepsiburada_task',
+        'schedule': crontab(minute=0, hour='22'),
+    },
+
+    'add-every-17-hours-market_sok_market_task': {
+        'task': 'crawlers.tasks.market_sok_market_task',
+        'schedule': crontab(minute=0, hour='17'),
+    },
+
+    'add-every-18-hours-market_a101_task': {
+        'task': 'crawlers.tasks.market_a101_task',
+        'schedule': crontab(minute=0, hour='18'),
+    },
+
+
+    #-------------------------------------------------------------#
+
+    ## Activity: Furniture
+    
+    # Chrome Browser
+
+    'add-every-16-hours-furniture_istikbal_task': {
+        'task': 'crawlers.tasks.furniture_istikbal_task',
+        'schedule': crontab(minute=0, hour='16', day_of_week='*/2'),
+    },
+
+    'add-every-19-hours-furniture_trendyol_task': {
+        'task': 'crawlers.tasks.furniture_trendyol_task',
+        'schedule': crontab(minute=0, hour='19', day_of_week='*/2'),
+    },
+
+    # Firefox Browser
+
+    'add-every-17-hours-furniture_bellona_task': {
+        'task': 'crawlers.tasks.furniture_bellona_task',
+        'schedule': crontab(minute=0, hour='17', day_of_week='*/2'),
+    },
+
+    'add-every-18-hours-furniture_hepsiburada_task': {
+        'task': 'crawlers.tasks.furniture_hepsiburada_task',
+        'schedule': crontab(minute=0, hour='18', day_of_week='*/2'),
+    },
+
+    #-------------------------------------------------------------#
+
+
+    ## Products
+
+    'add-every-22-hours_insert_new_products_task': {
+        'task': 'products.tasks.insert_new_products_task',
+        'schedule': crontab(minute=0, hour='23'),
+    },
+
+    'add-every-0-hours_product_matches_task': {
+        'task': 'products.tasks.product_matches_task',
+        'schedule': crontab(minute=0, hour='0'),
+    },
+
+
+    #-------------------------------------------------------------#
+
+
 
 }
 

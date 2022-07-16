@@ -22,12 +22,13 @@ class MongoService(object):
 			print("\nExeption get_db_handle: \n{}".format(e))
 
 
-	def insert_one(self, db_name, host, port, username, password, collection, document):
+	def insert_one(self, collection, document):
 		
 		try:
-			my_client = MongoService().get_db_handle(db_name, host, port, username, password)
+		
+			my_client = self.get_db_handle()
 			dbname = my_client[0]
-			collection_name = dbname[collection]
+			collection_name = dbname[str(collection)]
 			insert = collection_name.insert_one(document)
 			
 			return insert.inserted_id
