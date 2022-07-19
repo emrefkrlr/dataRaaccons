@@ -105,7 +105,7 @@ services:
       - "4443:4443"
       - "4444:4444"
 
-  chrome:
+  chrome_w1:
     image: selenium/node-chrome:4.1.4-20220427
     shm_size: 2gb
     depends_on:
@@ -116,12 +116,44 @@ services:
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
       - HUB_PORT_4444_TCP_ADDR=selenium
       - HUB_PORT_4444_TCP_PORT=4444
-      - NODE_MAX_INSTANCE=3
-      - NODE_MAX_SESSION=3
+      - SE_NODE_MAX_INSTANCES=3
+      - SE_NODE_MAX_SESSIONS=3
     volumes:
       - /dev/shm:/dev/shm
 
-  firefox:
+  chrome_w2:
+    image: selenium/node-chrome:4.1.4-20220427
+    shm_size: 2gb
+    depends_on:
+      - selenium
+    environment:
+      - SE_EVENT_BUS_HOST=selenium
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - HUB_PORT_4444_TCP_ADDR=selenium
+      - HUB_PORT_4444_TCP_PORT=4444
+      - SE_NODE_MAX_INSTANCES=3
+      - SE_NODE_MAX_SESSIONS=3
+    volumes:
+      - /dev/shm:/dev/shm
+
+  chrome_w3:
+    image: selenium/node-chrome:4.1.4-20220427
+    shm_size: 2gb
+    depends_on:
+      - selenium
+    environment:
+      - SE_EVENT_BUS_HOST=selenium
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - HUB_PORT_4444_TCP_ADDR=selenium
+      - HUB_PORT_4444_TCP_PORT=4444
+      - SE_NODE_MAX_INSTANCES=3
+      - SE_NODE_MAX_SESSIONS=3
+    volumes:
+      - /dev/shm:/dev/shm
+
+  firefox_w1:
     image: selenium/node-firefox:4.1.4-20220427
     shm_size: 2gb
     depends_on:
@@ -132,8 +164,40 @@ services:
       - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
       - HUB_PORT_4444_TCP_ADDR=selenium
       - HUB_PORT_4444_TCP_PORT=4444
-      - NODE_MAX_INSTANCE=3
-      - NODE_MAX_SESSION=3
+      - SE_NODE_MAX_INSTANCES=3
+      - SE_NODE_MAX_SESSIONS=3
+    volumes:
+      - /dev/shm:/dev/shm
+
+  firefox_w2:
+    image: selenium/node-firefox:4.1.4-20220427
+    shm_size: 2gb
+    depends_on:
+      - selenium
+    environment:
+      - SE_EVENT_BUS_HOST=selenium
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - HUB_PORT_4444_TCP_ADDR=selenium
+      - HUB_PORT_4444_TCP_PORT=4444
+      - SE_NODE_MAX_INSTANCES=3
+      - SE_NODE_MAX_SESSIONS=3
+    volumes:
+      - /dev/shm:/dev/shm
+
+  firefox_w3:
+    image: selenium/node-firefox:4.1.4-20220427
+    shm_size: 2gb
+    depends_on:
+      - selenium
+    environment:
+      - SE_EVENT_BUS_HOST=selenium
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - HUB_PORT_4444_TCP_ADDR=selenium
+      - HUB_PORT_4444_TCP_PORT=4444
+      - SE_NODE_MAX_INSTANCES=3
+      - SE_NODE_MAX_SESSIONS=3
     volumes:
       - /dev/shm:/dev/shm
   

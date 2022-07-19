@@ -10,6 +10,7 @@ from crawlers.sok_market.sok_tasks import SokMarketTasks
 from crawlers.hepsiburada.hepsiburada_tasks import HepsiburadaTasks
 from crawlers.trendyol.trendyol_tasks import TrendyolTasks
 from crawlers.migros.migros_tasks import MigrosTasks
+from crawlers.carrefoursa.carrefoursa_tasks import CarrefoursaTasks
 from crawlers.istikbal.istikbal_tasks import IstikbalTasks
 from crawlers.bellona.bellona_tasks import BellonaTasks
 
@@ -52,6 +53,11 @@ def market_trendyol_task():
 @shared_task
 def market_hepsiburada_task():
     HepsiburadaTasks().hepsiburada_crawler_tasks(activity_name=_ACTIVITY_MARKET_)
+
+
+@shared_task
+def market_carrefoursa_task():
+    CarrefoursaTasks().carrefoursa_crawler_tasks(activity_name=_ACTIVITY_MARKET_)
 
 
 # --------------------------- FURNITURE --------------------------- #

@@ -143,13 +143,29 @@ class UserService(object):
             return False
 
 
-        
-            
+    def get_user_by_email(self, email):
+
+        try:
+
+            user = User.objects.get(email=email)
+
+            return user if user else None
+
+        except Exception as e:
+            print("get_user_by_email EXCEPTION: {}, Email: {}".format(e,email))
 
 
-            
-            
-        
-        
-        
+    def update_user_password(self, token, password):
 
+        try:
+
+            account = AccountService().get_user_by_verified_code(verified_code=token)
+
+            user = User.objects.get(username=account.user)
+            user.set_password(password)
+            user.save()
+
+            print(user)
+
+        except Exception as e:
+            print("update_user_password EXCEPTION: {}, user: {}".format(e,token))

@@ -17,6 +17,20 @@ class AccountService(object):
             print("AccountService get_user_account Exception: {} \n User: {}".format(e, user))
 
 
+    def get_user_by_verified_code(self, verified_code):
+
+        try:
+
+            account = Account.objects.get(verified_code = verified_code)
+
+            return account if account else False
+
+        except Exception as e:
+            print("AccountService get_user_by_verified_code Exception: {} \n User: {}".format(e, verified_code))
+
+
+
+
     def set_user_account(self, user, **kwargs):
 
         try:
@@ -90,4 +104,5 @@ class AccountService(object):
 
         except Exception as e:
             print("AccountService get_user_company Exception: {} \n User: {}".format(e, user))
+
 

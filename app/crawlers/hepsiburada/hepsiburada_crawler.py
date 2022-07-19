@@ -1,6 +1,7 @@
 from crawlers import web_driver_config, functions
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium import webdriver
+from selenium.webdriver.common.by import By
 import time
 from bs4 import BeautifulSoup
 import uuid
@@ -21,9 +22,8 @@ class HepsiburadaCrawler(object):
             time.sleep(2)
 
             
-            get_content = driver.find_element_by_css_selector(css_selector)
+            get_content = driver.find_element(By.CSS_SELECTOR, css_selector)
             result = get_content.get_attribute('innerHTML')
-            print(url)
             driver.quit()
             
             return result

@@ -1,6 +1,4 @@
-from email import message
-from pickle import FALSE
-from struct import pack
+from urllib.parse import ParseResultBytes
 from package.models import UserPackage, Package, PackagePrice
 from datetime import datetime, timedelta
 import pytz
@@ -24,6 +22,33 @@ class PackageService(object):
             
         except Exception as e:
             print(" PackageService get_package Exeption \n {} \n PackageID".format(e, package))
+
+
+    def get_all_packages(self):
+
+        try:
+
+            packages = Package.objects.all()
+            
+            return packages if packages else False
+
+        except Exception as e:
+            print(" PackageService get_all_packages Exeption: {}".format(e))
+
+
+    def get_package_info(self, package):
+
+        try:
+
+            package_info = PackagePrice.objects.get(package=package)
+
+            return package_info if package_info else False
+
+        except Exception as e:
+            print(" PackageService get_packages_info Exeption: {}".format(e))
+
+
+
 
 
     

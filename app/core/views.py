@@ -9,6 +9,7 @@ from crawlers.iste_gelsin.iste_gelsin_tasks import IsteGelsinTasks
 from crawlers.istikbal.istikbal_tasks import IstikbalTasks
 from crawlers.bellona.bellona_tasks import BellonaTasks
 from crawlers.migros.migros_tasks import MigrosTasks
+from crawlers.carrefoursa.carrefoursa_tasks import CarrefoursaTasks
 
 def core_index(request):
 
@@ -24,6 +25,7 @@ def core_index(request):
 	#print(IstikbalTasks().istikbal_crawler_tasks(activity_name="furniture"))
 	#print(BellonaTasks().bellona_crawler_tasks(activity_name="furniture"))
 	#print(MigrosTasks().migros_sanal_market_crawler_tasks(activity_name="market"))
+	#print(CarrefoursaTasks().carrefoursa_crawler_tasks(activity_name="market"))
 	
 	context = {'configs': "configs"}
 	

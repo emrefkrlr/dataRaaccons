@@ -1,4 +1,7 @@
+import email
+from multiprocessing import context
 from django.shortcuts import render, redirect
+from account.services import AccountService
 from authentication.service import UserService, Authantication
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
@@ -84,3 +87,34 @@ def logout(request):
     
     else:
         print("Burada hata var incele...", user)
+
+
+def reset_password(request):
+
+    if request.POST:
+        user = UserService().get_user_by_email(request.POST['email'])
+        account = AccountService().get_user_account(user=user)
+        print(account.verified_code)
+        
+        time.sleep(5)
+        # Mail at
+    
+    response = render(request, 'raccoon_analytic/pages/password_reset.html')
+
+    return response
+
+
+def set_new_password(request, token):
+
+    if request.POST:
+        print(request.POST['password'])
+        print(UserService().update_user_password(token=token, password=request.POST['password']))
+
+    context = {
+        "token": token
+    }
+    response = render(request, 'raccoon_analytic/pages/new_password.html', context)
+    return response
+
+    
+

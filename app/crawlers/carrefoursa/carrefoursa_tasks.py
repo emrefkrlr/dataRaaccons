@@ -1,19 +1,19 @@
 from crawlers.service import CrawlerServices
 from mongo.services import MongoService
-from crawlers.istikbal import istikbal_crawler
+from crawlers.carrefoursa import carrefoursa_crawler
 import datetime
 import time
 
 
-class IstikbalTasks(object):
+class CarrefoursaTasks(object):
 
-    def istikbal_crawler_tasks(self, activity_name):
+    def carrefoursa_crawler_tasks(self, activity_name):
 
         try:
 
-            get_crawler_config = CrawlerServices().get_crawler_config(company="bellona", activity=activity_name)
+            get_crawler_config = CrawlerServices().get_crawler_config(company="carrefoursa", activity=activity_name)
 
-            get_crawlers = CrawlerServices().fetch_urls_to_crawl({"status": 1, 'company__name': 'bellona', "activity__name": activity_name})
+            get_crawlers = CrawlerServices().fetch_urls_to_crawl({"status": 1, 'company__name': 'carrefoursa', "activity__name": activity_name})
 
             for crawler in get_crawlers:
                 
@@ -34,24 +34,20 @@ class IstikbalTasks(object):
                 css_selector = get_crawler_config.css_selector.replace(" ", ".")
 
                 if crawler.page_numbers >= 1:
-
                     for page in range(1, crawler.page_numbers + 1):
-                        
-                        innerHTML = istikbal_crawler.IstikbalCrawler().get_innerHTML(crawler.page_url, css_selector, page)
-                        
-                        products_and_price = istikbal_crawler.IstikbalCrawler().html_parser(innerHTML, get_crawler_config, crawler.page_category)
 
+                        innerHTML = carrefoursa_crawler.CarrefoursaCrawler().get_innerHTML(crawler.page_url, css_selector, page)
+                        products_and_price = carrefoursa_crawler.CarrefoursaCrawler().html_parser(innerHTML, get_crawler_config, crawler.page_category)
+                        
                         if products_and_price:
                             data['products_and_price'] = data['products_and_price'] + products_and_price
-
-
+                            
+                
                 else:
-                    
-                    innerHTML = istikbal_crawler.IstikbalCrawler().get_innerHTML(crawler.page_url, css_selector, page)
-                    products_and_price = istikbal_crawler.IstikbalCrawler().html_parser(innerHTML, get_crawler_config, crawler.page_category)
+                    innerHTML = carrefoursa_crawler.CarrefoursaCrawler().get_innerHTML(crawler.page_url, css_selector)
+                    products_and_price = carrefoursa_crawler.CarrefoursaCrawler().html_parser(innerHTML, get_crawler_config, crawler.page_category)
                     
                     if products_and_price:
-
                         data['products_and_price'] = products_and_price
                 
                 if data['products_and_price']:
@@ -61,4 +57,4 @@ class IstikbalTasks(object):
                         print("Document saved mongodb...", datetime.datetime.utcnow())
 
         except Exception as e:
-            print("IstikbalTasks istikbal_crawler_tasks EXCEPTION: {} \n ACTIVITY: {}".format(e, activity_name))
+            print("CarrefoursaTasks carrefoursa_crawler_tasks EXCEPTION: {}".format(e))
