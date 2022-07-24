@@ -13,6 +13,19 @@ from crawlers.migros.migros_tasks import MigrosTasks
 from crawlers.carrefoursa.carrefoursa_tasks import CarrefoursaTasks
 from crawlers.istikbal.istikbal_tasks import IstikbalTasks
 from crawlers.bellona.bellona_tasks import BellonaTasks
+from crawlers.dogtas.dogtas_tasks import DogtasTasks
+from crawlers.enzahome.enzahome_tasks import EnzahomeTasks
+from crawlers.ider_mobilya.ider_mobilya_tasks import IderMobilyaTasks
+from crawlers.ikea.ikea_tasks import IkeaTasks
+from crawlers.kelebek_mobilya.kelebek_mobilya_tasks import KelebekMobilyaTasks
+from crawlers.kilim_mobilya.kilim_mobilya_tasks import KilimMobilyaTasks
+from crawlers.koctas.koctas_tasks import KoctasTasks
+from crawlers.modalife.modalife_tasks import ModalifeTasks
+from crawlers.mudo.mudo_tasks import MudoTasks
+from crawlers.normod.normod_tasks import NormodTasks
+from crawlers.ocasso.ocasso_taks import OcassoTasks
+from crawlers.ruum_store.ruum_store_tasks import RuumStoreTasks
+from crawlers.vivense.vivense_tasks import VivenseTasks
 
 _ACTIVITY_MARKET_ = "market"
 _ACTIVITY_FURNITURE_ = "furniture"
