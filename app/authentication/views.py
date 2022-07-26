@@ -30,6 +30,7 @@ def login(request, confirm = None):
             
             auth_login(request, user[1])
             menu = LayoutService().get_menues(user[1])
+            print(menu)
             response = redirect('dashboard:activity', menu[0]["menu"][0]["main_menu"])
             time.sleep(2)
             response.set_cookie('username', user[1].username)
@@ -94,7 +95,6 @@ def reset_password(request):
     if request.POST:
         user = UserService().get_user_by_email(request.POST['email'])
         account = AccountService().get_user_account(user=user)
-        print(account.verified_code)
         
         time.sleep(5)
         # Mail at
@@ -107,8 +107,8 @@ def reset_password(request):
 def set_new_password(request, token):
 
     if request.POST:
-        print(request.POST['password'])
-        print(UserService().update_user_password(token=token, password=request.POST['password']))
+        
+        UserService().update_user_password(token=token, password=request.POST['password'])
 
     context = {
         "token": token

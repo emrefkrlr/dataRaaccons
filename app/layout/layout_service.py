@@ -34,6 +34,7 @@ class LayoutService(object):
 
 
             else:
+                
                 main_menues = ActivitiesService().get_personal_activities()
 
                 for main_menu in main_menues:
@@ -46,7 +47,7 @@ class LayoutService(object):
                     }
 
                     menues[0]["menu"].append(data)
-                    menues[0]["products"].append({"products_activity": main_menu.activity})
+                    menues[0]["products"].append({"products_activity": main_menu.name})
 
             
                     

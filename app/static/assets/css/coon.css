@@ -1,0 +1,49 @@
+.logo1 {
+    width: 230px;
+    height: 43px;
+    display: flex;
+    margin: 10px 10px;
+}
+
+.logo1>.item2 {
+    margin: 0 5px;
+    position: relative;
+}
+
+.logo_c {
+    position: relative;
+    height: 220px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin: auto 5px;
+}
+
+.logo_c>.item2 {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    margin: 14px auto;
+}
+
+.logo_admin {
+    width: 180px;
+    height: 63px;
+    display: flex;
+    margin: 10px 0;
+}
+
+.logo-aside {
+    display: flex;
+    flex-direction: column;
+    align-content: space-between;
+    padding: 10px;
+}
+
+.logo1_m {
+    width: 180px;
+    height: 43px;
+    display: flex;
+}

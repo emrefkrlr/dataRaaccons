@@ -165,7 +165,5 @@ class UserService(object):
             user.set_password(password)
             user.save()
 
-            print(user)
-
         except Exception as e:
             print("update_user_password EXCEPTION: {}, user: {}".format(e,token))
