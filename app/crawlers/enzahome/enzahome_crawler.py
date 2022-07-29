@@ -21,7 +21,6 @@ class EnzaHomeCrawler(object):
 
             driver.get(url)
             time.sleep(7)
-            driver.save_screenshot("screenshot.png")
             get_content = driver.find_element(By.CSS_SELECTOR, css_selector)
             result = get_content.get_attribute('innerHTML')
             driver.quit()

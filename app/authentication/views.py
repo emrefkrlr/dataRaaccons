@@ -47,7 +47,7 @@ def login(request, confirm = None):
 
 
 
-def create_account(request):
+def create_account(request, package=None):
 
     confirmed_url = "{}/auth/login/".format(request.META["HTTP_HOST"])
 

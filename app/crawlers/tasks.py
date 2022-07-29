@@ -93,3 +93,80 @@ def furniture_hepsiburada_task():
 @shared_task
 def furniture_trendyol_task():
     TrendyolTasks().trendyol_crawler_tasks(activity_name=_ACTIVITY_FURNITURE_)
+
+
+@shared_task
+def furniture_dogtas_task():
+    DogtasTasks().dogtas_crawler_tasks(activity_name=_ACTIVITY_FURNITURE_)
+
+
+@shared_task
+def furniture_enzahome_task():
+    EnzahomeTasks().enzahome_crawler_tasks(activity_name=_ACTIVITY_FURNITURE_)
+
+
+@shared_task
+def furniture_ider_mobilya_task():
+    IderMobilyaTasks().ider_mobilya_crawler_tasks(activity_name=_ACTIVITY_FURNITURE_)
+
+
+@shared_task
+def furniture_ikea_task():
+    IkeaTasks().ikea_crawler_tasks(activity_name=_ACTIVITY_FURNITURE_)
+
+
+@shared_task
+def furniture_kelebek_mobilya_task():
+    KelebekMobilyaTasks().kelebek_mobilya_crawler_tasks(activity_name=_ACTIVITY_FURNITURE_)
+
+
+@shared_task
+def furniture_kilim_mobilya_task():
+    KilimMobilyaTasks().kilim_mobilya_crawler_tasks(activity_name=_ACTIVITY_FURNITURE_)
+
+
+@shared_task
+def furniture_koctas_task():
+    KoctasTasks().koctas_crawler_tasks(activity_name=_ACTIVITY_FURNITURE_)
+
+
+@shared_task
+def furniture_modalife_task():
+    ModalifeTasks().modalife_crawler_tasks(activity_name=_ACTIVITY_FURNITURE_)
+
+
+@shared_task
+def furniture_mudo_task():
+    MudoTasks().mudo_crawler_tasks(activity_name=_ACTIVITY_FURNITURE_)
+
+
+@shared_task
+def furniture_normod_task():
+    NormodTasks().normod_crawler_tasks(activity_name=_ACTIVITY_FURNITURE_)
+
+
+@shared_task
+def furniture_ocasso_task():
+    OcassoTasks().ocasso_crawler_tasks(activity_name=_ACTIVITY_FURNITURE_)
+
+
+@shared_task
+def furniture_ruum_store_task():
+    RuumStoreTasks().ruum_store_crawler_tasks(activity_name=_ACTIVITY_FURNITURE_)
+
+
+@shared_task
+def furniture_vivense_task():
+    VivenseTasks().vivense_crawler_tasks(activity_name=_ACTIVITY_FURNITURE_)
+
+
+
+
+
+
+
+
+
+
+
+

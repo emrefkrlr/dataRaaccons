@@ -13,7 +13,7 @@ class ModaLifeCrawler(object):
 
         try:
         
-            driver = webdriver.Remote(web_driver_config.REMOTE_URL, desired_capabilities=DesiredCapabilities.FIREFOX)
+            driver = webdriver.Remote(web_driver_config.REMOTE_URL, desired_capabilities=DesiredCapabilities.CHROME)
             
             if page is not None:
                 url = url.format(page)

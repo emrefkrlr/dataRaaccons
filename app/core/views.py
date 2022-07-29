@@ -26,7 +26,7 @@ from crawlers.vivense.vivense_tasks import VivenseTasks
 from products import tasks
 
 
-def core_index(request):
+#def core_index(request):
 
 	
 	#print(GetirTasks().getir_getir_crawler_tasks(activity_name="market"))
@@ -55,8 +55,8 @@ def core_index(request):
 	#print(OcassoTasks().ocasso_crawler_tasks(activity_name="furniture"))
 	#print(RuumStoreTasks().ruum_store_crawler_tasks(activity_name="furniture"))
 	#print(VivenseTasks().vivense_crawler_tasks(activity_name="furniture"))
-	print(tasks.insert_new_products_task())
+	#print(tasks.insert_new_products_task())
 	
-	context = {'configs': "configs"}
+	#context = {'configs': "configs"}
 	
-	return render(request, 'test.html', context)
+	#return render(request, 'test.html', context)
