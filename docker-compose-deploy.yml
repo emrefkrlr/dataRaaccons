@@ -26,6 +26,172 @@ services:
       - POSTGRES_DB=${DB_NAME}
       - POSTGRES_USER=${DB_USER}
       - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8
+
+  pgadmin:
+    container_name: pgadmin4_container
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PG_ADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PG_ADMIN_PASS}
+    ports:
+      - "5050:80"
+  
+  mongo:
+    image: mongo
+    container_name: mongo
+    hostname: dataRaccoonsMongo
+    environment:
+      - MONGO_INITDB_DATABASE=${MONGO_INITDB_DATABASE}
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
+    volumes:
+      - ${PWD}/_data/mongo:/data/db
+      - ${PWD}/docker/_mongo/fixtures:/import
+      - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo-js:ro
+    ports:
+      - 27017:27017
+
+  mongo-express:
+    image: mongo-express:latest
+    container_name: mongo-express
+    restart: unless-stopped
+    ports:
+      - 8081:8081
+    environment:
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=${ME_CONFIG_MONGODB_ADMINUSERNAME}
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=${ME_CONFIG_MONGODB_ADMINPASSWORD}
+      - ME_CONFIG_MONGODB_SERVER=${ME_CONFIG_MONGODB_SERVER} 
+
+  celery:
+    container_name: celery
+    build: .
+    command: celery -A app worker -l INFO
+    volumes:
+      - ./app:/app
+    environment:
+      - DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=${ALLOWED_HOSTS}
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/0
+      - DB_HOST=db
+      - BB_PORT=5432
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS} 
+      - POSTGRES_INITDB_ARGS=--encoding=UTF-8
+    depends_on:
+      - app
+      - redis
+
+  redis:
+    container_name: redis
+    image: "redis:alpine"
+
+  selenium:
+    image: selenium/hub:4.1.4-20220427
+    container_name: selenium
+    ports:
+      - "4442:4442"
+      - "4443:4443"
+      - "4444:4444"
+
+  chrome_w1:
+    image: selenium/node-chrome:4.1.4-20220427
+    shm_size: 2gb
+    depends_on:
+      - selenium
+    environment:
+      - SE_EVENT_BUS_HOST=selenium
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - HUB_PORT_4444_TCP_ADDR=selenium
+      - HUB_PORT_4444_TCP_PORT=4444
+      - SE_NODE_MAX_INSTANCES=3
+      - SE_NODE_MAX_SESSIONS=3
+    volumes:
+      - /dev/shm:/dev/shm
+
+  chrome_w2:
+    image: selenium/node-chrome:4.1.4-20220427
+    shm_size: 2gb
+    depends_on:
+      - selenium
+    environment:
+      - SE_EVENT_BUS_HOST=selenium
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - HUB_PORT_4444_TCP_ADDR=selenium
+      - HUB_PORT_4444_TCP_PORT=4444
+      - SE_NODE_MAX_INSTANCES=3
+      - SE_NODE_MAX_SESSIONS=3
+    volumes:
+      - /dev/shm:/dev/shm
+
+  chrome_w3:
+    image: selenium/node-chrome:4.1.4-20220427
+    shm_size: 2gb
+    depends_on:
+      - selenium
+    environment:
+      - SE_EVENT_BUS_HOST=selenium
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - HUB_PORT_4444_TCP_ADDR=selenium
+      - HUB_PORT_4444_TCP_PORT=4444
+      - SE_NODE_MAX_INSTANCES=3
+      - SE_NODE_MAX_SESSIONS=3
+    volumes:
+      - /dev/shm:/dev/shm
+
+  firefox_w1:
+    image: selenium/node-firefox:4.1.4-20220427
+    shm_size: 2gb
+    depends_on:
+      - selenium
+    environment:
+      - SE_EVENT_BUS_HOST=selenium
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - HUB_PORT_4444_TCP_ADDR=selenium
+      - HUB_PORT_4444_TCP_PORT=4444
+      - SE_NODE_MAX_INSTANCES=3
+      - SE_NODE_MAX_SESSIONS=3
+    volumes:
+      - /dev/shm:/dev/shm
+
+  firefox_w2:
+    image: selenium/node-firefox:4.1.4-20220427
+    shm_size: 2gb
+    depends_on:
+      - selenium
+    environment:
+      - SE_EVENT_BUS_HOST=selenium
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - HUB_PORT_4444_TCP_ADDR=selenium
+      - HUB_PORT_4444_TCP_PORT=4444
+      - SE_NODE_MAX_INSTANCES=3
+      - SE_NODE_MAX_SESSIONS=3
+    volumes:
+      - /dev/shm:/dev/shm
+
+  firefox_w3:
+    image: selenium/node-firefox:4.1.4-20220427
+    shm_size: 2gb
+    depends_on:
+      - selenium
+    environment:
+      - SE_EVENT_BUS_HOST=selenium
+      - SE_EVENT_BUS_PUBLISH_PORT=4442
+      - SE_EVENT_BUS_SUBSCRIBE_PORT=4443
+      - HUB_PORT_4444_TCP_ADDR=selenium
+      - HUB_PORT_4444_TCP_PORT=4444
+      - SE_NODE_MAX_INSTANCES=3
+      - SE_NODE_MAX_SESSIONS=3
+    volumes:
+      - /dev/shm:/dev/shm
 
   proxy:
     build:

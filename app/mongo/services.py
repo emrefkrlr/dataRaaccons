@@ -1,11 +1,8 @@
 from unittest import result
 from pymongo import MongoClient, errors
 from django.conf import settings
-import logging
 from datetime import datetime, timedelta
 import os
-
-logger = logging.getLogger(__name__)
 
 
 class MongoService(object):

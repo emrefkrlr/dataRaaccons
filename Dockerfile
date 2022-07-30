@@ -12,11 +12,11 @@ EXPOSE 8000
 
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
-    apk --no-cache add gcc musl-dev libffi-dev && \
     apk add --update --no-cache python3-dev && \
     apk add --update --no-cache postgresql-client && \
     apk add --update --no-cache --virtual .tmp-deps \
         build-base postgresql-dev musl-dev linux-headers && \
+        apk --no-cache add gcc musl-dev libffi-dev && \
     /py/bin/pip install -r /requirements.txt && \
     apk del .tmp-deps && \
     adduser --disabled-password --no-create-home app && \

@@ -1,7 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 from asyncio.log import logger
 from celery import shared_task
-import logging
 from datetime import datetime
 from crawlers.service import CrawlerServices
 from activities.service import ActivitiesService
@@ -12,8 +11,6 @@ from companies.models import Companies
 from activities.models import Activities, ActivityCategory
 from products.product_matches import jaro_winkler_distance
 
-
-logger = logging.getLogger(__name__)
 
 @shared_task
 def insert_new_products_task():
