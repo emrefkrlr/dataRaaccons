@@ -234,6 +234,7 @@ scratch
 
 /emr.jar
 *.class
+_data
 _data/mongo/_mdb_catalog.wt
 _data/mongo/_mdb_catalog.wt
 _data/mongo/collection-0--5636860594670494810.wt
