@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
+from pickle import TRUE
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -46,12 +47,15 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'smart_selects',
     'core',
+    'home',
     'activities',
     'companies',
     'crawlers',
     'demands',
     'account',
     'products',
+    'dashboard',
+    'package',
 ]
 
 MIDDLEWARE = [
@@ -200,3 +204,23 @@ CELERY_BROKER_URL = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
 CELERY_RESULT_BACKEND = os.environ.get("CELERY_BROKER", "redis://redis:6379/0")
 
 USE_DJANGO_JQUERY = True
+
+
+# MAIL CONFIG
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "raccoonanalytic@gmail.com"
+EMAIL_HOST_PASSWORD = "-47712116"
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+
+# MONGO
+
+MONGO_HOST = "dataRaccoonsMongo"
+MONGO_PORT = "27017"
+MONGO_USER = "root"
+MONGO_PASSWORD = "root"
+MONGO_DB = "DataRaccoons"
+

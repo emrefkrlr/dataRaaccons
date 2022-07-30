@@ -7,6 +7,7 @@ from activities.models import Activities
 class Companies(models.Model):
 
 	name = models.CharField(max_length=120, null=False, blank=None, verbose_name='Company Name')
+	page_name = models.CharField(max_length=120, null=True, blank=True, verbose_name='Company Page Name')
 	url = models.CharField(max_length=255, null=True, blank=True, verbose_name='Company Main Url')
 	logo = models.CharField(max_length=255, null=True, blank=True, verbose_name='Company Logo')
 	status = models.BooleanField(default=1)

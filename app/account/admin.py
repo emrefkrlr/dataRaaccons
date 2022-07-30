@@ -1,5 +1,5 @@
 from django.contrib import admin
-from account.models import Account, AccountCompany,UserType
+from account.models import Account, AccountCompany,UserType, PersonalUserActivity
 from django.contrib.auth.models import User
 from django.contrib.auth.admin import UserAdmin
 from account.models import AccountCompany
@@ -33,4 +33,13 @@ class UserTypeAdmin(admin.ModelAdmin):
 
   class Meta:
       model = UserType
+
+
+@admin.register(PersonalUserActivity)
+class PersonalActivityAdmin(admin.ModelAdmin):
+
+  list_display = ['user', 'activity']
+
+  class Meta:
+      model = PersonalUserActivity
 

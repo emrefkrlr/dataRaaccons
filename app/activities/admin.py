@@ -18,8 +18,8 @@ class ActivitiesAdmin(admin.ModelAdmin):
 @admin.register(ActivityCategory)
 class ActivityCategoryAdmin(admin.ModelAdmin):
 
-  list_display = ['name', 'status']
-  list_filter = ['name', 'status']
+  list_display = ['name', 'activity', 'status']
+  list_filter = ['name','status']
 
     
   class Meta:

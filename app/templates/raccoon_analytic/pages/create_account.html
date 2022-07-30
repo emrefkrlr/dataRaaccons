@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+{% load static %}
+<!--
+Author: Keenthemes
+Product Name: Metronic - Bootstrap 5 HTML, VueJS, React, Angular & Laravel Admin Dashboard Theme
+Purchase: https://1.envato.market/EA4JP
+Website: http://www.keenthemes.com
+Contact: support@keenthemes.com
+Follow: www.twitter.com/keenthemes
+Dribbble: www.dribbble.com/keenthemes
+Like: www.facebook.com/keenthemes
+License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
+-->
+<html lang="en">
+	<!--begin::Head-->
+	<head><base href="../../../">
+		<title>Raccoon Analytic - Your smart assistant with data solutions</title>
+		<meta charset="utf-8" />
+		<meta name="description" content="The most advanced Bootstrap Admin Theme on Themeforest trusted by 94,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue &amp; Laravel versions. Grab your copy now and get life-time updates for free." />
+		<meta name="keywords" content="Metronic, bootstrap, bootstrap 5, Angular, VueJs, React, Laravel, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Metronic - Bootstrap 5 HTML, VueJS, React, Angular &amp; Laravel Admin Dashboard Theme" />
+		<meta property="og:url" content="https://keenthemes.com/metronic" />
+		<meta property="og:site_name" content="Keenthemes | Metronic" />
+		<link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
+		<link rel="shortcut icon" href="{% static '/assets/media/logos/favicon.ico' %}" />
+		<!--begin::Fonts-->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700" />
+		<!--end::Fonts-->
+		<!--begin::Global Stylesheets Bundle(used by all pages)-->
+		<link href="{% static 'assets/plugins/global/plugins.bundle.css' %}" rel="stylesheet" type="text/css" />
+		<link href="{% static 'assets/css/style.bundle.css' %}" rel="stylesheet" type="text/css" />
+		<link href="{% static 'assets/css/coon.css' %}" rel="stylesheet" type="text/css" />
+		<!--end::Global Stylesheets Bundle-->
+	</head>
+	<!--end::Head-->
+	<!--begin::Body-->
+	<body id="kt_body" class="bg-body">
+		<!--begin::Main-->
+		<!--begin::Root-->
+		<div class="d-flex flex-column flex-root">
+			<!--begin::Authentication - Sign-up -->
+			<div class="d-flex flex-column flex-lg-row flex-column-fluid">
+				<!--begin::Aside-->
+				<div class="d-flex flex-column flex-lg-row-auto w-xl-600px positon-xl-relative" style="background-color: #F2C98A">
+					<!--begin::Wrapper-->
+					<div class="d-flex flex-column position-xl-fixed top-0 bottom-0 w-xl-600px scroll-y">
+						<!--begin::Content-->
+						<div class="d-flex flex-row-fluid flex-column text-center p-10 pt-lg-20">
+							<!--begin::Logo-->
+							<a href="{% url 'index' %}" class="py-9 mb-5">
+								<div class="logo_c">
+
+									<div class="item1">
+								
+										<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="160px" height="160px" viewBox="0 0 267.6000061035156 267.6000061035156">
+											<g fill="#36c980">
+												<path d="M219.6 48.1c-22.9-22.9-53.4-35.5-85.8-35.5S71 25.2 48.1 48.1s-35.5 53.4-35.5 85.8 12.6 62.9 35.5 85.8 53.4 35.5 85.8 35.5 62.9-12.6 85.8-35.5 35.5-53.4 35.5-85.8-12.7-62.9-35.6-85.8z"></path><path d="M133.8 0C59.9 0 0 59.9 0 133.8s59.9 133.8 133.8 133.8 133.8-59.9 133.8-133.8S207.8 0 133.8 0zm0 260.1c-69.7 0-126.3-56.5-126.3-126.3S64.1 7.6 133.8 7.6s126.3 56.5 126.3 126.3-56.5 126.2-126.3 126.2z"></path>
+											</g>
+										</svg>
+								
+									</div>
+								
+									<div class="item2">
+								
+										<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="130px" height="130px" viewBox="0 0 833.3330078125 833.3330078125">
+											<g fill="#fff" fill-rule="evenodd" clip-rule="evenodd" stroke-linejoin="round" stroke-miterlimit="2">
+												<path fill="none" d="M0 0h833.333v833.333H0z"></path>
+												<path d="M275.57 515.79c6.33-40.06 16.63-79.33 32.82-116.5 18.68-42.9 45.48-83.07 83.53-110.49.86-.62 1.72-1.23 2.59-1.83l-1.44.99 55.24-67.28c-6.79-9.39-13.6-18.76-20.35-28.18-12.01-16.93-14.57-40.06-6.28-59.24 7.05-16.32 21.88-30.16 39.66-31.03 7.4-.36 14.85 1.41 21.37 5.02l66.94 37.52 1.33-.33c.42-.1.84-.2 1.25-.3 8.34-1.9 16.89-2.86 25.42-2.86h.64c16.62.14 33.86 1.43 49.67 5.85 19.27 5.38 36.96 15.96 50.97 30.49 3.8 3.97 7.52 8.01 11.76 11.47 9.18 7.51 20.07 12.89 31.63 15.71l57.97 13.98c3.16 1.16 4.15 1.21 6.78 3.42 4.81 4.02 6.9 10.85 5.35 17.31-8.71 36.41-34.18 67.48-69.42 81.27l-60.23 23.5-74.99 31.76c-.8 1.15-1.75 2.2-2.84 3.1l1.51 131.62c.32.32.64.65.96.98 33.3 34.91 45.9 89.82 28.58 136.96 23.39 14.78 38.38 42.29 38.46 69.72v.03c-.37 3.27-.19 4.21-1.65 7.23-2.15 4.47-6.41 7.9-11.31 9.02-1.21.27-2.47.27-3.7.41-83.12 0-166.28.18-249.43 0-42-.2-83.08-23.44-104.63-60.04-.17-.3-.35-.6-.52-.9-.18-.04-.35-.09-.53-.14-4.7-1.37-8.84-4.27-13.42-6.42-34.93-16.42-70.49-32.56-101.19-55.99-31.52-24.07-52.78-59.87-69.27-96.79-20.97-46.98-35.47-96.46-49.03-146.16-12.07-44.22-8.23-92.58 11.11-133.48 8.4-17.78 20.47-36.3 40.84-37.65.91-.06 1.82-.08 2.73-.07 16.63.25 31.97 10.08 45.34 20.44 36.13 28.03 64.17 66.91 79.51 108.66 11.93 32.46 17.08 66.79 24.67 100.87 6.59 29.58 13.87 59.09 21.6 88.35zm264.86-338.08c-.36-.17-.71-.34-1.07-.49-24.34-13.65-48.48-27.67-73.03-40.93-.96-.51-2.03-.78-3.13-.77-1.58.02-3.04.55-4.28 1.66-3.01 2.7-4.19 4.55-5.57 7.09-4.88 8.98-4.19 20.59 1.86 29.03l27.64 38.28c1.81 3.19 3.25 6.67 3.14 10.27-.11 3.63-1.75 6.96-3.77 10.06l-64.86 79c-3.46 3.66-8.1 6.4-12.23 9.71-36.04 28.89-59.74 71.34-75.36 115.28-19.06 53.63-26.76 111.36-29.07 167.91-3.1 33.8 13.6 68.64 43.71 86.06 13.31 7.7 28.74 11.83 44.07 11.91 4.95.01 9.9.02 14.85.02-9.57-9.12-17.9-19.65-24.71-31.26 0 0-2.19-4.07-2.43-7.63-.58-8.77 6.76-17.34 15.87-17.75.47-.02.93-.02 1.4-.01 2.14.13 2.5.26 3.45.5 7 1.77 10.77 9.02 14.84 14.93 13.51 19.6 33.66 34.91 56.59 41.24 28.06-.01 56.11-.04 84.17-.04h65.71c-.09-.27-.19-.53-.29-.8-5.05-13.17-15.94-23.93-29.31-28.78l-3.6-1.83c-2.05-1.77-4.12-3.59-5.39-5.96-1.94-3.6-2.46-7.9-1.52-11.8.42-1.71 1.22-3.37 1.94-4.78 19.27-37.92 11.17-87.38-20.96-117.21l-.49-.45-1.18-1.32a34.63 34.63 0 0 1-2.53-1.89c-28.09-23.19-69.37-29.03-102.86-14.14-10.2 4.53-19.6 10.83-27.73 18.5l-1.19 1.08c-7.94 6.3-21.04 4.06-25.69-5.35-3.23-6.52-1.39-14.89 3.98-19.96.66-.62 1.31-1.23 1.98-1.83 23.73-21.52 55.46-34 87.86-34.24h1.21c20.98.09 41.78 5.31 60.38 14.91l-1.3-113.49-81.47-46.42c-.62-.37-.79-.45-1.38-.88-7.09-5.02-9.14-15.99-3.93-23.28.42-.6.55-.73 1.01-1.29l44.54-50.92c3.42-3.72 8.17-5.78 13.3-5.68 10.02.71 18.06 11.14 15.31 21.09-.45 1.6-1.13 3.14-2.03 4.54-.44.7-.96 1.35-1.49 1.99l-31.11 35.57 68.51 39.03 77.42-32.79c20.4-7.96 40.85-15.79 61.2-23.88 19.31-7.73 35.36-23.34 43.6-42.55-15.11-3.64-30.66-6.36-45.43-11-11.46 22.69-28.7 42.88-51.55 52.6-20.03 8.52-43.85 9.31-63.42-.53-19.63-9.87-29.01-37.31-15.46-58.41 7.06-11 18.71-18.5 29.77-24.42 9.18-4.99 16.95-12.54 22.76-21.18-8.48-4.03-17.67-6.58-27.13-7.42-2.14-.18-4.27-.38-6.4-.57 5.43 6.98 4.56 18.59-3.22 24.12-5.36 3.8-13.01 3.92-18.62.46l-35.88-22.91zM240.87 513.36l-94.85 21.36c9.82 17.26 21.4 33.44 37.3 46.46 25.32 20.75 54.9 35.09 84.8 49.09-.99-6.97-1.39-14.05-1.16-21.13-.9-2.71-1.52-5.56-2.33-8.33-8.48-28.96-16.21-58.18-23.76-87.45zm-42.36-173.38l-115.74 23c8.01 29.25 16.26 58.66 26.24 87.43l110.26-25.94c-2.59-11.86-5.12-23.77-7.68-35.69-3.56-16.48-7.47-33-13.08-48.8zm418.01-97.19c0 10.14 8.22 18.36 18.36 18.36 10.14 0 18.36-8.22 18.36-18.36 0-10.14-8.22-18.36-18.36-18.36-10.14 0-18.36 8.22-18.36 18.36z"></path>
+											</g>
+										</svg>
+								
+									</div>
+								
+									<div class="item3">
+										<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="160px" height="100%" viewBox="3.450000047683716 -38.88999938964844 247.08999633789062 39.380001068115234">
+											<g fill="#36c980">
+												<path d="M26.08 0L35.29 0L24.39 -15.44C26.88 -16.37 28.79 -17.77 30.11 -19.64C31.43 -21.51 32.1 -23.81 32.1 -26.54C32.1 -30.73 30.71 -33.83 27.94 -35.84C25.18 -37.86 21.02 -38.87 15.46 -38.87C13.44 -38.87 11.39 -38.75 9.31 -38.5C7.24 -38.26 5.28 -37.94 3.45 -37.54L3.45 0L11.78 0L11.78 -14.22C13.25 -14.13 14.59 -14.09 15.8 -14.09L16.27 -14.09ZM11.78 -20.6L11.78 -32.25C13.28 -32.51 14.8 -32.64 16.32 -32.64C19 -32.64 20.98 -32.15 22.25 -31.17C23.52 -30.2 24.16 -28.64 24.16 -26.52C24.16 -24.35 23.49 -22.79 22.16 -21.82C20.83 -20.85 18.76 -20.37 15.96 -20.37C14.63 -20.37 13.23 -20.45 11.78 -20.6Z M62.45 0L70.78 0L58.38 -38.4L46.03 -38.4L33.63 0L41.88 0L45.04 -10.25L59.29 -10.25ZM47.09 -16.97L52.15 -33.34L57.21 -16.97Z M77.55 -4.27C80.96 -1.09 85.95 0.49 92.52 0.49C94.05 0.49 95.56 0.38 97.05 0.17C98.55 -0.05 99.92 -0.35 101.16 -0.73L101.16 -7.71C98.38 -6.89 95.76 -6.49 93.3 -6.49C90.57 -6.49 88.33 -6.91 86.58 -7.74C84.84 -8.58 83.52 -9.94 82.64 -11.81C81.76 -13.67 81.32 -16.15 81.32 -19.23C81.32 -22.24 81.76 -24.67 82.65 -26.53C83.54 -28.39 84.89 -29.75 86.69 -30.62C88.49 -31.48 90.79 -31.91 93.59 -31.91C96.13 -31.91 98.66 -31.62 101.16 -31.03L101.16 -37.99C98.64 -38.59 95.9 -38.89 92.94 -38.89C86.3 -38.89 81.22 -37.23 77.71 -33.91C74.2 -30.59 72.44 -25.66 72.44 -19.12C72.44 -12.39 74.15 -7.44 77.55 -4.27Z M108.82 -4.27C112.23 -1.09 117.22 0.49 123.79 0.49C125.31 0.49 126.82 0.38 128.32 0.17C129.81 -0.05 131.18 -0.35 132.43 -0.73L132.43 -7.71C129.65 -6.89 127.02 -6.49 124.57 -6.49C121.84 -6.49 119.6 -6.91 117.85 -7.74C116.1 -8.58 114.79 -9.94 113.9 -11.81C113.02 -13.67 112.58 -16.15 112.58 -19.23C112.58 -22.24 113.03 -24.67 113.92 -26.53C114.81 -28.39 116.15 -29.75 117.95 -30.62C119.75 -31.48 122.05 -31.91 124.85 -31.91C127.4 -31.91 129.92 -31.62 132.43 -31.03L132.43 -37.99C129.9 -38.59 127.16 -38.89 124.2 -38.89C117.56 -38.89 112.49 -37.23 108.97 -33.91C105.46 -30.59 103.71 -25.66 103.71 -19.12C103.71 -12.39 105.41 -7.44 108.82 -4.27Z M143.47 -1.67C146.18 -0.23 149.39 0.49 153.11 0.49C156.81 0.49 160.02 -0.23 162.72 -1.69C165.43 -3.14 167.52 -5.34 169 -8.28C170.48 -11.22 171.22 -14.86 171.22 -19.2C171.22 -23.54 170.48 -27.18 169.01 -30.12C167.54 -33.06 165.46 -35.26 162.75 -36.71C160.04 -38.17 156.83 -38.89 153.11 -38.89C149.39 -38.89 146.18 -38.17 143.47 -36.73C140.76 -35.28 138.67 -33.09 137.19 -30.15C135.71 -27.21 134.97 -23.56 134.97 -19.2C134.97 -14.84 135.71 -11.19 137.19 -8.25C138.67 -5.31 140.76 -3.12 143.47 -1.67ZM160.11 -9.37C158.51 -7.34 156.17 -6.33 153.11 -6.33C150.03 -6.33 147.69 -7.36 146.08 -9.42C144.47 -11.48 143.66 -14.8 143.66 -19.38C143.66 -23.79 144.47 -27.01 146.09 -29.03C147.71 -31.06 150.05 -32.07 153.11 -32.07C156.15 -32.07 158.48 -31.04 160.1 -28.97C161.72 -26.9 162.53 -23.59 162.53 -19.02C162.53 -14.61 161.72 -11.39 160.11 -9.37Z M184.02 -1.67C186.73 -0.23 189.94 0.49 193.66 0.49C197.36 0.49 200.57 -0.23 203.28 -1.69C205.98 -3.14 208.08 -5.34 209.56 -8.28C211.03 -11.22 211.77 -14.86 211.77 -19.2C211.77 -23.54 211.04 -27.18 209.57 -30.12C208.1 -33.06 206.01 -35.26 203.3 -36.71C200.6 -38.17 197.38 -38.89 193.66 -38.89C189.94 -38.89 186.73 -38.17 184.02 -36.73C181.32 -35.28 179.22 -33.09 177.75 -30.15C176.27 -27.21 175.53 -23.56 175.53 -19.2C175.53 -14.84 176.27 -11.19 177.75 -8.25C179.22 -5.31 181.32 -3.12 184.02 -1.67ZM200.67 -9.37C199.06 -7.34 196.72 -6.33 193.66 -6.33C190.58 -6.33 188.24 -7.36 186.63 -9.42C185.02 -11.48 184.22 -14.8 184.22 -19.38C184.22 -23.79 185.03 -27.01 186.64 -29.03C188.26 -31.06 190.6 -32.07 193.66 -32.07C196.71 -32.07 199.04 -31.04 200.66 -28.97C202.27 -26.9 203.08 -23.59 203.08 -19.02C203.08 -14.61 202.28 -11.39 200.67 -9.37Z M242.57 -38.4L242.57 -12.69L225.89 -38.4L217.38 -38.4L217.38 0L225.34 0L225.34 -25.71L242.03 0L250.54 0L250.54 -38.4Z"></path>
+											</g>
+										</svg>
+									</div>
+								
+									<div class="item4">
+										<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xlink="http://www.w3.org/1999/xlink" xmlns:svgjs="http://svgjs.com/svgjs" width="160px" height="100%" viewBox="1.1703872680664062 -27.90999984741211 183.30615234375 28.559999465942383">
+											<g fill="#fff">
+												<path d="M2.19 0L5.21 0C6.05 0 6.63 -0.44 6.96 -1.31L8.9 -6.43L18.56 -6.43L20.5 -1.31C20.83 -0.44 21.41 0 22.25 0L25.27 0C26.18 0 26.48 -0.42 26.16 -1.25L16.85 -25.73C16.45 -26.75 15.86 -27.27 15.06 -27.27L12.4 -27.27C11.6 -27.27 11 -26.75 10.61 -25.73L1.29 -1.25C0.98 -0.42 1.27 0 2.19 0ZM10.67 -11.14L13.01 -17.19C13.28 -17.9 13.45 -18.41 13.51 -18.74C13.57 -19.06 13.63 -19.54 13.69 -20.17L13.77 -20.17C13.83 -19.54 13.89 -19.06 13.95 -18.74C14 -18.41 14.17 -17.9 14.45 -17.19L16.79 -11.14Z M30.88 0L33.77 0C34.66 0 35.1 -0.48 35.1 -1.43L35.1 -14.91C35.1 -15.67 35.07 -16.43 35 -17.19L35.14 -17.19L45.02 -1.33C45.58 -0.44 46.41 0 47.5 0L50.12 0C51.01 0 51.45 -0.48 51.45 -1.43L51.45 -25.84C51.45 -26.79 51.01 -27.27 50.12 -27.27L47.23 -27.27C46.34 -27.27 45.9 -26.79 45.9 -25.84L45.9 -12.64C45.9 -11.88 45.93 -11.12 45.99 -10.36L45.86 -10.36L36.16 -25.93C35.61 -26.82 34.78 -27.27 33.69 -27.27L30.88 -27.27C29.99 -27.27 29.55 -26.79 29.55 -25.84L29.55 -1.43C29.55 -0.48 29.99 0 30.88 0Z M56.68 0L59.7 0C60.54 0 61.12 -0.44 61.45 -1.31L63.39 -6.43L73.05 -6.43L74.99 -1.31C75.32 -0.44 75.9 0 76.74 0L79.76 0C80.67 0 80.97 -0.42 80.66 -1.25L71.34 -25.73C70.95 -26.75 70.35 -27.27 69.55 -27.27L66.89 -27.27C66.09 -27.27 65.5 -26.75 65.1 -25.73L55.79 -1.25C55.47 -0.42 55.77 0 56.68 0ZM65.16 -11.14L67.5 -17.19C67.78 -17.9 67.95 -18.41 68 -18.74C68.06 -19.06 68.12 -19.54 68.18 -20.17L68.26 -20.17C68.32 -19.54 68.38 -19.06 68.44 -18.74C68.5 -18.41 68.66 -17.9 68.94 -17.19L71.28 -11.14Z M85.37 0L100.68 0C101.63 0 102.1 -0.41 102.1 -1.24L102.1 -3.48C102.1 -4.3 101.63 -4.72 100.68 -4.72L89.59 -4.72L89.59 -25.84C89.59 -26.79 89.21 -27.27 88.45 -27.27L85.37 -27.27C84.48 -27.27 84.04 -26.79 84.04 -25.84L84.04 -1.43C84.04 -0.48 84.48 0 85.37 0Z M99.88 -25.63L109.14 -9.98L109.14 -1.05C109.14 -0.35 109.58 0 110.47 0L113.36 0C114.25 0 114.69 -0.35 114.69 -1.05L114.69 -9.98L123.95 -25.63C124.6 -26.72 124.3 -27.27 123.06 -27.27L119.73 -27.27C119.07 -27.27 118.49 -26.83 117.98 -25.95L113.93 -18.9C113.82 -18.71 113.48 -18.12 112.92 -17.12C112.36 -16.13 112.04 -15.16 111.95 -14.22L111.88 -14.22C111.79 -15.16 111.46 -16.13 110.91 -17.12C110.35 -18.12 110.01 -18.71 109.9 -18.9L105.85 -25.95C105.34 -26.83 104.76 -27.27 104.1 -27.27L100.77 -27.27C99.53 -27.27 99.23 -26.72 99.88 -25.63Z M126.02 -22.4L133.02 -22.4L133.02 -1.05C133.02 -0.35 133.34 0 133.97 0L137.62 0C138.25 0 138.57 -0.35 138.57 -1.05L138.57 -22.4L145.57 -22.4C146.52 -22.4 146.99 -22.81 146.99 -23.63L146.99 -26.03C146.99 -26.85 146.52 -27.27 145.57 -27.27L126.02 -27.27C125.07 -27.27 124.6 -26.85 124.6 -26.03L124.6 -23.63C124.6 -22.81 125.07 -22.4 126.02 -22.4Z M152.01 0L154.9 0C155.79 0 156.23 -0.48 156.23 -1.43L156.23 -25.84C156.23 -26.79 155.79 -27.27 154.9 -27.27L152.01 -27.27C151.13 -27.27 150.68 -26.79 150.68 -25.84L150.68 -1.43C150.68 -0.48 151.13 0 152.01 0Z M160.91 -13.63C160.91 -9.26 162.04 -5.79 164.29 -3.21C166.54 -0.64 169.72 0.65 173.84 0.65C176.4 0.65 178.58 0.2 180.36 -0.7C182.15 -1.6 183.41 -2.69 184.15 -3.95C184.64 -4.8 184.58 -5.44 183.96 -5.86L181.67 -7.38C180.98 -7.85 180.32 -7.61 179.7 -6.65C179.32 -6.07 178.64 -5.46 177.65 -4.81C176.67 -4.16 175.46 -3.84 174.03 -3.84C171.37 -3.84 169.51 -4.68 168.44 -6.36C167.38 -8.04 166.84 -10.46 166.84 -13.63C166.84 -16.8 167.38 -19.23 168.44 -20.91C169.51 -22.58 171.37 -23.42 174.03 -23.42C175.24 -23.42 176.28 -23.19 177.18 -22.72C178.07 -22.25 178.68 -21.73 179.01 -21.14C179.53 -20.23 180.19 -19.99 180.99 -20.42L183.27 -21.64C183.88 -21.97 183.96 -22.6 183.5 -23.54C182.82 -24.96 181.64 -26.04 179.96 -26.79C178.29 -27.54 176.25 -27.91 173.84 -27.91C169.66 -27.91 166.46 -26.63 164.24 -24.05C162.02 -21.48 160.91 -18.01 160.91 -13.63Z"></path>
+											</g>
+										</svg>
+									</div>
+								</div>
+							</a>
+							<!--end::Logo-->
+							<!--begin::Title-->
+							<h1 class="fw-bolder fs-2qx pb-5 pb-md-10" style="color: #986923;">Welcome to the club</h1>
+							<!--end::Title-->
+							<!--begin::Description-->
+							<p class="fw-bold fs-2" style="color: #986923;">Explore Raccoon Analytics
+								<br /> with great reports</p>
+							<!--end::Description-->
+						</div>
+						<!--end::Content-->
+						<!--begin::Illustration-->
+						<div class="d-flex flex-row-auto bgi-no-repeat bgi-position-x-center bgi-size-contain bgi-position-y-bottom min-h-100px min-h-lg-350px" style="background-image: url({% static 'assets/media/illustrations/dozzy-1/13.png' %}"></div>
+						<!--end::Illustration-->
+					</div>
+					<!--end::Wrapper-->
+				</div>
+				<!--end::Aside-->
+				<!--begin::Body-->
+				<div class="d-flex flex-column flex-lg-row-fluid py-10">
+					<!--begin::Content-->
+					<div class="d-flex flex-center flex-column flex-column-fluid">
+
+						{% if error_message|length > 0 %}
+						<!--begin::Alert-->
+						<div class="alert alert-danger">
+    						<!--begin::Icon-->
+    						<span class="svg-icon svg-icon-2hx svg-icon-danger me-3"></span>
+    						<!--end::Icon-->
+
+    						<!--begin::Wrapper-->
+    						<div class="d-flex flex-column">
+        						<!--begin::Title-->
+        						<h4 class="mb-1 text-dark">This is an alert</h4>
+        						<!--end::Title-->
+        						<!--begin::Content-->
+								{% for mes in error_message %}
+								<span>{{ mes }}</span>
+								{% endfor %}
+        						<!--end::Content-->
+    						</div>
+    						<!--end::Wrapper-->
+						</div>
+						<!--end::Alert-->
+						{% endif %}
+
+						<!--begin::Wrapper-->
+						<div class="w-lg-600px p-10 p-lg-15 mx-auto">
+							
+							<div class="mb-10">
+								
+							</div>
+							
+							<!--begin::Form-->
+							<form class="form w-100" novalidate="novalidate" id="kt_sign_up_form" action="{% url 'authentication:create_account'%}">
+								<!--begin::Heading-->
+								{% csrf_token %}
+								<div class="mb-10 text-center">
+									<!--begin::Title-->
+									<h1 class="text-dark mb-3">Create an Account</h1>
+									<!--end::Title-->
+									<!--begin::Link-->
+									<div class="text-gray-400 fw-bold fs-4">Already have an account?
+									<a href="{% url 'authentication:login' %}" class="link-primary fw-bolder">Sign in here</a></div>
+									<!--end::Link-->
+								</div>
+								<!--end::Heading-->
+								<!--begin::Action-->
+								<button type="button" class="btn btn-light-primary fw-bolder w-100 mb-10">
+								<img alt="Logo" src="{% static 'assets/media/svg/brand-logos/google-icon.svg' %}" class="h-20px me-3" />Sign in with Google</button>
+								<!--end::Action-->
+								<!--begin::Separator-->
+								<div class="d-flex align-items-center mb-10">
+									<div class="border-bottom border-gray-300 mw-50 w-100"></div>
+									<span class="fw-bold text-gray-400 fs-7 mx-2">OR</span>
+									<div class="border-bottom border-gray-300 mw-50 w-100"></div>
+								</div>
+								<!--end::Separator-->
+								<!--begin::Input group-->
+								<div class="row fv-row mb-7">
+									<!--begin::Col-->
+									<label class="form-label fw-bolder text-dark fs-6">User Name</label>
+										<input class="form-control form-control-lg form-control-solid" type="text" placeholder="" name="username" autocomplete="off" />
+									<!--end::Col-->
+									<!--begin::Col-->
+									
+									<!--end::Col-->
+								</div>
+								<!--end::Input group-->
+								<!--begin::Input group-->
+								<div class="fv-row mb-7">
+									<label class="form-label fw-bolder text-dark fs-6">Email</label>
+									<input class="form-control form-control-lg form-control-solid" type="email" placeholder="" name="email" autocomplete="off" />
+								</div>
+								<!--end::Input group-->
+								<!--begin::Input group-->
+								<div class="mb-10 fv-row" data-kt-password-meter="true">
+									<!--begin::Wrapper-->
+									<div class="mb-1">
+										<!--begin::Label-->
+										<label class="form-label fw-bolder text-dark fs-6">Password</label>
+										<!--end::Label-->
+										<!--begin::Input wrapper-->
+										<div class="position-relative mb-3">
+											<input class="form-control form-control-lg form-control-solid" type="password" placeholder="" name="password" autocomplete="off" />
+											<span class="btn btn-sm btn-icon position-absolute translate-middle top-50 end-0 me-n2" data-kt-password-meter-control="visibility">
+												<i class="bi bi-eye-slash fs-2"></i>
+												<i class="bi bi-eye fs-2 d-none"></i>
+											</span>
+										</div>
+										<!--end::Input wrapper-->
+										<!--begin::Meter-->
+										<div class="d-flex align-items-center mb-3" data-kt-password-meter-control="highlight">
+											<div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
+											<div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
+											<div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px me-2"></div>
+											<div class="flex-grow-1 bg-secondary bg-active-success rounded h-5px"></div>
+										</div>
+										<!--end::Meter-->
+									</div>
+									<!--end::Wrapper-->
+									<!--begin::Hint-->
+									<div class="text-muted">Use 8 or more characters with a mix of letters, numbers &amp; symbols.</div>
+									<!--end::Hint-->
+								</div>
+								<!--end::Input group=-->
+								<!--begin::Input group-->
+								<div class="fv-row mb-5">
+									<label class="form-label fw-bolder text-dark fs-6">Confirm Password</label>
+									<input class="form-control form-control-lg form-control-solid" type="password" placeholder="" name="confirm-password" autocomplete="off" />
+								</div>
+								<!--end::Input group-->
+								<!--begin::Input group-->
+								<div class="fv-row mb-10">
+									<label class="form-check form-check-custom form-check-solid form-check-inline">
+										<input class="form-check-input" type="checkbox" name="toc" value="1" />
+										<span class="form-check-label fw-bold text-gray-700 fs-6">I Agree
+										<a href="#" class="ms-1 link-primary" data-bs-toggle="modal" data-bs-target="#terms_and_conditions">Terms and conditions</a>.</span>
+									</label>
+								</div>
+								<!--end::Input group-->
+								<!--begin::Actions-->
+								<div class="text-center">
+									<button type="button" id="kt_sign_up_submit" class="btn btn-lg btn-primary">
+										<span class="indicator-label">Submit</span>
+										<span class="indicator-progress">Please wait...
+										<span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+									</button>
+								</div>
+								<!--end::Actions-->
+							</form>
+							<!--end::Form-->
+						</div>
+						<!--end::Wrapper-->
+					</div>
+					<!--end::Content-->
+					<!--begin::Footer-->
+					<div class="d-flex flex-center flex-wrap fs-6 p-5 pb-0">
+						<!--begin::Links-->
+						<div class="d-flex flex-center fw-bold fs-6">
+							<a href="https://keenthemes.com" class="text-muted text-hover-primary px-2" target="_blank">About</a>
+							<a href="https://devs.keenthemes.com" class="text-muted text-hover-primary px-2" target="_blank">Support</a>
+							<a href="https://1.envato.market/EA4JP" class="text-muted text-hover-primary px-2" target="_blank">Purchase</a>
+						</div>
+						<!--end::Links-->
+					</div>
+					<!--end::Footer-->
+				</div>
+				<!--end::Body-->
+			</div>
+			<!--end::Authentication - Sign-up-->
+		</div>
+		<!--begin::Modal - Share & Earn-->
+		<div class="modal fade" id="terms_and_conditions" tabindex="-1" aria-hidden="true">
+			<!--begin::Modal dialog-->
+			<div class="modal-dialog modal-dialog-centered mw-800px">
+				<!--begin::Modal content-->
+				<div class="modal-content">
+					<!--begin::Container-->
+					<div class="container-fluid" id="kt_content_container">
+						<!--begin::About card-->
+						<div class="card">
+							<!--begin::Body-->
+							<div class="card-body p-5 px-lg-19 py-lg-16">
+								<!--begin::Content main-->
+								<div class="mb-14">
+									<!--begin::Heading-->
+									<div class="mb-15">
+										<!--begin::Title-->
+										<h1 class="fs-2x text-dark mb-6">License Comparision</h1>
+										<!--end::Title-->
+										<!--begin::Text-->
+										<div class="fs-5 text-gray-600 fw-bold">First, a disclaimer – the entire process of writing a blog post often takes more than a couple of hours, even if you can type eighty words as per minute and your writing skills are sharp.</div>
+										<!--end::Text-->
+									</div>
+									<!--end::Heading-->
+									<!--begin::Body-->
+									<!--begin::Table-->
+									<div class="mb-14">
+										<!--begin::Table container-->
+										<div class="table-responsive">
+											<!--begin::Table-->
+											<table class="table table-row-dashed table-row-gray-300 align-middle gs-0 gy-4">
+												<!--begin::Table head-->
+												<thead>
+													<tr class="fw-bolder fs-6 text-gray-800 text-center border-0 bg-light">
+														<th class="min-w-200px rounded-start"></th>
+														<th class="min-w-140px">Regular</th>
+														<th class="min-w-120px">Multiple</th>
+														<th class="min-w-100px rounded-end">Extended</th>
+													</tr>
+												</thead>
+												<!--end::Table head-->
+												<!--begin::Table body-->
+												<tbody class="border-bottom border-dashed">
+													<tr class="fw-bold fs-6 text-gray-800 text-center">
+														<td class="text-start ps-6 fs-4">Number of end products or domains</td>
+														<td>1</td>
+														<td>Unlimited</td>
+														<td>1</td>
+													</tr>
+													<tr class="text-center">
+														<td class="text-start ps-6">
+															<div class="fw-bold fs-4 text-gray-800">Free end product</div>
+														</td>
+														<td>
+															<!--begin::Svg Icon | path: icons/duotune/arrows/arr012.svg-->
+															<span class="svg-icon svg-icon-2x svg-icon-success">
+																<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																	<path opacity="0.3" d="M10 18C9.7 18 9.5 17.9 9.3 17.7L2.3 10.7C1.9 10.3 1.9 9.7 2.3 9.3C2.7 8.9 3.29999 8.9 3.69999 9.3L10.7 16.3C11.1 16.7 11.1 17.3 10.7 17.7C10.5 17.9 10.3 18 10 18Z" fill="currentColor" />
+																	<path d="M10 18C9.7 18 9.5 17.9 9.3 17.7C8.9 17.3 8.9 16.7 9.3 16.3L20.3 5.3C20.7 4.9 21.3 4.9 21.7 5.3C22.1 5.7 22.1 6.30002 21.7 6.70002L10.7 17.7C10.5 17.9 10.3 18 10 18Z" fill="currentColor" />
+																</svg>
+															</span>
+															<!--end::Svg Icon-->
+															<!--SVG file not found: 0-->
+														</td>
+														<td>
+															<!--begin::Svg Icon | path: icons/duotune/arrows/arr012.svg-->
+															<span class="svg-icon svg-icon-2x svg-icon-success">
+																<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																	<path opacity="0.3" d="M10 18C9.7 18 9.5 17.9 9.3 17.7L2.3 10.7C1.9 10.3 1.9 9.7 2.3 9.3C2.7 8.9 3.29999 8.9 3.69999 9.3L10.7 16.3C11.1 16.7 11.1 17.3 10.7 17.7C10.5 17.9 10.3 18 10 18Z" fill="currentColor" />
+																	<path d="M10 18C9.7 18 9.5 17.9 9.3 17.7C8.9 17.3 8.9 16.7 9.3 16.3L20.3 5.3C20.7 4.9 21.3 4.9 21.7 5.3C22.1 5.7 22.1 6.30002 21.7 6.70002L10.7 17.7C10.5 17.9 10.3 18 10 18Z" fill="currentColor" />
+																</svg>
+															</span>
+															<!--end::Svg Icon-->
+															<!--SVG file not found: 0-->
+														</td>
+														<td>
+															<!--begin::Svg Icon | path: icons/duotune/arrows/arr012.svg-->
+															<span class="svg-icon svg-icon-2x svg-icon-success">
+																<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																	<path opacity="0.3" d="M10 18C9.7 18 9.5 17.9 9.3 17.7L2.3 10.7C1.9 10.3 1.9 9.7 2.3 9.3C2.7 8.9 3.29999 8.9 3.69999 9.3L10.7 16.3C11.1 16.7 11.1 17.3 10.7 17.7C10.5 17.9 10.3 18 10 18Z" fill="currentColor" />
+																	<path d="M10 18C9.7 18 9.5 17.9 9.3 17.7C8.9 17.3 8.9 16.7 9.3 16.3L20.3 5.3C20.7 4.9 21.3 4.9 21.7 5.3C22.1 5.7 22.1 6.30002 21.7 6.70002L10.7 17.7C10.5 17.9 10.3 18 10 18Z" fill="currentColor" />
+																</svg>
+															</span>
+															<!--end::Svg Icon-->
+															<!--SVG file not found: 0-->
+														</td>
+													</tr>
+													<tr class="text-center">
+														<td class="text-start ps-6">
+															<div class="fw-bold fs-4 text-gray-800">End product with paid services</div>
+														</td>
+														<td>
+															<!--SVG file not found: 0-->
+															<!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+															<span class="svg-icon svg-icon-2x svg-icon-danger">
+																<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																	<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+																	<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+																</svg>
+															</span>
+															<!--end::Svg Icon-->
+														</td>
+														<td>
+															<!--SVG file not found: 0-->
+															<!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+															<span class="svg-icon svg-icon-2x svg-icon-danger">
+																<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																	<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+																	<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+																</svg>
+															</span>
+															<!--end::Svg Icon-->
+														</td>
+														<td>
+															<!--begin::Svg Icon | path: icons/duotune/arrows/arr012.svg-->
+															<span class="svg-icon svg-icon-2x svg-icon-success">
+																<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																	<path opacity="0.3" d="M10 18C9.7 18 9.5 17.9 9.3 17.7L2.3 10.7C1.9 10.3 1.9 9.7 2.3 9.3C2.7 8.9 3.29999 8.9 3.69999 9.3L10.7 16.3C11.1 16.7 11.1 17.3 10.7 17.7C10.5 17.9 10.3 18 10 18Z" fill="currentColor" />
+																	<path d="M10 18C9.7 18 9.5 17.9 9.3 17.7C8.9 17.3 8.9 16.7 9.3 16.3L20.3 5.3C20.7 4.9 21.3 4.9 21.7 5.3C22.1 5.7 22.1 6.30002 21.7 6.70002L10.7 17.7C10.5 17.9 10.3 18 10 18Z" fill="currentColor" />
+																</svg>
+															</span>
+															<!--end::Svg Icon-->
+															<!--SVG file not found: 0-->
+														</td>
+													</tr>
+													<tr class="text-center">
+														<td class="text-start ps-6">
+															<div class="fw-bold fs-4 text-gray-800">Use in derivative themes or “generators”</div>
+														</td>
+														<td>
+															<!--SVG file not found: 0-->
+															<!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+															<span class="svg-icon svg-icon-2x svg-icon-danger">
+																<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																	<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+																	<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+																</svg>
+															</span>
+															<!--end::Svg Icon-->
+														</td>
+														<td>
+															<!--SVG file not found: 0-->
+															<!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+															<span class="svg-icon svg-icon-2x svg-icon-danger">
+																<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																	<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+																	<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+																</svg>
+															</span>
+															<!--end::Svg Icon-->
+														</td>
+														<td>
+															<!--SVG file not found: 0-->
+															<!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+															<span class="svg-icon svg-icon-2x svg-icon-danger">
+																<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+																	<rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1" transform="rotate(-45 6 17.3137)" fill="currentColor" />
+																	<rect x="7.41422" y="6" width="16" height="2" rx="1" transform="rotate(45 7.41422 6)" fill="currentColor" />
+																</svg>
+															</span>
+															<!--end::Svg Icon-->
+														</td>
+													</tr>
+												</tbody>
+												<!--end::Table body-->
+											</table>
+											<!--end::Table-->
+										</div>
+										<!--end::Table container-->
+									</div>
+									<!--end::Table-->
+									<!--begin::Block-->
+									<div class="mb-20 pb-lg-20">
+										<!--begin::Title-->
+										<h2 class="fw-bolder text-dark mb-8">Regular License:</h2>
+										<!--end::Title-->
+										<!--begin::List-->
+										<ul class="fs-4 fw-bold mb-6">
+											<li>
+												<span class="text-gray-700">E-commerce site</span>
+											</li>
+											<li class="my-2">
+												<span class="text-gray-700">Company business activity dashboard</span>
+											</li>
+											<li>
+												<span class="text-gray-700">Customer support center</span>
+											</li>
+										</ul>
+										<!--end::List-->
+										<!--begin::Text-->
+										<div class="fs-4 fw-bold text-gray-700 mb-13">If users can free browse and use your website or Admin Panel is used only as interface(eCommerce site) to sell other's products you can use Regular license.
+										<br />If you are going to use the item on one domain and multiple subdomains, you only require one Licence.(ex: www.
+										<span class="text-dark">domain.com</span>/site1 – site2.
+										<span class="text-dark">domain.com</span>– site.3.
+										<span class="text-dark">domain.com</span>).</div>
+										<!--end::Text-->
+										<!--begin::Title-->
+										<h2 class="fw-bolder text-dark mb-7">Multisite License:</h2>
+										<!--end::Title-->
+										<!--begin::List-->
+										<ul>
+											<li>
+												<span class="fs-4 fw-bold text-gray-700">It works the same as the Standard License, but you can use it in unlimited count of projects.</span>
+											</li>
+										</ul>
+										<!--end::List-->
+										<!--begin::Text-->
+										<div class="fs-4 fw-bold text-gray-700 mb-13">If users can free browse and use your website is used only as interface(eCommerce site) to sell other's products you can use Regular license. if you are going to use the item on multiple domains, then you will need to purchase a Licence for each domain or buy Multisite License.
+										<br />(ex: www.domain-site-
+										<span class="text-dark">one.com</span>– www.domain-site.
+										<span class="text-dark">two.com</span>– www.site-three-
+										<span class="text-dark">domain.com</span>).</div>
+										<!--end::Text-->
+										<!--begin::Title-->
+										<h2 class="fw-bolder text-dark mb-8">Extended License:</h2>
+										<!--end::Title-->
+										<!--begin::List-->
+										<ul class="fs-4 fw-bold mb-6">
+											<li>
+												<span class="text-gray-700">SaaS projects</span>
+											</li>
+											<li class="my-2">
+												<span class="text-gray-700">Photo stock with PRO subscription</span>
+											</li>
+											<li>
+												<span class="text-gray-700">Cloud service with paid plans</span>
+											</li>
+										</ul>
+										<!--end::List-->
+										<!--begin::Text-->
+										<div class="fs-4 fw-bold text-gray-700">E-commerce site Company business activity dashboard Customer support center If users can free browse and use your website is used only as interface(eCommerce site) to sell other's products you can use Regular license. If you are going to use the item on one domain and multiple subdomains, you only require one Licence . (ex: www.domain.com/site1 – site2.domain.com – site.3.domain.com).</div>
+										<!--end::Text-->
+									</div>
+									<!--end::Block-->
+									<!--end::Body-->
+								</div>
+								<!--end::Content main-->
+							</div>
+							<!--end::Body-->
+						</div>
+						<!--end::About card-->
+					</div>
+					<!--end::Container-->
+				</div>
+				<!--end::Modal content-->
+			</div>
+			<!--end::Modal dialog-->
+		</div>
+		<!--end::Modal - Share & Earn-->
+		<!--end::Root-->
+		<!--end::Main-->
+		<!--begin::Javascript-->
+		<script>var hostUrl = "assets/";</script>
+		<!--begin::Global Javascript Bundle(used by all pages)-->
+		<script src="{% static 'assets/plugins/global/plugins.bundle.js' %}"></script>
+		<script src="{% static 'assets/js/scripts.bundle.js' %}"></script>
+		<!--end::Global Javascript Bundle-->
+		<!--begin::Page Custom Javascript(used by this page)-->
+		<script src="{% static 'assets/js/custom/authentication/sign-up/general.js' %}"></script>
+		<script src="{% static 'assets/js/custom/utilities/modals/share-earn.js' %}"></script>
+		<!--end::Page Custom Javascript-->
+		<!--end::Javascript-->
+	</body>
+	<!--end::Body-->
+</html>

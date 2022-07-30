@@ -1,137 +1,62 @@
-from distutils.command.config import config
-from email import message
-from itertools import count
-from multiprocessing import context
-from pickletools import markobject
-from pprint import pprint
-from unicodedata import name
 from django.shortcuts import render
-from mongo.services import MongoService
-from crawlers.service import CrawlerServices
-from activities.service import ActivitiesService
-import logging
-from crawlers.market.migros.migros_tasks import MigrosTasks
-from crawlers.market.trendyol.trendyol_tasks import TrendyolTasks
-from crawlers.market.a101.a101_tasks import A101Tasks
-from crawlers.functions import char_to_replace
-import datetime
-import json
-from dashboard.service import DashboardService
-from products.models import Products
-from companies.models import Companies, CompanyActivities
-from activities.models import Activities, ActivityCategory
-from products.service import ProductsService
-from products.product_matches import jaro_winkler_distance
-from products.tasks import insert_new_products_task, product_matches_task
-from django.db.models import Count
-from account.models import AccountCompany
-from statistics import mean
+from crawlers.getir.getir_tasks import GetirTasks
+from crawlers.a101.a101_tasks import A101Tasks
+from crawlers.trendyol.trendyol_tasks import TrendyolTasks
+from crawlers.hepsiburada.hepsiburada_tasks import HepsiburadaTasks
+from crawlers.sok_market.sok_tasks import SokMarketTasks
+from crawlers.iste_gelsin.iste_gelsin_tasks import IsteGelsinTasks
+from crawlers.istikbal.istikbal_tasks import IstikbalTasks
+from crawlers.bellona.bellona_tasks import BellonaTasks
+from crawlers.migros.migros_tasks import MigrosTasks
+from crawlers.carrefoursa.carrefoursa_tasks import CarrefoursaTasks
 
-logger = logging.getLogger(__name__)
+from crawlers.dogtas.dogtas_tasks import DogtasTasks
+from crawlers.enzahome.enzahome_tasks import EnzahomeTasks
+from crawlers.ider_mobilya.ider_mobilya_tasks import IderMobilyaTasks
+from crawlers.ikea.ikea_tasks import IkeaTasks
+from crawlers.kelebek_mobilya.kelebek_mobilya_tasks import KelebekMobilyaTasks
+from crawlers.kilim_mobilya.kilim_mobilya_tasks import KilimMobilyaTasks
+from crawlers.koctas.koctas_tasks import KoctasTasks
+from crawlers.modalife.modalife_tasks import ModalifeTasks
+from crawlers.mudo.mudo_tasks import MudoTasks
+from crawlers.normod.normod_tasks import NormodTasks
+from crawlers.ocasso.ocasso_taks import OcassoTasks
+from crawlers.ruum_store.ruum_store_tasks import RuumStoreTasks
+from crawlers.vivense.vivense_tasks import VivenseTasks
+from products import tasks
 
 
-def index(request):
-	
-	#fetch urls to crawl
-
-	#filter = {'status': 1, 'activity': 1, 'company__name':'sok', 'category': 'meyve_ve_sebze'}
-	
+#def core_index(request):
 
 	
-
-	activities = ActivitiesService().get_activities(filter={'status': 1})
+	#print(GetirTasks().getir_getir_crawler_tasks(activity_name="market"))
+	#print(A101Tasks().a101_crawler_tasks(activity_name="market"))
+	#print(TrendyolTasks().trendyol_crawler_tasks(activity_name="market"))
+	#print(TrendyolTasks().trendyol_crawler_tasks(activity_name="furniture"))
+	#print(HepsiburadaTasks().hepsiburada_crawler_tasks(activity_name="market"))
+	#print(HepsiburadaTasks().hepsiburada_crawler_tasks(activity_name="furniture"))
+	#print(SokMarketTasks().sok_crawler_tasks(activity_name="market"))
+	#print(IsteGelsinTasks().iste_gelsin_crawler_tasks(activity_name="market"))
+	#print(IstikbalTasks().istikbal_crawler_tasks(activity_name="furniture"))
+	#print(BellonaTasks().bellona_crawler_tasks(activity_name="furniture"))
+	#print(MigrosTasks().migros_sanal_market_crawler_tasks(activity_name="market"))
+	#print(CarrefoursaTasks().carrefoursa_crawler_tasks(activity_name="market"))
 	
-	#print(len(activities))
-	for a in activities:
-		#print(a.name)
-		filter = {'status': 1, 'activity': a.id}
-		
-		urls = CrawlerServices().fetch_urls_to_crawl(filter=filter)
-
-		#print(urls)
-
-	categories = CrawlerServices().get_unique_page_category(filter=filter)
-
-
-	query = {}
+	#print(DogtasTasks().dogtas_crawler_tasks(activity_name="furniture"))
+	#print(EnzahomeTasks().enzahome_crawler_tasks(activity_name="furniture")) YENİ
+	#print(IderMobilyaTasks().ider_mobilya_crawler_tasks(activity_name="furniture"))
+	#print(IkeaTasks().ikea_crawler_tasks(activity_name="furniture"))
+	#print(KelebekMobilyaTasks().kelebek_mobilya_crawler_tasks(activity_name="furniture"))
+	#print(KilimMobilyaTasks().kilim_mobilya_crawler_tasks(activity_name="furniture"))
+	#print(KoctasTasks().koctas_crawler_tasks(activity_name="furniture"))
+	#print(ModalifeTasks().modalife_crawler_tasks(activity_name="furniture"))
+	#print(MudoTasks().mudo_crawler_tasks(activity_name="furniture"))
+	#print(NormodTasks().normod_crawler_tasks(activity_name="furniture"))
+	#print(OcassoTasks().ocasso_crawler_tasks(activity_name="furniture"))
+	#print(RuumStoreTasks().ruum_store_crawler_tasks(activity_name="furniture"))
+	#print(VivenseTasks().vivense_crawler_tasks(activity_name="furniture"))
+	#print(tasks.insert_new_products_task())
 	
-
-	market_data = MongoService().find(db_name='DataRaccoons', 
-	host='dataRaccoonsMongo', port='27017', username='root', 
-	password='root', collection='market', query=query, distinct="info.company_name")
-
-
-
-
-
-	#### DASHBOARD #####
-
-
-	results = []
-	main_company_id = 1
-	activity_id = 1
+	#context = {'configs': "configs"}
 	
-	for i in DashboardService().activity_category_based_product_statistics_of_companies(main_company_id==main_company_id, activity_id=activity_id):
-		print(i)
-
-
-	print("-----------------------------------")
-
-	print(DashboardService().main_company_activity_category_based_statistics(activity_id=activity_id, company_id=main_company_id))
-
-	print("-----------------------------------")
-
-	print(DashboardService().main_company_activity_category_based_products_ratio(activity_id=activity_id, company_id=main_company_id))
-	
-	print("-----------------------------------")
-
-
-	print(DashboardService().activity_category_based_products_ratio_of_companies(activity_id=activity_id))
-	#print(datetime.datetime.utcnow())
-
-	#print(datetime.datetime.now())
-	#print(datetime.datetime(2009, 11, 12, 12))
-
-
-	#print(MigrosTasks().migros_sanal_market_crawler())
-	#print(A101Tasks().a101_crawler())
-	#print(TrendyolTasks().trendyol_crawler())
-
-	z = "2.495,25"
-
-	#print(insert_new_products_task())
-	#print(product_matches_task())
-	#get() returned more than one Products -- it returned 2!
-
-	#print(float(char_to_replace(z)))
-
-	#print(int(z))
-
-	#activity_categories = ActivityCategory.objects.filter(**{"activity": 1})
-
-
-
-	#for activity_category in activity_categories:
-
-
-	#	print("\n-----------------------------\n{}".format(activity_category))
-	#	a = Products.objects.filter(**{'activity_category': activity_category.id, 'status': 1}).values('company',"activity_category",).annotate(product_count=Count("sub_category"))
-	#	print(a)
-	#	print("\n-----------------------------\n")
-		
-
-
-	#main_category = Products.objects.filter(**{'company': 6}).values('activity_category').annotate(dcount=Count("sub_category"))
-	
-	#companies_to_compare = Products.objects.values("company","activity_category").filter(**{'status':1}).annotate(dcount=Count("sub_category"))
-	
-
-	#for company_to_compare in companies_to_compare:
-		#print(company_to_compare)
-	#	pass
-	
-	
-	
-	context = {'urls': urls}
-	
-	return render(request, 'index.html', context)
+	#return render(request, 'test.html', context)
