@@ -7,14 +7,13 @@ COPY ./requirements.txt /requirements.txt
 COPY ./app /app
 COPY ./scripts /scripts
 
-RUN apk add --update --no-cache su-exec
+RUN apk add --update --no-cache curl sudo
 
 WORKDIR /app
 EXPOSE 8000
 
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
-    apk add --update --no-cache su-exec && \
     apk add --update --no-cache python3-dev && \
     apk add --update --no-cache postgresql-client && \
     apk add --update --no-cache --virtual .tmp-deps \
