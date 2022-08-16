@@ -7,6 +7,8 @@ COPY ./requirements.txt /requirements.txt
 COPY ./app /app
 COPY ./scripts /scripts
 
+RUN apk add --update --no-cache su-exec
+
 WORKDIR /app
 EXPOSE 8000
 
