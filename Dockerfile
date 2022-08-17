@@ -28,6 +28,10 @@ RUN python -m venv /py && \
 
 ENV PATH="/scripts:/py/bin:$PATH"
 
+USER root
+
+RUN celery -A app beat -l INFO
+
 USER app
 
 CMD ["run.sh"]
