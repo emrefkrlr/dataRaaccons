@@ -21,7 +21,7 @@ app.conf.beat_schedule = {
 
     'add-every-15-hours-market_migros_sanal_market_task': {
         'task': 'crawlers.tasks.market_migros_sanal_market_task',
-        'schedule': crontab(minute=0, hour='19'),
+        'schedule': crontab(minute=25, hour='15'),
     },
 
     'add-every-16-hours-market_iste_gelsin_task': {
