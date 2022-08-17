@@ -10,6 +10,7 @@ COPY ./scripts /scripts
 WORKDIR /app
 EXPOSE 8000
 
+
 RUN python -m venv /py && \
     /py/bin/pip install --upgrade pip && \
     apk add --update --no-cache python3-dev && \
@@ -30,8 +31,10 @@ ENV PATH="/scripts:/py/bin:$PATH"
 
 USER root
 
-RUN celery -A app beat -l INFO
+RUN chown app:app /py/bin/celery
 
 USER app
+
+
 
 CMD ["run.sh"]
