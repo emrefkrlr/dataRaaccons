@@ -85,6 +85,22 @@ services:
       - app
       - redis
 
+  celery-beat:
+    container_name: celery-beat
+    build: .
+    command: celery -A app beat -l info
+    volumes:
+      - ./app:/app
+    environment:
+      - DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=${ALLOWED_HOSTS}
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/0
+    depends_on:
+      - app
+      - redis
+      - celery
+
   redis:
     container_name: redis
     image: "redis:alpine"
