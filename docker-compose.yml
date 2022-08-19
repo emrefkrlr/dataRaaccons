@@ -88,10 +88,26 @@ services:
       - DB_USER=devuser
       - DB_PASS=changeme 
       - POSTGRES_INITDB_ARGS=--encoding=UTF-8
-
     depends_on:
       - app
       - redis
+  
+  celery-beat:
+    container_name: celery-beat
+    build: .
+    command: celery -A app beat -l info
+    volumes:
+      - ./app:/app
+    environment:
+      - DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.0.1 [::1]
+      - CELERY_BROKER=redis://redis:6379/0
+      - CELERY_BACKEND=redis://redis:6379/0
+    depends_on:
+      - app
+      - redis
+      - celery
+
   
   redis:
     container_name: redis
