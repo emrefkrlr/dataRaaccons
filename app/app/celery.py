@@ -21,17 +21,17 @@ app.conf.beat_schedule = {
 
     'add-every-15-hours-market_migros_sanal_market_task': {
         'task': 'crawlers.tasks.market_migros_sanal_market_task',
-        'schedule': crontab(minute=25, hour='15'),
+        'schedule': crontab(minute=25, hour='13'),
     },
 
     'add-every-16-hours-market_iste_gelsin_task': {
         'task': 'crawlers.tasks.market_iste_gelsin_task',
-        'schedule': crontab(minute=0, hour='20'),
+        'schedule': crontab(minute=0, hour='14'),
     },
 
     'add-every-17-hours-market_getir_getir_task': {
         'task': 'crawlers.tasks.market_getir_getir_task',
-        'schedule': crontab(minute=0, hour='21'),
+        'schedule': crontab(minute=0, hour='15'),
     },
 
     'add-every-18-hours-market_trendyol_task': {
@@ -43,17 +43,17 @@ app.conf.beat_schedule = {
 
     'add-every-15-hours-market_hepsiburada_task': {
         'task': 'crawlers.tasks.market_hepsiburada_task',
-        'schedule': crontab(minute=0, hour='19'),
+        'schedule': crontab(minute=0, hour='13'),
     },
 
     'add-every-16-hours-market_sok_market_task': {
         'task': 'crawlers.tasks.market_sok_market_task',
-        'schedule': crontab(minute=0, hour='20'),
+        'schedule': crontab(minute=0, hour='14'),
     },
 
     'add-every-17-hours-market_a101_task': {
         'task': 'crawlers.tasks.market_a101_task',
-        'schedule': crontab(minute=0, hour='21'),
+        'schedule': crontab(minute=0, hour='15'),
     },
 
     'add-every-18-hours-carrefoursa_crawler_tasks': {
