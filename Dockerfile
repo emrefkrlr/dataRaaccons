@@ -29,9 +29,8 @@ RUN python -m venv /py && \
 
 ENV PATH="/scripts:/py/bin:$PATH"
 
-RUN sh /scripts/celery.sh
 
-USER app
+USER root
 
 
 
