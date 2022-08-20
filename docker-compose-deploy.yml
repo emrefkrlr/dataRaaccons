@@ -76,7 +76,7 @@ services:
       - CELERY_BROKER=redis://redis:6379/0
       - CELERY_BACKEND=redis://redis:6379/0
       - DB_HOST=db
-      - BB_PORT=5432
+      - DB_PORT=5432
       - DB_NAME=${DB_NAME}
       - DB_USER=${DB_USER}
       - DB_PASS=${DB_PASS} 
@@ -96,6 +96,7 @@ services:
       - DJANGO_ALLOWED_HOSTS=${ALLOWED_HOSTS}
       - CELERY_BROKER=redis://redis:6379/0
       - CELERY_BACKEND=redis://redis:6379/0
+      
     depends_on:
       - app
       - redis
