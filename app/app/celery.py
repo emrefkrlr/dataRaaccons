@@ -162,7 +162,7 @@ app.conf.beat_schedule = {
 
     'add-every-19-hours_insert_new_products_task': {
         'task': 'products.tasks.insert_new_products_task',
-        'schedule': crontab(minute=0, hour='8'),
+        'schedule': crontab(minute='*/20'),
     },
 
     'add-every-20-hours_product_matches_task': {
