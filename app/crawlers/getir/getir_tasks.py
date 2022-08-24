@@ -42,7 +42,7 @@ class GetirTasks(object):
                     document_save = MongoService().insert_one(collection=activity_name, document=data)
 
                     if document_save:
-                        print("Document saved mongodb...", datetime.datetime.utcnow())
+                        print("Document saved mongodb Getir...", datetime.datetime.utcnow())
                   
 
         except Exception as e:
