@@ -179,3 +179,6 @@ MONGO_USER = "root"
 MONGO_PASSWORD = "root"
 MONGO_DB = "admin"
 
+MONGO_URI = "mongodb://root:root@mongo:27017/?authSource=ddataRaccoons&authMechanism=SCRAM-SHA-256"
+
+
