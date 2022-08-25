@@ -59,7 +59,7 @@ class TrendyolTasks(object):
 
                     if document_save:
 
-                        print("Document saved mongodb...", datetime.datetime.utcnow())
+                        print("Document saved mongodb Trendyol...", datetime.datetime.utcnow())
 
         except Exception as e:
             print("TrendyolTasks trendyol_crawler_tasks EXCEPTION: {} \n ACTIVITY: {}".format(e, activity_name))

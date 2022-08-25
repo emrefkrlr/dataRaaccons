@@ -54,7 +54,7 @@ class ModalifeTasks(object):
                     document_save = MongoService().insert_one(collection=activity_name, document=data)
 
                     if document_save:
-                        print("Document saved mongodb...", datetime.datetime.utcnow())
+                        print("Document saved mongodb Modalife...", datetime.datetime.utcnow())
 
         except Exception as e:
             print("ModalifeTasks modalife_crawler_tasks EXCEPTION: {}".format(e))

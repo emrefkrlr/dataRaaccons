@@ -108,7 +108,7 @@ class DashboardService(object):
             }]
 
             if activity_category:
-
+                
                 results[0]["sub_label"] = "Sub category based statistics of companies for {}".format(activity_category.lower()),
                 results[0]["main_company_activity_category_pie_title"] = "Sub Category distribution of your company"
 

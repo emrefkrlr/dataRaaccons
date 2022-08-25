@@ -187,7 +187,7 @@ class ProductsService(object):
     def get_last_update_at(self, activity):
 
         last_update = Products.objects.filter(status=1, activity=activity).order_by("-id").first()
-        print(last_update)
+        
 
         return last_update.updated_at
 

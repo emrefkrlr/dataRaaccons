@@ -40,7 +40,7 @@ class IsteGelsinTasks(object):
                     document_save = MongoService().insert_one(collection=activity_name, document=data)
 
                     if document_save:
-                        print("Document saved mongodb...", datetime.datetime.utcnow())
+                        print("Document saved mongodb İstegelsin...", datetime.datetime.utcnow())
 
         except Exception as e:
             print("HepsiburadaTasks hepsiburada_crawler_tasks EXCEPTION: {} \n ACTIVITY: {}".format(e, activity_name))
