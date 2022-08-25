@@ -23,9 +23,6 @@ def index(request):
         context['dashboard_url'] = True
         menu = LayoutService().get_menues(user)
         context['menu'] = menu[0]["menu"][0]["main_menu"]
-       
-
-    print(context)    
 
     response = render(request, 'raccoon_analytic/pages/index.html', context)
 
