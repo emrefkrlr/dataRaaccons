@@ -175,7 +175,7 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 
 MONGO_HOST = "dataRaccoonsMongo"
 MONGO_PORT = "27017"
-MONGO_USER = "root_raccoon"
-MONGO_PASSWORD = "k0CJiHbmdTmjYj"
-MONGO_DB = "dataRaccoons"
+MONGO_USER = "root"
+MONGO_PASSWORD = "root"
+MONGO_DB = "admin"
 
