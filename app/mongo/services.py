@@ -11,9 +11,8 @@ class MongoService(object):
 	def get_db_handle(self, db_name=None, host=None, port=None, username=None, password=None):
 
 		try:
-			client = MongoClient(settings.MONGO_URI)
-			print("\n\n\n SSETTINGS \n\n\n", settings.MONGO_URI)
-			#client = MongoClient(host=settings.MONGO_HOST, port=int(settings.MONGO_PORT), username=settings.MONGO_USER, password=settings.MONGO_PASSWORD)
+			#client = MongoClient(settings.MONGO_URI)
+			client = MongoClient(host=settings.MONGO_HOST, port=int(settings.MONGO_PORT), username=settings.MONGO_USER, password=settings.MONGO_PASSWORD)
 			db_handle = client[str(settings.MONGO_DB)]
 			return db_handle, client
 		

@@ -379,6 +379,7 @@ class DashboardService(object):
             results[0]["sub_category_information"].append(sub_category_information)
 
             # BEGIN: Recent Price Info
+            
             data = MongoService().get_avg_data(collection=activity, query=recent_price_query)
             
             if len(data) > 0:
