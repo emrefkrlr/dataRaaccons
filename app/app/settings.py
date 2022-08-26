@@ -177,8 +177,8 @@ MONGO_HOST = "dataRaccoonsMongo"
 MONGO_PORT = "27017"
 MONGO_USER = "root"
 MONGO_PASSWORD = "root"
-MONGO_DB = "admin"
+MONGO_DB = "dataRaccoons"
 
-MONGO_URI = "mongodb://root:root@mongo:27017/?authSource=ddataRaccoons&authMechanism=SCRAM-SHA-256"
+MONGO_URI = "mongodb://root:root@mongo:27017/?authSource=dataRaccoons&authMechanism=SCRAM-SHA-256"
 
 
