@@ -14,6 +14,7 @@ class MongoService(object):
 			#client = MongoClient(settings.MONGO_URI)
 			client = MongoClient(host=settings.MONGO_HOST, port=int(settings.MONGO_PORT), username=settings.MONGO_USER, password=settings.MONGO_PASSWORD)
 			db_handle = client[str(settings.MONGO_DB)]
+			print(db_handle)
 			return db_handle, client
 		
 		except Exception as e:
