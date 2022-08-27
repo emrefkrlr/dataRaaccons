@@ -1,5 +1,5 @@
 db.createUser({
-    user: "root_raccoon",
+    user: "root",
     pwd: "k0CJiHbmdTmjYj",
     roles: [{
         role: "root",
