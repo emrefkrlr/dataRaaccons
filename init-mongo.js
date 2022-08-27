@@ -1,9 +1,9 @@
 db.createUser({
-    user: "emrefikirlier",
-    pwd: "1234",
+    user: "root",
+    pwd: "root",
     roles: [{
-        role: "readWrite",
-        db: "dataRaccoons"
+        role: "root",
+        db: "admin",
 
     }]
 })
