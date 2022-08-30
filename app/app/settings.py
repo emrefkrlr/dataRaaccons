@@ -20,8 +20,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "changeme"
-#SECRET_KEY = os.environ.get('SECRET_KEY')
+#SECRET_KEY = "changeme"
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.environ.get('DEBUG', 0)))
@@ -150,6 +150,23 @@ STATICFILES_DIRS = [
     
 ]
 
+import logging
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'DEBUG'),
+        },
+    },
+}
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -176,8 +193,11 @@ EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 MONGO_HOST = "dataRaccoonsMongo"
 MONGO_PORT = "27017"
 MONGO_USER = "root_raccoon"
+#MONGO_USER = "root"
 MONGO_PASSWORD = "k0CJiHbmdTmjYj"
+#MONGO_PASSWORD = "root"
 MONGO_DB = "dataRaccoons"
+#MONGO_DB = "DataRaccoons"
 
 MONGO_URI = "mongodb://root:root@mongo:27017/?authSource=dataRaccoons&authMechanism=SCRAM-SHA-256"
 
