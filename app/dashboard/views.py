@@ -93,10 +93,12 @@ def dashboard(request, activity, activity_category = None):
 
 def activity_overview_dashboard(request, activity):
 
-    print("\n\n\nactivity_overview\n\n\n")
+    print("\n\nActivity Dashboard Called\n\n")
 
     auth_user = Authantication.getInstance().getUser()
     activity = ActivitiesService().get_activity(activity=activity)
+
+    print("\n\nAuth User: {}\n\n".format(auth_user))
 
     context = {
         "title": "{} | RaccoonAnalytic Your smart assistant with data solutions.".format(activity.name)
@@ -104,9 +106,13 @@ def activity_overview_dashboard(request, activity):
 
     if auth_user:
 
+        print("\n\nAuth User True\n\n")
+
         user_info = UserService().get_user(auth_user)
 
         if user_info["dashboard_status"]:
+
+            print("\n\nDashboard Status True\n\n")
 
             menues = LayoutService().get_menues(auth_user)
             context["menues"] = menues
@@ -123,7 +129,8 @@ def activity_overview_dashboard(request, activity):
             context["product_distribution_of_companies_in_activities"] = DashboardService().product_distribution_of_companies_in_activities(activity=activity)
 
             if user_info["company"]:
-
+                
+                print("\n\nCompany True\n\n")
                 main_company = user_info["company"]
 
                 context["comparative_statistics_on_activity_for_the_main_company"] = DashboardService().comparative_statistics_on_activity_for_the_main_company(activity=activity, main_company=main_company)
@@ -131,7 +138,7 @@ def activity_overview_dashboard(request, activity):
                 context["average_prices_of_companies_by_activities"] = DashboardService().average_prices_of_companies_by_activities(activity=activity, main_company=main_company)
                 
             else:
-                    
+                print("\n\nCompany False\n\n")
                 context["category_based_statistics_of_companies_for_activities"] = DashboardService().category_based_statistics_of_companies_for_activities(activity=activity)
                 context["average_prices_of_companies_by_activities"] = DashboardService().average_prices_of_companies_by_activities(activity=activity)
                 
@@ -139,13 +146,14 @@ def activity_overview_dashboard(request, activity):
             page = render(request, 'raccoon_analytic/pages/activity_dashboard.html', context)
 
         else:
-
+            print("\n\nDashboard Status False\n\n")
             # Expire Olmuş sayfa tasarla
             page = redirect('index')
        
         response = page
        
     else:
+        print("\n\nAuth User False\n\n")
         response = redirect('index')
         
     return response
@@ -153,10 +161,12 @@ def activity_overview_dashboard(request, activity):
 
 def activity_category_dashboard(request, activity, activity_category):
 
-    print("\n\n\n activity_category_dashboard \n\n\n")
+    print("\n\nActivity Category Dashboard Called\n\n")
 
     auth_user = Authantication.getInstance().getUser()
     activity = ActivitiesService().get_activity(activity=activity)
+
+    print("\n\nAuth User: {}\n\n".format(auth_user))
 
     context = {
         "title": "{} | RaccoonAnalytic Your smart assistant with data solutions.".format(activity.name)
@@ -166,7 +176,11 @@ def activity_category_dashboard(request, activity, activity_category):
 
         user_info = UserService().get_user(auth_user)
 
+        print("\n\nAuth User True\n\n")
+
         if user_info["dashboard_status"]:
+
+            print("\n\nDashboard Status True\n\n")
             
             menues = LayoutService().get_menues(auth_user)
             context["menues"] = menues
@@ -183,7 +197,7 @@ def activity_category_dashboard(request, activity, activity_category):
             context["product_distribution_of_companies_in_activities"] = DashboardService().product_distribution_of_companies_in_activities(activity=activity, activity_category=activity_category)
 
             if user_info["company"]:
-
+                print("\n\nCompany True\n\n")
                 main_company = user_info["company"]
 
                 context["comparative_statistics_on_activity_for_the_main_company"] = DashboardService().comparative_statistics_on_activity_for_the_main_company(activity=activity, activity_category=activity_category, main_company=main_company)
@@ -191,20 +205,21 @@ def activity_category_dashboard(request, activity, activity_category):
                 context["average_prices_of_companies_by_activities"] = DashboardService().average_prices_of_companies_by_activities(activity=activity, activity_category=activity_category, main_company=main_company)
                 
             else:
-                    
+                print("\n\nCompany False\n\n")
                 context["category_based_statistics_of_companies_for_activities"] = DashboardService().category_based_statistics_of_companies_for_activities(activity=activity, activity_category=activity_category)
                 context["average_prices_of_companies_by_activities"] = DashboardService().average_prices_of_companies_by_activities(activity=activity, activity_category=activity_category)
 
             page = render(request, 'raccoon_analytic/pages/activity_dashboard.html', context)
 
         else:
-
+            print("\n\nDashboard Status False\n\n")
             # Expire Olmuş sayfa tasarla
             page = redirect('index')
        
         response = page
        
     else:
+        print("\n\nAuth User False\n\n")
         response = redirect('index')
         
     return response

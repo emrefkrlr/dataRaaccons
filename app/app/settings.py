@@ -25,6 +25,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(int(os.environ.get('DEBUG', 0)))
+print("\n\n\n DEBUG STATUS: {} \n\n\n".format(DEBUG))
 
 ALLOWED_HOSTS = []
 ALLOWED_HOSTS.extend(
@@ -196,8 +197,8 @@ MONGO_USER = "root_raccoon"
 #MONGO_USER = "root"
 MONGO_PASSWORD = "k0CJiHbmdTmjYj"
 #MONGO_PASSWORD = "root"
-MONGO_DB = "dataRaccoons"
-#MONGO_DB = "DataRaccoons"
+#MONGO_DB = "dataRaccoons"
+MONGO_DB = "DataRaccoons"
 
 MONGO_URI = "mongodb://root:root@mongo:27017/?authSource=dataRaccoons&authMechanism=SCRAM-SHA-256"
 

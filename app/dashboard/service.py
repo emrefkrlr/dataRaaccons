@@ -214,7 +214,7 @@ class DashboardService(object):
                 return results
 
             else:
-                print("s")
+                print("get_all_companies_for_activity None")
 
         except Exception as e:
             print("DashboardService category_based_statistics_of_companies_for_activities Excepiton: {}".format(e))
@@ -535,6 +535,8 @@ class DashboardService(object):
             # BEGIN: Previous Price Info
             previous_data = MongoService().get_avg_data(collection=str(activity), query=previous_price_query)
 
+            print("\n\n\nprevious_data\n\n\n", previous_data)
+
             if len(previous_data) > 0:
 
                 previous_price_info = {
@@ -561,8 +563,6 @@ class DashboardService(object):
             # END: Previous Price Info
 
             return results
-
-                
 
         except Exception as e:
             print("DashboardService all_comparative_statistics_data_for_activities Exception: {}".format(e))
@@ -676,14 +676,6 @@ class DashboardService(object):
             print("DashboardService average_prices_of_companies_by_activities Excepiton: {}".format(e))
 
 
-
-
-
-
-
-
-
-  
     def get_last_update_activity_date(self, activity):
 
         try:
