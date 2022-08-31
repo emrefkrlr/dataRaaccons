@@ -535,6 +535,8 @@ class DashboardService(object):
             # BEGIN: Previous Price Info
             previous_data = MongoService().get_avg_data(collection=str(activity), query=previous_price_query)
 
+            print("\n\n\nprevious_data\n\n\n", previous_data)
+
             if len(previous_data) > 0:
 
                 previous_price_info = {
