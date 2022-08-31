@@ -15,7 +15,7 @@ services:
       - ./app:/app
       - ./data/web:/vol/web
     environment:
-      - SECRET_KEY=devsecretkey
+      - SECRET_KEY=hyRGwson7kwBiDm1h0yJpJu7Vtdjw7Nu2I4
       - DEBUG=1
       - DB_HOST=db
       - DB_NAME=devdb
@@ -51,8 +51,8 @@ services:
     hostname: dataRaccoonsMongo
     environment:
       - MONGO_INITDB_DATABASE=dataRaccoons
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGO_INITDB_ROOT_USERNAME=root_raccoon
+      - MONGO_INITDB_ROOT_PASSWORD=k0CJiHbmdTmjYj
     volumes:
       - ${PWD}/_data/mongo:/data/db
       - ${PWD}/docker/_mongo/fixtures:/import
@@ -67,8 +67,8 @@ services:
     ports:
       - 8081:8081
     environment:
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=root
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root_raccoon
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=k0CJiHbmdTmjYj
       - ME_CONFIG_MONGODB_SERVER=mongo 
   
   celery:
