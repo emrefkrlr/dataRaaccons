@@ -88,7 +88,7 @@ services:
   celery-beat:
     container_name: celery-beat
     build: .
-    command: celery -A app beat -s /home/celery/var/run/celerybeat-schedule
+    command: celery -A app beat -l info
     volumes:
       - ./app:/app
     environment:
