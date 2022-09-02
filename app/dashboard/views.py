@@ -96,7 +96,7 @@ def activity_overview_dashboard(request, activity):
 
     print("\n\nActivity Dashboard Called\n\n")
     p_count = ProductsService().count_of_products_by_filter({'status': 1})
-    print(p_count)
+    
     if p_count == 0:
         return HttpResponse("<h1>Configuration in progress... I can't answer right now</h1>")
     else:
@@ -173,7 +173,7 @@ def activity_category_dashboard(request, activity, activity_category):
     activity = ActivitiesService().get_activity(activity=activity)
 
     p_count = ProductsService().count_of_products_by_filter({'status': 1})
-    print(p_count)
+    
     if p_count == 0:
         return HttpResponse("<h1>Configuration in progress... I can't answer right now</h1>")
 

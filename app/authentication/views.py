@@ -30,11 +30,12 @@ def login(request, confirm = None):
             
             auth_login(request, user[1])
             menu = LayoutService().get_menues(user[1])
+            # time sleep 2
             response = redirect('dashboard:activity', menu[0]["menu"][0]["main_menu"])
-            time.sleep(2)
             response.set_cookie('username', user[1].username)
             response.set_cookie('user_id', user[1].id)
             Authantication.getInstance().setUser(user[1].id)
+            
             return response
         
         else:
