@@ -109,8 +109,8 @@ def activity_overview_dashboard(request, activity):
         context = {
             "title": "{} | RaccoonAnalytic Your smart assistant with data solutions.".format(activity.name)
         }
-
-        if auth_user:
+        print("\n\nCookie User: {}\n\n".format(request.COOKIES.get('user_id')))
+        if auth_user or request.COOKIES.get('user_id'):
 
             print("\n\nAuth User True\n\n")
 
