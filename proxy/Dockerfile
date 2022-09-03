@@ -24,6 +24,7 @@ RUN mkdir -p /vol/static && \
     chmod +x /run.sh
 
 VOLUME /vol/static
+VOLUME /vol/www
 
 USER nginx
 
