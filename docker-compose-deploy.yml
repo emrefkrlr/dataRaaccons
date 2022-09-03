@@ -48,7 +48,7 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=${MONGO_INITDB_ROOT_PASSWORD}
     volumes:
       - ${PWD}/_data/mongo:/data/db
-      - ${PWD}/docker/_mongo/fixtures:/import
+      - ${PWD}/_mongo/fixtures:/import
       - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo-js:ro
     ports:
       - 27017:27017
@@ -218,7 +218,7 @@ services:
 
   proxy:
     build:
-      context: ./proxy
+      context: ./docker/proxy
     restart: always
     depends_on:
       - app
@@ -235,7 +235,7 @@ services:
 
   certbot:
     build:
-      context: ./certbot
+      context: ./docker/certbot
     command: echo "Skipping..."
     environment:
       - EMAIL=${ACME_DEFAULT_EMAIL}
