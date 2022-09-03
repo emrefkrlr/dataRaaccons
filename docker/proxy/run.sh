@@ -2,7 +2,6 @@
 
 set -e
 
-
 echo "Checking for dhparams.pem"
 if [ ! -f "/vol/proxy/ssl-dhparams.pem" ]; then
   echo "dhparams.pem does not exist - creating it"
@@ -21,6 +20,5 @@ else
   echo "SSL cert exists, enabling HTTPS..."
   envsubst < /etc/nginx/default-ssl.conf.tpl > /etc/nginx/conf.d/default.conf
 fi
-
 
 nginx -g 'daemon off;'
