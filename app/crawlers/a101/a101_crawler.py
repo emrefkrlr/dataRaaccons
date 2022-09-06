@@ -1,4 +1,5 @@
 from crawlers import web_driver_config, functions
+from crawlers.service import CrawlerServices
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -11,7 +12,7 @@ class A101Crawler(object):
     def get_innerHTML(self, url, css_selector, page=None):
 
         try:
-
+           
             driver = webdriver.Remote(web_driver_config.REMOTE_URL, desired_capabilities=DesiredCapabilities.FIREFOX)
             # https://www.a101.com.tr/market/cikolata-gofret/?page=2
             
