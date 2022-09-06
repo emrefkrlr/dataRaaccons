@@ -153,6 +153,7 @@ STATICFILES_DIRS = [
 ]
 
 import logging
+"""
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
@@ -168,6 +169,7 @@ LOGGING = {
         },
     },
 }
+"""
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -184,8 +186,8 @@ USE_DJANGO_JQUERY = True
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = "raccoonanalytic@gmail.com"
-EMAIL_HOST_PASSWORD = "-47712116"
+EMAIL_HOST_USER = "support@raccoonanalytic.com"
+EMAIL_HOST_PASSWORD = "ekmqloyxgafusbgq"
 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 

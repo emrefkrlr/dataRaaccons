@@ -1,4 +1,4 @@
-from crawlers.models import Crawlers, CrawlersConfig, CrawlerError
+from crawlers.models import Crawlers, CrawlersConfig, CrawlerError, WebDriverConfig
 
 
 class CrawlerServices(object):
@@ -51,6 +51,18 @@ class CrawlerServices(object):
 
 		except Exception as e:
 			print("Crawler Service set_crawler_error EXCEPTION: {}".format(e))
+
+	def get_web_driver_address(self):
+
+		try:
+
+			web_driver = WebDriverConfig.objects.all()
+
+			return web_driver if web_driver else False
+
+		except Exception as e:
+			print("Crawler Service get_web_driver_address EXCEPTION: {}".format(e))
+
 
 
 

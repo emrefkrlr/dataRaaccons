@@ -64,7 +64,7 @@ class CrawlersConfig(models.Model):
 	class Meta:
 		
 		verbose_name = 'Crawler Config'
-		verbose_name_plural = 'Crawler Congig'
+		verbose_name_plural = 'Crawler Config'
 	
 
 	def __str__(self):
@@ -86,5 +86,19 @@ class CrawlerError(models.Model):
 
 	def __str__(self):
 		return "%s" % self.crawler_id
+
+
+class WebDriverConfig(models.Model):
+
+	ip_address = models.CharField(max_length=120, null=True, blank=True, verbose_name='IP address')
+
+	class Meta:
+		
+		verbose_name = 'WebDriver'
+		verbose_name_plural = 'WebDriver'
+	
+
+	def __str__(self):
+		return "%s" % self.ip_address
 
 

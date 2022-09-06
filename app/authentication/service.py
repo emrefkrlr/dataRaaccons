@@ -70,7 +70,7 @@ class UserService(object):
 
             confirmed_url = kwargs["confirmed_url"] + confirme_code
         
-            #send_mail(mail_address=[kwargs["email"]], template="raccoon_analytic/email/verify_email.html", confirm_code=confirmed_url)
+            send_mail(mail_address=kwargs["email"], template="raccoon_analytic/email/verify_email.html", confirm_code=confirmed_url)
             
             return True, user
 

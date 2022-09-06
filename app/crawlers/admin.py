@@ -1,6 +1,7 @@
 import imp
+from pyexpat import model
 from django.contrib import admin
-from crawlers.models import Crawlers, CrawlersConfig, CrawlerError
+from crawlers.models import Crawlers, CrawlersConfig, CrawlerError, WebDriverConfig
 # Register your models here.
 
 @admin.register(Crawlers)
@@ -34,4 +35,13 @@ class CrawlersAdmin(admin.ModelAdmin):
     
   class Meta:
     model = CrawlerError
+
+
+@admin.register(WebDriverConfig)
+class WebDriverAdmin(admin.ModelAdmin):
+  list_display = ["ip_address"]
+
+
+  class Meta:
+    model = WebDriverConfig
 
