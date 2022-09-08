@@ -82,10 +82,11 @@ class UserService(object):
         user =  User.objects.get(email=kwargs['email'])
 
         if user:
-
+            
             auth_user = authenticate(username = str(user.username), password = str(kwargs["password"]))
             AccountService().update_user_account(user, is_online=1)
-            Authantication.setUser(user=user)
+            Authantication.getInstance().setUser(user=user)
+            
             
             if auth_user:
                 return True, auth_user
@@ -102,11 +103,11 @@ class UserService(object):
     def logout_user(self, user):
         
         account = AccountService().update_user_account(user=user, is_online=0)
-        Authantication.logutInstance()
+        Authantication.getInstance().logutInstance()
 
         return account if account else False
-        
-        
+
+
     def get_user(self, user):
 
         user = User.objects.get(pk=user)
@@ -115,13 +116,16 @@ class UserService(object):
 
             account = AccountService().get_user_account(user=user)
             account_company = AccountService().get_user_company(user=user)
+
             if account_company:
+
                 company = CompaniesService().get_company_by_name(company=account_company.company)
+
             else:
+                
                 company = False
 
             package_warning = PackageService().get_user_package_warning(user=user)
-
 
             user_info = {
 
@@ -142,6 +146,7 @@ class UserService(object):
             return user_info
 
         else:
+
             return False
 
 
@@ -162,7 +167,6 @@ class UserService(object):
         try:
 
             account = AccountService().get_user_by_verified_code(verified_code=token)
-
             user = User.objects.get(username=account.user)
             user.set_password(password)
             user.save()
