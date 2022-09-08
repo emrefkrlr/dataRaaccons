@@ -85,6 +85,7 @@ class UserService(object):
 
             auth_user = authenticate(username = str(user.username), password = str(kwargs["password"]))
             AccountService().update_user_account(user, is_online=1)
+            Authantication.setUser(user=user)
             
             if auth_user:
                 return True, auth_user
@@ -101,6 +102,7 @@ class UserService(object):
     def logout_user(self, user):
         
         account = AccountService().update_user_account(user=user, is_online=0)
+        Authantication.logutInstance()
 
         return account if account else False
         
