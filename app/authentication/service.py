@@ -1,6 +1,7 @@
 from importlib.resources import Package
+from django.conf import settings
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate
+from django.contrib.auth import authenticate, login
 from account.services import AccountService
 from package.service import PackageService
 from companies.service import CompaniesService
@@ -61,38 +62,46 @@ class UserService(object):
             user.set_password(kwargs["password"])
             user.save()
 
-            user_type = AccountService().get_user_type_personal()
-        
+            user_type = AccountService().get_user_type_personal()        
             AccountService().set_user_account(user=user, verified_code=confirme_code, verified=0, user_type=user_type)
-
             free_trial_package = PackageService().get_package("Free Trial")
             PackageService().set_user_package(user, free_trial_package)
-
             confirmed_url = kwargs["confirmed_url"] + confirme_code
         
-            send_mail(mail_address=kwargs["email"], template="raccoon_analytic/email/verify_email.html", confirm_code=confirmed_url)
+            send_mail(subject="Verified Mail",from_address=settings.EMAIL_HOST_USER, to_address=kwargs["email"], template="raccoon_analytic/email/verify_email.html", confirm_code=confirmed_url)
             
             return True, user
 
 
-    def login_user(self, **kwargs):
+    def login_user(self, email, password):
 
         
         error_message = []
-        user =  User.objects.get(email=kwargs['email'])
+        user =  User.objects.get(email=email)
+        # check verified
+        is_verified = AccountService().get_user_account(user=user)
 
         if user:
             
-            auth_user = authenticate(username = str(user.username), password = str(kwargs["password"]))
-            AccountService().update_user_account(user, is_online=1)
-            Authantication.getInstance().setUser(user=user)
+            if is_verified.verified:
+                
+                auth_user = authenticate(username = str(user.username), password = str(password))
+                
+                if auth_user is not None:
+
+                    AccountService().update_user_account(user, is_online=1)
+
+                    return True, auth_user
             
-            
-            if auth_user:
-                return True, auth_user
-            
+                else:
+                
+                    error_message.append("Oops! Email or password looks wrong.")
+                
+                    return False, error_message
             else:
-                error_message.append("Oops! Email or password looks wrong.")
+
+                error_message.append("Make sure you have done the verification process sent to your e-mail.")
+                
                 return False, error_message
         
         else:
@@ -103,7 +112,6 @@ class UserService(object):
     def logout_user(self, user):
         
         account = AccountService().update_user_account(user=user, is_online=0)
-        Authantication.getInstance().logutInstance()
 
         return account if account else False
 
@@ -173,3 +181,17 @@ class UserService(object):
 
         except Exception as e:
             print("update_user_password EXCEPTION: {}, user: {}".format(e,token))
+
+
+    def user_comfirmed(self, verified_code):
+
+        try:
+            account = AccountService().get_user_by_verified_code(verified_code=verified_code)
+            verified_user = User.objects.get(username=account)            
+            verified = AccountService().update_user_account(user=verified_user, verified=1)
+
+            return verified if verified else False
+
+
+        except Exception as e:
+            print("user_comfirmed EXCEPTION: {}, user: {}".format(account))

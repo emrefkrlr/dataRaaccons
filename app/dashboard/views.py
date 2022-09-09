@@ -13,10 +13,8 @@ import products.tasks as p_tasks
 # Create your views here.
 
 def activity_overview_dashboard(request, activity):
-
-    # check_product_count = ProductsService().count_of_products_by_filter({'status': 1})
     
-    auth_user = Authantication.getInstance().getUser()
+    auth_user = request.user.id
     activity = ActivitiesService().get_activity(activity=activity)
     context = {
         "title": "{} | RaccoonAnalytic Your smart assistant with data solutions.".format(activity.name)
@@ -73,7 +71,7 @@ def activity_category_dashboard(request, activity, activity_category):
 
     # check_product_count = ProductsService().count_of_products_by_filter({'status': 1})
 
-    auth_user = Authantication.getInstance().getUser()
+    auth_user = request.user.id
     activity = ActivitiesService().get_activity(activity=activity)
     context = {
         "title": "{} | RaccoonAnalytic Your smart assistant with data solutions.".format(activity.name)

@@ -7,9 +7,9 @@ from django.core.mail import EmailMultiAlternatives
 templates = {
     'verify_email': "email/verify_email.html",
 }
-def send_mail(mail_address, template, confirm_code):
+def send_mail(subject, from_address, to_address, template, confirm_code):
 
-    subject, from_email, to = 'test', 'emrefikirlier@raccoonanalytic.com', mail_address
+    subject, from_email, to = subject, from_address, to_address
     text_content = 'This is an important message.'
     html_content = render_to_string(template, {'confirme_code': confirm_code})
     msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
