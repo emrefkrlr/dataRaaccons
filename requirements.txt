@@ -9,5 +9,6 @@ pymongo
 dnspython
 django-jazzmin
 django-smart-selects
+fake-useragent
 
 

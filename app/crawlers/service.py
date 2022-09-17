@@ -56,9 +56,11 @@ class CrawlerServices(object):
 
 		try:
 
-			web_driver = WebDriverConfig.objects.all()
+			web_driver = WebDriverConfig.objects.first()
 
-			return web_driver if web_driver else False
+			
+
+			return str(web_driver)
 
 		except Exception as e:
 			print("Crawler Service get_web_driver_address EXCEPTION: {}".format(e))

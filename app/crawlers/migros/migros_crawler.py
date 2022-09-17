@@ -1,4 +1,5 @@
 from crawlers import web_driver_config, functions
+from crawlers.inner_html import GetInnerHtml
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -13,8 +14,9 @@ class MigrosCrawler(object):
 
         try:
 
-            driver = webdriver.Remote(web_driver_config.REMOTE_URL, desired_capabilities=DesiredCapabilities.CHROME)
-            
+            #driver = webdriver.Remote(web_driver_config.REMOTE_URL, desired_capabilities=DesiredCapabilities.CHROME)
+            driver = GetInnerHtml().get_driver(browser_name="chrome")
+
             if page is not None:
                 url = url.format(page)
 

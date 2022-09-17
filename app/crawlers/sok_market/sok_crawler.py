@@ -1,4 +1,5 @@
 from crawlers import web_driver_config, functions
+from crawlers.inner_html import GetInnerHtml
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -13,7 +14,8 @@ class SokCrawler(object):
 
         try:
 
-            driver = webdriver.Remote(web_driver_config.REMOTE_URL, desired_capabilities=DesiredCapabilities.FIREFOX)
+            #driver = webdriver.Remote(web_driver_config.REMOTE_URL, desired_capabilities=DesiredCapabilities.FIREFOX)
+            driver = GetInnerHtml().get_driver(browser_name="firefox")
             driver.get(url)
             time.sleep(5)
             get_content = driver.find_element(By.CSS_SELECTOR, css_selector)

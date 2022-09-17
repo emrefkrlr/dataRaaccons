@@ -134,6 +134,7 @@ services:
       - HUB_PORT_4444_TCP_PORT=4444
       - SE_NODE_MAX_INSTANCES=3
       - SE_NODE_MAX_SESSIONS=3
+      - SE_NODE_SESSION_TIMEOUT=180
     volumes:
       - /dev/shm:/dev/shm
 
@@ -150,6 +151,7 @@ services:
       - HUB_PORT_4444_TCP_PORT=4444
       - SE_NODE_MAX_INSTANCES=3
       - SE_NODE_MAX_SESSIONS=3
+      - SE_NODE_SESSION_TIMEOUT=180
     volumes:
       - /dev/shm:/dev/shm
 
@@ -166,6 +168,7 @@ services:
       - HUB_PORT_4444_TCP_PORT=4444
       - SE_NODE_MAX_INSTANCES=3
       - SE_NODE_MAX_SESSIONS=3
+      - SE_NODE_SESSION_TIMEOUT=180
     volumes:
       - /dev/shm:/dev/shm
 
@@ -182,6 +185,7 @@ services:
       - HUB_PORT_4444_TCP_PORT=4444
       - SE_NODE_MAX_INSTANCES=3
       - SE_NODE_MAX_SESSIONS=3
+      - SE_NODE_SESSION_TIMEOUT=180
     volumes:
       - /dev/shm:/dev/shm
 
@@ -198,6 +202,7 @@ services:
       - HUB_PORT_4444_TCP_PORT=4444
       - SE_NODE_MAX_INSTANCES=3
       - SE_NODE_MAX_SESSIONS=3
+      - SE_NODE_SESSION_TIMEOUT=180
     volumes:
       - /dev/shm:/dev/shm
 
@@ -214,5 +219,6 @@ services:
       - HUB_PORT_4444_TCP_PORT=4444
       - SE_NODE_MAX_INSTANCES=3
       - SE_NODE_MAX_SESSIONS=3
+      - SE_NODE_SESSION_TIMEOUT=180
     volumes:
       - /dev/shm:/dev/shm

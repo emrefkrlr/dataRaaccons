@@ -1,6 +1,7 @@
 from crawlers import web_driver_config, functions
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium import webdriver
+from crawlers.inner_html import GetInnerHtml
 from selenium.webdriver.common.by import By
 from bs4 import BeautifulSoup
 import time
@@ -13,7 +14,8 @@ class CarrefoursaCrawler(object):
 
         try:
 
-            driver = webdriver.Remote(web_driver_config.REMOTE_URL, desired_capabilities=DesiredCapabilities.FIREFOX)
+            #driver = webdriver.Remote(web_driver_config.REMOTE_URL, desired_capabilities=DesiredCapabilities.FIREFOX)
+            driver = GetInnerHtml().get_driver(browser_name="firefox")
             
             if page is not None:
                 url = url.format(page)
