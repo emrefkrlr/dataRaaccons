@@ -1,5 +1,7 @@
+from lib2to3.pgen2 import driver
 from crawlers import web_driver_config, functions
 from crawlers.service import CrawlerServices
+from crawlers.inner_html import GetInnerHtml
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -13,7 +15,8 @@ class A101Crawler(object):
 
         try:
            
-            driver = webdriver.Remote(web_driver_config.REMOTE_URL, desired_capabilities=DesiredCapabilities.FIREFOX)
+            # driver = webdriver.Remote(web_driver_config.REMOTE_URL, desired_capabilities=DesiredCapabilities.FIREFOX)
+            driver = GetInnerHtml().get_driver(browser_name="firefox")
             # https://www.a101.com.tr/market/cikolata-gofret/?page=2
             
             if page is not None:
