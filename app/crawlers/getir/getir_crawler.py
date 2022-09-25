@@ -1,82 +1,85 @@
-from crawlers import web_driver_config, functions
-from crawlers.inner_html import GetInnerHtml
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from selenium import webdriver
-from selenium.webdriver.common.by import By
-from bs4 import BeautifulSoup
-import time
+from crawlers.scraper import *
+from crawlers import functions
 import uuid
+import json
 
 class GetirCrawler(object):
 
-    def get_innerHTML(self, url, css_selector):
+    def get_innerHTML(self, url, page=None):
 
-        #driver = webdriver.Remote(web_driver_config.REMOTE_URL, desired_capabilities=DesiredCapabilities.CHROME)
-        driver = GetInnerHtml().get_driver(browser_name="chrome")
+        if page is not None:
+
+            url = url.format(page)
+        
+        scraper = Scraper()
+        cookies={
+            "language": "tr"
+        }
         
         try:
-            
-            driver.get(url)
-            time.sleep(5)
-            get_content = driver.find_element(By.CSS_SELECTOR, css_selector)
-            result = get_content.get_attribute('innerHTML')
-            driver.quit()
 
-            return result
+            response_get = scraper.GET(url=url, cookies=cookies)
+
+            #time.sleep(5)
+
+            #soup = BeautifulSoup(response_get.text, "lxml")
         
         except Exception as e:
-            print("GetirCrawler get_innerHTML EXCEPTION: {}".format(e))
+
+            print("MetroMarketCrawler İnnerHtml Error: {}".format(e))
+
+        return response_get if response_get else False
 
     
     def html_parser(self, html, crawler_config):
 
+        p1 = crawler_config.p1
+        p2 = crawler_config.p2
+        p3 = crawler_config.p3
+        p4 = crawler_config.p4
+        p5 = crawler_config.p5
+        p6 = crawler_config.p6
+        p7 = crawler_config.p7
+        p8 = crawler_config.p8
+        p9 = crawler_config.p9
+        p10 = crawler_config.p10
+        products_and_price = []
+
+        body = json.loads(html.content)
+
         try:
-            
-            soup = BeautifulSoup(html, 'html.parser')
 
-            p1 = crawler_config.p1.split(",")
-            p2 = crawler_config.p2.split(",")
-            p3 = crawler_config.p3
-            p4 = crawler_config.p4.split(",")
-            p5 = crawler_config.p5.split(",")
-            p6 = crawler_config.p6.split(",")
-            p7 = crawler_config.p7.split(",")
-            p8 = crawler_config.p8
-            
-            first_category = soup.find_all(eval(p1[0]), eval(p1[1])) 
-            product_list = soup.find_all(eval(p2[0]), eval(p2[1]))
-            products_and_price = []
-            
-            for product in product_list:
+            sub_categories = body["data"]["category"]["subCategories"]
 
-                articles = product.find_all(eval(p3))
-                category = product.find(eval(p4[0]), eval(p4[1]))
-                
-                for article in articles:
-                    
-                    articleName = article.find(eval(p5[0]), eval(p5[1]))
-                    articleMeas = article.find(eval(p6[0]), eval(p6[1]))
-                    articlePrice = article.find(eval(p7[0]), eval(p7[1])).text
-                    articleImage = article.find(eval(p8))
-                    # Replace key character with value character in string
-                    articlePrice = functions.char_to_replace(articlePrice)
+            for sub_category in sub_categories:
 
+                sub_category_name = sub_category["name"]
 
+                products = sub_category["products"]
+
+                for product in products:
+                    # get articles
+                    articleName = product["name"]
+                    articleURL = "https://getir.com/urun/" + product["slug"]
+                    articleMeas = product["shortDescription"]
+                    articleImage = product["squareThumbnailURL"]
+                    articlePrice = product["price"]
+
+                    # assignment articles
                     product_detail = {
                         'product_id': str(uuid.uuid4().hex),
-                        'sub_category': category.text if category else first_category[1].text,
-                        'product_name': articleName.text if articleName.text != "" else None,
-                        'product_url': None,
-                        'measurement_value': articleMeas.text if articleMeas.text != "" else None,
-                        'currency_unit': 'tl',
-                        'price': float(articlePrice if articlePrice != "" else None),
-                        'image': articleImage['src'] if articleImage else None
+                        'category': sub_category_name,
+                        'product_name': articleName,
+                        'product_url': articleURL,
+                        'measurement_value': articleMeas,
+                        'currenct_unit': 'tl',
+                        'price': articlePrice,
+                        'image': articleImage
                     }
-                    products_and_price.append(product_detail)
-                
-          
-            if products_and_price:
-                return products_and_price
 
+                    products_and_price.append(product_detail)
+        
         except Exception as e:
-            print("GetirCrawler html_parser EXCEPTION: {}".format(e))
+            print("Articles error: {}".format(e))
+    
+        return products_and_price if products_and_price else False

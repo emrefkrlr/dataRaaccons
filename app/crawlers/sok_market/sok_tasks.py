@@ -2,13 +2,14 @@ from crawlers.service import CrawlerServices
 from crawlers.sok_market import sok_crawler
 from mongo.services import MongoService
 import datetime
-import time
 
 class SokMarketTasks(object):
 
     def sok_crawler_tasks(self, activity_name, activity_category):
 
         try:
+
+            print("Task sok_crawler_tasks started.....", datetime.datetime.utcnow())
 
             get_crawler_config = CrawlerServices().get_crawler_config(company="sok_market", activity=activity_name)
 
@@ -32,13 +33,20 @@ class SokMarketTasks(object):
                     }
 
                     data['products_and_price'] = []
-                    css_selector = get_crawler_config.css_selector.replace(" ", ".")
 
-                    innerHTML = sok_crawler.SokCrawler().get_innerHTML(crawler.page_url, css_selector)
+                    innerHTML = sok_crawler.SokCrawler().get_innerHTML(crawler.page_url)
                     products_and_price = sok_crawler.SokCrawler().html_parser(innerHTML, get_crawler_config, crawler.page_category)
-                    data['products_and_price'] = products_and_price
+                    
+                    if products_and_price:
+                            
+                        data['products_and_price'] = products_and_price
+                    
+                    else:
+
+                        print("products_and_price is False...")
 
                     if data['products_and_price']:
+
                         document_save = MongoService().insert_one(collection=activity_name, document=data)
 
                         if document_save:

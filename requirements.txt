@@ -3,12 +3,16 @@ psycopg2>=2.8.6,<2.9
 uWSGI==2.0.20
 celery
 redis
-beautifulsoup4
 selenium
 pymongo
 dnspython
 django-jazzmin
 django-smart-selects
 fake-useragent
+undetected-chromedriver
+requests==2.18.4
+random_user_agent==1.0.1
+beautifulsoup4==4.11.1
+lxml
 
 

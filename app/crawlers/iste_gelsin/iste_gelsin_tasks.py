@@ -32,11 +32,16 @@ class IsteGelsinTasks(object):
                     }
 
                     data['products_and_price'] = []
-                    css_selector = get_crawler_config.css_selector.replace(" ", ".")
+                    innerHTML = iste_gelsin_crawler.IsteGelsinCrawler().get_innerHTML(crawler.page_url)
+                    products_and_price = iste_gelsin_crawler.IsteGelsinCrawler().html_parser(innerHTML, get_crawler_config, crawler.page_category, crawler.page_url)
 
-                    innerHTML = iste_gelsin_crawler.IsteGelsinCrawler().get_innerHTML(crawler.page_url, css_selector)
-                    products_and_price = iste_gelsin_crawler.IsteGelsinCrawler().html_parser(innerHTML, get_crawler_config, crawler.page_category)
-                    data['products_and_price'] = products_and_price
+                    if products_and_price:
+
+                        data['products_and_price'] = products_and_price
+
+                    else:
+
+                        print("products_and_price is False...")
 
                     if data['products_and_price']:
                         document_save = MongoService().insert_one(collection=activity_name, document=data)
@@ -48,4 +53,4 @@ class IsteGelsinTasks(object):
                 print("ISTE GELSIN Activity Category: {} bulunmuyor....".format(activity_category))
 
         except Exception as e:
-            print("HepsiburadaTasks hepsiburada_crawler_tasks EXCEPTION: {} \n ACTIVITY: {}".format(e, activity_name))
+            print("iste_gelsin_crawler_tasks EXCEPTION: {} \n ACTIVITY: {}".format(e, activity_name))
