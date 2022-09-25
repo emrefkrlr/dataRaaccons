@@ -2,7 +2,6 @@ from crawlers.service import CrawlerServices
 from mongo.services import MongoService
 from crawlers.a101 import a101_crawler
 import datetime
-import time
 
 
 class A101Tasks(object):
@@ -33,26 +32,37 @@ class A101Tasks(object):
                     }
 
                     data['products_and_price'] = []
-                    css_selector = get_crawler_config.css_selector.replace(" ", ".")
 
                     if crawler.page_numbers >= 1:
+                        
                         for page in range(1, crawler.page_numbers + 1):
 
-                            innerHTML = a101_crawler.A101Crawler().get_innerHTML(crawler.page_url, css_selector, page)
+                            innerHTML = a101_crawler.A101Crawler().get_innerHTML(crawler.page_url, page)
                             products_and_price = a101_crawler.A101Crawler().html_parser(innerHTML, get_crawler_config, crawler.page_category)
                             
                             if products_and_price:
+                        
                                 data['products_and_price'] = data['products_and_price'] + products_and_price
-                                
+                            
+                            else:
+
+                                print("products_and_price is False...")        
                     
                     else:
-                        innerHTML = a101_crawler.A101Crawler().get_innerHTML(crawler.page_url, css_selector)
+
+                        innerHTML = a101_crawler.A101Crawler().get_innerHTML(crawler.page_url)
                         products_and_price = a101_crawler.A101Crawler().html_parser(innerHTML, get_crawler_config, crawler.page_category)
                         
                         if products_and_price:
+
                             data['products_and_price'] = products_and_price
+                        
+                        else:
+
+                            print("products_and_price is False...")
                     
                     if data['products_and_price']:
+
                         document_save = MongoService().insert_one(collection=activity_name, document=data)
 
                         if document_save:

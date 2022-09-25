@@ -5,6 +5,7 @@ from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import undetected_chromedriver as uc
 from fake_useragent import UserAgent
 from selenium.webdriver.common.by import By
 from crawlers.service import CrawlerServices
@@ -41,8 +42,6 @@ class GetInnerHtml(object):
             print("User Agent: {}".format(agent))
             
             return driver
-
-
 
         except Exception as e:
             print("GetInnerHtml get_driver Exception: {}".format(e))

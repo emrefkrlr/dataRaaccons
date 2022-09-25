@@ -1,76 +1,103 @@
-from crawlers import web_driver_config, functions
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
-from selenium import webdriver
-from crawlers.inner_html import GetInnerHtml
-from selenium.webdriver.common.by import By
-from bs4 import BeautifulSoup
-import time
+from crawlers.scraper import *
+from crawlers import functions
 import uuid
 
 
 class CarrefoursaCrawler(object):
 
-    def get_innerHTML(self, url, css_selector, page=None):
+    def get_innerHTML(self, url, page=None):
+
+        if page is not None:
+
+            url = url.format(page)
+
+        scraper = Scraper()
 
         try:
 
-            #driver = webdriver.Remote(web_driver_config.REMOTE_URL, desired_capabilities=DesiredCapabilities.FIREFOX)
-            driver = GetInnerHtml().get_driver(browser_name="firefox")
-            
-            if page is not None:
-                url = url.format(page)
-            
-            driver.get(url)
-            driver.refresh()
-            time.sleep(3)
-            get_content = driver.find_element(By.CSS_SELECTOR, css_selector)
-            result = get_content.get_attribute('innerHTML')
-            driver.quit()
+            response_get = scraper.GET(url=url)
 
-            return result if result else None
+            time.sleep(5)
+
+            soup = BeautifulSoup(response_get.text, "lxml")
 
         except Exception as e:
-            print("CarrefoursaCrawler get_innerHTML EXCEPTION: {}".format(e))
+            
+            print("CarrefoursaCrawler İnnerHtml Error: {}".format(e))
+
+        return soup if soup else False
     
 
     def html_parser(self, html, crawler_config, page_category):
 
+        css_selector = crawler_config.css_selector.split(",")
+        p1 = crawler_config.p1.split(",")
+        p2 = crawler_config.p2.split(",")
+        p3 = crawler_config.p3
+        p4 = crawler_config.p4.split(",")
+        p5 = crawler_config.p5
+        products_and_price = []
+
+        # get product list
         try:
 
-            soup = BeautifulSoup(html, 'html.parser')
+            content = html.find(eval(css_selector[0]), eval(css_selector[1]))            
+            products = content.find_all(eval(p1[0]), eval(p1[1]))
 
-            p1 = crawler_config.p1.split(",")
-            p2 = crawler_config.p2.split(",")
-            p3 = crawler_config.p3
-            p4 = crawler_config.p4.split(",")
-            
-            product_list = soup.find_all(eval(p1[0]), eval(p1[1]))
-            products_and_price = []
+        except (TypeError, KeyError) as e:
 
-            for product in product_list:
+            print("Product list not found : {}".format(e))
+
+        for product in products:
+            # get articles
+            try:
 
                 articleName = product.find(eval(p2[0]), eval(p2[1]))
-                articleMeas_get = articleName.text.strip().split(" ")
-                articleMeas = articleMeas_get[-2] + " " + articleMeas_get[-1]
                 articleImage = product.find(eval(p3))
-                articlePrice = product.find(eval(p4[0]), eval(p4[1])).text.strip()
+                articlePrice = product.find(eval(p4[0]), eval(p4[1]))
+                articleURL = product.find(eval(p5))
+                
+            except AttributeError as e:
+
+                print("Articles error: {}".format(e))
+
+            try:
+                # editing articles
+                articleName = articleName.text.strip() if articleName else None
+                articleImage = articleImage["src"] if articleImage else None
+                articleURL = articleURL["href"] if articleURL else "None"
+
+                if articleName:
+                    
+                    articleMeas_get = articleName.strip().split(" ")
+
+                    if len(articleMeas_get)>1:
+
+                        articleMeas = str(articleMeas_get[-2]) + " " + str(articleMeas_get[-1])
+
+                    else:
+
+                        articleMeas = None
 
                 # Replace key character with value character in string
-                articlePrice = functions.char_to_replace(articlePrice)
+                articlePrice = float(functions.char_to_replace(articlePrice.text)) if articlePrice else None
+            
+            except Exception as e:
 
-                product_detail = {
-                    'product_id': str(uuid.uuid4().hex),
-                    'category': page_category,
-                    'product_name': articleName.text.strip() if articleName.text != "" else None,
-                    'measurement_value': articleMeas if articleMeas != "" else None,
-                    'currenct_unit': 'tl',
-                    'price': float(articlePrice if articlePrice != "" else None),
-                    'image': articleImage['src'] if articleImage else None
-                    }
-                
-                products_and_price.append(product_detail)
+                print("Editing articles error: {}".format(e))
 
-            return products_and_price if products_and_price else None
+            # assignment articles
+            product_detail = {
+                'product_id': str(uuid.uuid4().hex),
+                'category': page_category,
+                'product_name': articleName,
+                'product_url': 'https://www.carrefoursa.com' + articleURL,
+                'measurement_value': articleMeas,
+                'currenct_unit': 'tl',
+                'price': articlePrice,
+                'image': articleImage
+            }
 
-        except Exception as e:
-            print("CarrefoursaCrawler html_parser EXCEPTION: {}".format(e))
+            products_and_price.append(product_detail)
+    
+        return products_and_price if products_and_price else False

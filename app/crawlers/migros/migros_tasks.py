@@ -10,7 +10,9 @@ class MigrosTasks(object):
     def migros_sanal_market_crawler_tasks(self, activity_name, activity_category):
 
         try:
-
+            
+            print("Task migros_sanal_market_crawler_tasks started.....", datetime.datetime.utcnow())
+            
             get_crawler_config = CrawlerServices().get_crawler_config(company="migros_sanal_market", activity=activity_name)
 
             get_crawlers = CrawlerServices().fetch_urls_to_crawl({"status": 1, 'company__name': 'migros_sanal_market', "activity__name": activity_name, "activity_category__name": activity_category})
@@ -33,32 +35,41 @@ class MigrosTasks(object):
                     }
 
                     data['products_and_price'] = []
-                    css_selector = get_crawler_config.css_selector.replace(" ", ".")
 
                     if crawler.page_numbers >= 1:
 
                         for page in range(1, crawler.page_numbers + 1):
                             
-                            innerHTML = migros_crawler.MigrosCrawler().get_innerHTML(crawler.page_url, css_selector, page)
+                            innerHTML = migros_crawler.MigrosCrawler().get_innerHTML(crawler.page_url, page)
                             
                             products_and_price = migros_crawler.MigrosCrawler().html_parser(innerHTML, get_crawler_config, crawler.page_category)
 
                             if products_and_price:
+
                                 data['products_and_price'] = data['products_and_price'] + products_and_price
 
+                            else:
+
+                                print("products_and_price is False...")
                     else:
                         
-                        innerHTML = migros_crawler.MigrosCrawler().get_innerHTML(crawler.page_url, css_selector, page)
+                        innerHTML = migros_crawler.MigrosCrawler().get_innerHTML(crawler.page_url)
                         products_and_price = migros_crawler.MigrosCrawler().html_parser(innerHTML, get_crawler_config, crawler.page_category)
                         
                         if products_and_price:
 
                             data['products_and_price'] = products_and_price
+                        
+                        else:
+
+                            print("products_and_price is False...")
 
                     if data['products_and_price']:
+
                         document_save = MongoService().insert_one(collection=activity_name, document=data)
 
                         if document_save:
+
                             print("Document saved mongodb Migros...", datetime.datetime.utcnow())
 
             else:

@@ -33,8 +33,8 @@ class GetirTasks(object):
                         },
                     }
 
-                    css_selector = get_crawler_config.css_selector.replace(" ", ".")
-                    innerHTML = getir_crawler.GetirCrawler().get_innerHTML(crawler.page_url, css_selector)
+                    #css_selector = get_crawler_config.css_selector.replace(" ", ".")
+                    innerHTML = getir_crawler.GetirCrawler().get_innerHTML(crawler.page_url)
                     products_and_price = getir_crawler.GetirCrawler().html_parser(innerHTML, get_crawler_config)
                     
                     if len(products_and_price) > 0:
