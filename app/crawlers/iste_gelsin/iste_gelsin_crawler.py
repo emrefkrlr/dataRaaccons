@@ -72,7 +72,7 @@ class IsteGelsinCrawler(object):
                 # assignment articles
                 product_detail = {
                     'product_id': str(uuid.uuid4().hex),
-                    'category': sub_category,
+                    'sub_category': sub_category,
                     'product_name': articleName,
                     'product_url': articleURL,
                     'measurement_value': articleMeas,

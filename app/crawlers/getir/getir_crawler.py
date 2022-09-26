@@ -68,7 +68,7 @@ class GetirCrawler(object):
                     # assignment articles
                     product_detail = {
                         'product_id': str(uuid.uuid4().hex),
-                        'category': sub_category_name,
+                        'sub_category': sub_category_name,
                         'product_name': articleName,
                         'product_url': articleURL,
                         'measurement_value': articleMeas,
