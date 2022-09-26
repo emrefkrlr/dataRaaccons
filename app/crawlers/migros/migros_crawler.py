@@ -63,7 +63,7 @@ class MigrosCrawler(object):
                 
                 if len(product[eval(p8)])>0:
                     
-                    articlePrice = float(functions.char_to_replace(product[eval(p8)][0][eval(p9)]))
+                    articlePrice = float(functions.char_to_replace(functions.clear_price_text(product[eval(p8)][0][eval(p9)])))
 
                 else:
 
