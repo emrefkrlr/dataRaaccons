@@ -46,7 +46,7 @@ class A101Crawler(object):
         
         except (TypeError, KeyError) as e:
 
-            print("Product list not found : {}".format(e))
+            print("A101Crawler Product list not found : {}".format(e))
 
 
         for product in products:
@@ -60,7 +60,7 @@ class A101Crawler(object):
 
             except AttributeError as e:
 
-                print("Articles error: {}".format(e))
+                print("A101Crawler Articles error: {}".format(e))
 
             try:
                 # editing articles
@@ -82,7 +82,7 @@ class A101Crawler(object):
                 
             except Exception as e:
 
-                print("Editing articles error: {}".format(e))
+                print("A101Crawler Editing articles error: {}".format(e))
             
             # assignment articles
             product_detail = {

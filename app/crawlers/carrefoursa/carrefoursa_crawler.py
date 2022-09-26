@@ -46,7 +46,7 @@ class CarrefoursaCrawler(object):
 
         except (TypeError, KeyError) as e:
 
-            print("Product list not found : {}".format(e))
+            print("CarrefoursaCrawler Product list not found : {}".format(e))
 
         for product in products:
             # get articles
@@ -59,7 +59,7 @@ class CarrefoursaCrawler(object):
                 
             except AttributeError as e:
 
-                print("Articles error: {}".format(e))
+                print("CarrefoursaCrawler Articles error: {}".format(e))
 
             try:
                 # editing articles
@@ -84,7 +84,7 @@ class CarrefoursaCrawler(object):
             
             except Exception as e:
 
-                print("Editing articles error: {}".format(e))
+                print("CarrefoursaCrawler Editing articles error: {}".format(e))
 
             # assignment articles
             product_detail = {

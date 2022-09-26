@@ -17,6 +17,8 @@ class CarrefoursaTasks(object):
             if get_crawlers:
 
                 for crawler in get_crawlers:
+
+                    print("carrefoursa_crawler_tasks {} started...".format(crawler.page_url) )
                     
                     data = {
                         'info': {
@@ -46,7 +48,7 @@ class CarrefoursaTasks(object):
                             
                             else:
 
-                                print("products_and_price is False...")                                
+                                print("carrefoursa_crawler_tasks products_and_price is False...")                                
                     
                     else:
 
@@ -59,7 +61,7 @@ class CarrefoursaTasks(object):
                         
                         else:
 
-                            print("products_and_price is False...")
+                            print("carrefoursa_crawler_tasks products_and_price is False...")
                     
                     if data['products_and_price']:
 

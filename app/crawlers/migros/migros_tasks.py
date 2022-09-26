@@ -20,6 +20,8 @@ class MigrosTasks(object):
             if get_crawlers:
 
                 for crawler in get_crawlers:
+
+                    print("migros_sanal_market_crawler_tasks {} started...".format(crawler.page_url))
                     
                     data = {
                         'info': {
@@ -50,7 +52,7 @@ class MigrosTasks(object):
 
                             else:
 
-                                print("products_and_price is False...")
+                                print("migros_sanal_market_crawler_tasks products_and_price is False...")
                     else:
                         
                         innerHTML = migros_crawler.MigrosCrawler().get_innerHTML(crawler.page_url)
@@ -62,7 +64,7 @@ class MigrosTasks(object):
                         
                         else:
 
-                            print("products_and_price is False...")
+                            print("migros_sanal_market_crawler_tasks products_and_price is False...")
 
                     if data['products_and_price']:
 

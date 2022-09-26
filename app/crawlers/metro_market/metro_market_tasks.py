@@ -15,6 +15,8 @@ class MetroMarketTasks(object):
         if get_crawlers:
 
             for crawler in get_crawlers:
+
+                print("metro_market_tasks {} started...".format(crawler.page_url))
                     
                 data = {
 
@@ -45,7 +47,7 @@ class MetroMarketTasks(object):
                         
                         else:
 
-                            print("products_and_price is False...")
+                            print("metro_market_tasks products_and_price is False...")
                                                     
                 else:
                         
@@ -58,7 +60,7 @@ class MetroMarketTasks(object):
                     
                     else:
 
-                        print("products_and_price is False...")
+                        print("metro_market_tasks products_and_price is False...")
                     
                 if data['products_and_price']:
                     
