@@ -53,7 +53,7 @@ class IsteGelsinCrawler(object):
                 articleName = product[eval(p4)]
                 articleURL = "https://www.istegelsin.com/urun/" + product[eval(p5)]
                 articleImage = product[eval(p6)] + "medium/" + product[eval(p7)] + ".webp"
-                articlePrice = product[eval(p8)]
+                articlePrice = float(product[eval(p8)])
                 sub_category = page_category
                 articleMeas_get = articleName.strip().split(" ")
                 

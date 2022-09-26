@@ -61,7 +61,7 @@ class SokCrawler(object):
                 articleURL = "https://www.sokmarket.com.tr/" + i[eval(p4)] + "-p-" + str(i[eval(p5)])
                 articleMeas = i[eval(p6)][eval(p7)]
                 articleImage = i[eval(p8)][eval(p9)] + i[eval(p10)][0][eval(p11)]
-                articlePrice = i[eval(p12)][eval(p13)]
+                articlePrice = float(i[eval(p12)][eval(p13)])
                 page_category = i[eval(p14)]
                 
                 # editing articles
