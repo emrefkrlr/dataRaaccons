@@ -46,7 +46,7 @@ class MetroMarketCrawler(object):
 
         except (TypeError, KeyError) as e:
 
-            print("Product list not found : {}".format(e))
+            print("MetroMarketCrawler Product list not found : {}".format(e))
 
         for product in products:
             # get articles
@@ -60,7 +60,7 @@ class MetroMarketCrawler(object):
 
             except AttributeError as e:
 
-                print("Articles error: {}".format(e))
+                print("MetroMarketCrawler Articles error: {}".format(e))
 
             try:
                 # editing articles
@@ -80,7 +80,7 @@ class MetroMarketCrawler(object):
 
             except Exception as e:
 
-                print("Editing articles error: {}".format(e))
+                print("MetroMarketCrawler Editing articles error: {}".format(e))
 
             # assignment articles
             product_detail = {

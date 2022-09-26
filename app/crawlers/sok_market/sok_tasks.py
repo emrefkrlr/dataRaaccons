@@ -18,6 +18,8 @@ class SokMarketTasks(object):
             if get_crawlers:
 
                 for crawler in get_crawlers:
+
+                    print("sok_crawler_tasks {} started...".format(crawler.page_url))
                     
                     data = {
                         'info': {
@@ -43,7 +45,7 @@ class SokMarketTasks(object):
                     
                     else:
 
-                        print("products_and_price is False...")
+                        print("sok_crawler_tasks products_and_price is False...")
 
                     if data['products_and_price']:
 
@@ -53,7 +55,7 @@ class SokMarketTasks(object):
                             print("Document saved mongodb Sok Market...", datetime.datetime.utcnow())
 
             else:
-                print("GETIR Activity Category: {} bulunmuyor....".format(activity_category))
+                print("SokCrawlers Activity Category: {} bulunmuyor....".format(activity_category))
 
         except Exception as e:
             print("SokCrawlers sok_crawler_tasks EXCEPTION: {}".format(e))

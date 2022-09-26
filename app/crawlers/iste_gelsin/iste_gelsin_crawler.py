@@ -84,6 +84,6 @@ class IsteGelsinCrawler(object):
                 products_and_price.append(product_detail)
         
         except Exception as e:
-            print("Articles error: {}".format(e))
+            print("IsteGelsinCrawler Articles error: {}".format(e))
         
         return products_and_price if products_and_price else False

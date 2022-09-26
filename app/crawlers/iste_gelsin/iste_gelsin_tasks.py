@@ -17,6 +17,8 @@ class IsteGelsinTasks(object):
             if get_crawlers:
 
                 for crawler in get_crawlers:
+
+                    print("iste_gelsin_crawler_tasks {} started...".format(crawler.page_url))
                     
                     data = {
                         'info': {
@@ -41,7 +43,7 @@ class IsteGelsinTasks(object):
 
                     else:
 
-                        print("products_and_price is False...")
+                        print("iste_gelsin_crawler_tasks products_and_price is False...")
 
                     if data['products_and_price']:
                         document_save = MongoService().insert_one(collection=activity_name, document=data)
