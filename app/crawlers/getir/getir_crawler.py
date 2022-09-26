@@ -63,7 +63,7 @@ class GetirCrawler(object):
                     articleURL = "https://getir.com/urun/" + product["slug"]
                     articleMeas = product["shortDescription"]
                     articleImage = product["squareThumbnailURL"]
-                    articlePrice = product["price"]
+                    articlePrice = float(product["price"])
 
                     # assignment articles
                     product_detail = {

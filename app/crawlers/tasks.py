@@ -11,6 +11,7 @@ from crawlers.hepsiburada.hepsiburada_tasks import HepsiburadaTasks
 from crawlers.trendyol.trendyol_tasks import TrendyolTasks
 from crawlers.migros.migros_tasks import MigrosTasks
 from crawlers.carrefoursa.carrefoursa_tasks import CarrefoursaTasks
+from crawlers.metro_market.metro_market_tasks import MetroMarketTasks
 from crawlers.istikbal.istikbal_tasks import IstikbalTasks
 from crawlers.bellona.bellona_tasks import BellonaTasks
 from crawlers.dogtas.dogtas_tasks import DogtasTasks
@@ -40,6 +41,7 @@ def market_meyve_ve_sebze_chrome_task():
     
     # Chrome
     #GetirTasks().getir_getir_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
+    MetroMarketTasks().metro_market_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     IsteGelsinTasks().iste_gelsin_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     MigrosTasks().migros_sanal_market_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
 
@@ -62,6 +64,7 @@ def market_et_tavuk_balik_chrome_task():
 
     # Chrome
     #GetirTasks().getir_getir_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
+    MetroMarketTasks().metro_market_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     IsteGelsinTasks().iste_gelsin_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     MigrosTasks().migros_sanal_market_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
 
@@ -84,6 +87,7 @@ def market_sut_ve_sut_urunleri_chrome_task():
 
     # Chrome
     #GetirTasks().getir_getir_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
+    MetroMarketTasks().metro_market_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     IsteGelsinTasks().iste_gelsin_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     MigrosTasks().migros_sanal_market_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
 
@@ -106,6 +110,7 @@ def market_kahvaltilik_chrome_task():
 
     # Chrome
     #GetirTasks().getir_getir_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
+    MetroMarketTasks().metro_market_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     IsteGelsinTasks().iste_gelsin_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     MigrosTasks().migros_sanal_market_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
 
@@ -128,6 +133,7 @@ def market_temel_gida_chrome_task():
 
     # Chrome
     #GetirTasks().getir_getir_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
+    MetroMarketTasks().metro_market_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     IsteGelsinTasks().iste_gelsin_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     MigrosTasks().migros_sanal_market_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
 
@@ -150,6 +156,7 @@ def market_donuk_hazir_gida_chrome_task():
 
     # Chrome
     #GetirTasks().getir_getir_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
+    MetroMarketTasks().metro_market_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     IsteGelsinTasks().iste_gelsin_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     MigrosTasks().migros_sanal_market_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
 
@@ -172,6 +179,7 @@ def market_pasta_ve_pasta_malzemeleri_chrome_task():
 
     # Chrome
     #GetirTasks().getir_getir_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
+    MetroMarketTasks().metro_market_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     IsteGelsinTasks().iste_gelsin_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     MigrosTasks().migros_sanal_market_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
 
@@ -194,6 +202,7 @@ def market_firin_ve_pastahane_chrome_task():
     
     # Chrome
     #GetirTasks().getir_getir_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
+    MetroMarketTasks().metro_market_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     IsteGelsinTasks().iste_gelsin_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     MigrosTasks().migros_sanal_market_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
 
@@ -216,6 +225,7 @@ def market_dondurma_ve_tatli_chrome_task():
 
     # Chrome
     #GetirTasks().getir_getir_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
+    MetroMarketTasks().metro_market_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     IsteGelsinTasks().iste_gelsin_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     MigrosTasks().migros_sanal_market_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
 
@@ -238,6 +248,7 @@ def market_atistirmalik_chrome_task():
 
     # Chrome
     #GetirTasks().getir_getir_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
+    MetroMarketTasks().metro_market_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     IsteGelsinTasks().iste_gelsin_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     MigrosTasks().migros_sanal_market_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
 
@@ -260,6 +271,7 @@ def market_su_ve_icecek_chrome_task():
 
     # Chrome
     #GetirTasks().getir_getir_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
+    MetroMarketTasks().metro_market_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     IsteGelsinTasks().iste_gelsin_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     MigrosTasks().migros_sanal_market_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
 
@@ -282,6 +294,7 @@ def market_cay_ve_kahve_chrome_task():
 
     # Chrome
     #GetirTasks().getir_getir_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
+    MetroMarketTasks().metro_market_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     IsteGelsinTasks().iste_gelsin_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     MigrosTasks().migros_sanal_market_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
 
@@ -304,6 +317,7 @@ def market_temizlik_ve_deterjan_chrome_task():
 
     # Chrome
     #GetirTasks().getir_getir_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
+    MetroMarketTasks().metro_market_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     IsteGelsinTasks().iste_gelsin_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     MigrosTasks().migros_sanal_market_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
 
@@ -326,6 +340,7 @@ def market_kisisel_bakim_chrome_task():
 
     # Chrome
     #GetirTasks().getir_getir_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
+    MetroMarketTasks().metro_market_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     IsteGelsinTasks().iste_gelsin_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     MigrosTasks().migros_sanal_market_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
 
@@ -348,6 +363,7 @@ def market_vitamin_dermokozmetik_chrome_task():
 
     # Chrome
     #GetirTasks().getir_getir_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
+    MetroMarketTasks().metro_market_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     IsteGelsinTasks().iste_gelsin_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     MigrosTasks().migros_sanal_market_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
 
@@ -370,6 +386,7 @@ def market_evcil_hayvan_chrome_task():
 
     # Chrome
     #GetirTasks().getir_getir_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
+    MetroMarketTasks().metro_market_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     IsteGelsinTasks().iste_gelsin_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
     MigrosTasks().migros_sanal_market_crawler_tasks(activity_name=_ACTIVITY_MARKET_, activity_category=_ACTIVITY_CATEGORY_)
 

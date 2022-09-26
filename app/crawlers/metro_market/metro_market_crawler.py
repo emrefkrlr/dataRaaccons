@@ -95,7 +95,5 @@ class MetroMarketCrawler(object):
             }
 
             products_and_price.append(product_detail)
-
-            print(product_detail)
         
         return products_and_price if products_and_price else False
