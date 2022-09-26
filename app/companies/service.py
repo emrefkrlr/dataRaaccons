@@ -21,7 +21,7 @@ class CompaniesService(object):
 
         try:
 
-            results = Companies.objects.get(name=company, status=1)
+            results = Companies.objects.get(name=company)
 
             return results if results else False
 
@@ -33,7 +33,7 @@ class CompaniesService(object):
 
         try:
 
-            results = Companies.objects.get(pk=int(company), status=1)
+            results = Companies.objects.get(pk=int(company))
 
             return results if results else False
 
@@ -42,8 +42,6 @@ class CompaniesService(object):
 
 
         
-
-
     def get_company_activities(self, company):
 
         try:

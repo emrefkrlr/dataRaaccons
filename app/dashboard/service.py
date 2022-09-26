@@ -144,59 +144,64 @@ class DashboardService(object):
 
                         company = CompaniesService().get_company_by_name(company=company_name)
 
-                    data = {
-                            "company_name": company.page_name,
-                            "company_logo": company.logo,
-                            "comany_html_id": company.name,
-                            "activity_category_detail": []
-                        }
-                    
-                    for activity_category in get_all_activity_category_for_activity:
+                    #asdasdfa
+                    if company.status:
+
+                        data = {
+                                "company_name": company.page_name,
+                                "company_logo": company.logo,
+                                "comany_html_id": company.name,
+                                "activity_category_detail": []
+                            }
                         
-                        if type(activity_category) is dict:
-                            activity_category = activity_category["sub_category"]
-                            info_activity_category = activity_category
-                            mongo_query = MongoService().avg_price_query_generator(get_id="sub_category", activity=activity, sub_category=activity_category, company=company.name)
-                           
-                        else:
-                            info_activity_category = activity_category.name
-                            mongo_query = MongoService().avg_price_query_generator(get_id="activity_category", activity=activity, activity_category=activity_category, company=company.name)
-
-                        activity_category_product_statistics_data = MongoService().get_avg_data(collection=activity, query=mongo_query)
-
-                        if len(activity_category_product_statistics_data) > 0:
-
-                            if type(activity_category_product_statistics_data[0]["_id"]) is list:
-
-                                get_mongo_activity_category = activity_category_product_statistics_data[0]["_id"][0]
-                                mongo_activity_category = get_mongo_activity_category.replace("_", " ").capitalize()
+                        for activity_category in get_all_activity_category_for_activity:
+                            
+                            if type(activity_category) is dict:
+                                activity_category = activity_category["sub_category"]
+                                info_activity_category = activity_category
+                                mongo_query = MongoService().avg_price_query_generator(get_id="sub_category", activity=activity, sub_category=activity_category, company=company.name)
+                            
                             else:
-                                mongo_activity_category = activity_category_product_statistics_data[0]["_id"].replace("_", " ").capitalize()
-                           
-                            activity_category_detail = {
-                                "activity_category": info_activity_category.replace("_", " ").capitalize()  if activity_category_product_statistics_data[0]["_id"] == None else mongo_activity_category,
-                                "product_count": activity_category_product_statistics_data[0]["count"],
-                                "min_price": round(min(float(activity_category_product_statistics_data[0]["minPrice"])), 3) if type(activity_category_product_statistics_data[0]["minPrice"]) == list else activity_category_product_statistics_data[0]["minPrice"],
-                                "max_price": round(max(float(activity_category_product_statistics_data[0]["maxPrice"])), 3) if type(activity_category_product_statistics_data[0]["maxPrice"]) == list else activity_category_product_statistics_data[0]["maxPrice"],
-                                "avg_price": round(float(activity_category_product_statistics_data[0]["averagePrice"]), 3) if activity_category_product_statistics_data[0]["averagePrice"] else None,
-                            }
+                                info_activity_category = activity_category.name
+                                mongo_query = MongoService().avg_price_query_generator(get_id="activity_category", activity=activity, activity_category=activity_category, company=company.name)
 
-                        else:
+                            activity_category_product_statistics_data = MongoService().get_avg_data(collection=activity, query=mongo_query)
 
-                            activity_category_detail = {
-                                "activity_category": info_activity_category.replace("_", " ").capitalize()  if type(activity_category) is dict else info_activity_category.replace("_", " ").capitalize(),
-                                "product_count": 0,
-                                "min_price": 0,
-                                "max_price": 0,
-                                "avg_price": 0,
-                            }
+                            if len(activity_category_product_statistics_data) > 0:
 
-                        data["activity_category_detail"].append(activity_category_detail)
-                
-                    results[0]["data"].append(data)
+                                if type(activity_category_product_statistics_data[0]["_id"]) is list:
+
+                                    get_mongo_activity_category = activity_category_product_statistics_data[0]["_id"][0]
+                                    mongo_activity_category = get_mongo_activity_category.replace("_", " ").capitalize()
+                                else:
+                                    mongo_activity_category = activity_category_product_statistics_data[0]["_id"].replace("_", " ").capitalize()
+                            
+                                activity_category_detail = {
+                                    "activity_category": info_activity_category.replace("_", " ").capitalize()  if activity_category_product_statistics_data[0]["_id"] == None else mongo_activity_category,
+                                    "product_count": activity_category_product_statistics_data[0]["count"],
+                                    "min_price": round(min(float(activity_category_product_statistics_data[0]["minPrice"])), 3) if type(activity_category_product_statistics_data[0]["minPrice"]) == list else activity_category_product_statistics_data[0]["minPrice"],
+                                    "max_price": round(max(float(activity_category_product_statistics_data[0]["maxPrice"])), 3) if type(activity_category_product_statistics_data[0]["maxPrice"]) == list else activity_category_product_statistics_data[0]["maxPrice"],
+                                    "avg_price": round(float(activity_category_product_statistics_data[0]["averagePrice"]), 3) if activity_category_product_statistics_data[0]["averagePrice"] else None,
+                                }
+
+                            else:
+
+                                activity_category_detail = {
+                                    "activity_category": info_activity_category.replace("_", " ").capitalize()  if type(activity_category) is dict else info_activity_category.replace("_", " ").capitalize(),
+                                    "product_count": 0,
+                                    "min_price": 0,
+                                    "max_price": 0,
+                                    "avg_price": 0,
+                                }
+
+                            data["activity_category_detail"].append(activity_category_detail)
                     
-                    if main_company == company.name:
-                        results[0]["main_company"].append(data)
+                        results[0]["data"].append(data)
+                        
+                        if main_company == company.name:
+                            results[0]["main_company"].append(data)
+
+                    #asdasdfa
                 
                 main_company_activity_category_pie_data = []
                 main_company_activity_category_pie_labels = []
@@ -271,16 +276,18 @@ class DashboardService(object):
 
                         company = CompaniesService().get_company_by_name(company=company_name)
 
-                    query["company"] = company
+                    if company.status:
 
-                    company_product_count = ProductsService().count_of_products_by_filter(**query)
+                        query["company"] = company
 
-                    data = {
-                        "company_name": company.page_name,
-                        "product_count": company_product_count
-                    }
+                        company_product_count = ProductsService().count_of_products_by_filter(**query)
 
-                    results[0]["data"].append(data)
+                        data = {
+                            "company_name": company.page_name,
+                            "product_count": company_product_count
+                        }
+
+                        results[0]["data"].append(data)
 
                 results[0]["data"] = sorted(results[0]["data"], key=lambda x: x['product_count'], reverse=True)
 
@@ -614,51 +621,50 @@ class DashboardService(object):
                         company = CompaniesService().get_company_by_name(company=company_name)
                         mongo_query = MongoService().avg_price_query_generator(get_id="activity", activity=activity, company=company.name)
 
-                    get_activities_statistics_data = MongoService().get_avg_data(collection=activity, query=mongo_query)
+                    if company.status:
 
-                    if len(get_activities_statistics_data) > 0:
+                        get_activities_statistics_data = MongoService().get_avg_data(collection=activity, query=mongo_query)
 
-                        activity_category_detail = {
-                            "activity_category": get_activity_category.name if activity_category else activity,
-                            "product_count": get_activities_statistics_data[0]["count"],
-                            "min_price": round(min(float(get_activities_statistics_data[0]["minPrice"])), 3) if type(get_activities_statistics_data[0]["minPrice"]) == list else get_activities_statistics_data[0]["minPrice"],
-                            "max_price": round(max(float(get_activities_statistics_data[0]["maxPrice"])), 3) if type(get_activities_statistics_data[0]["maxPrice"]) == list else get_activities_statistics_data[0]["maxPrice"],
-                            "avg_price": round(float(get_activities_statistics_data[0]["averagePrice"]), 3) if get_activities_statistics_data[0]["averagePrice"] else 0,
+                        if len(get_activities_statistics_data) > 0:
+
+                            activity_category_detail = {
+                                "activity_category": get_activity_category.name if activity_category else activity,
+                                "product_count": get_activities_statistics_data[0]["count"],
+                                "min_price": round(min(float(get_activities_statistics_data[0]["minPrice"])), 3) if type(get_activities_statistics_data[0]["minPrice"]) == list else get_activities_statistics_data[0]["minPrice"],
+                                "max_price": round(max(float(get_activities_statistics_data[0]["maxPrice"])), 3) if type(get_activities_statistics_data[0]["maxPrice"]) == list else get_activities_statistics_data[0]["maxPrice"],
+                                "avg_price": round(float(get_activities_statistics_data[0]["averagePrice"]), 3) if get_activities_statistics_data[0]["averagePrice"] else 0,
+                                }
+
+                        else:
+
+                            activity_category_detail = {
+                                "activity_category": get_activity_category.name if activity_category else activity,
+                                "product_count": 0,
+                                "min_price": 0,
+                                "max_price": 0,
+                                "avg_price": 0,
                             }
 
-                    else:
-
-                        activity_category_detail = {
-                            "activity_category": get_activity_category.name if activity_category else activity,
-                            "product_count": 0,
-                            "min_price": 0,
-                            "max_price": 0,
-                            "avg_price": 0,
+                        data = {
+                            "company": company.name,
+                            "company_name": company.page_name,
+                            "logo": company.logo,
+                            "avg_price": activity_category_detail["avg_price"],
+                            "max_price": activity_category_detail["max_price"],
+                            "min_price": activity_category_detail["min_price"],
+                            "product_count": activity_category_detail["product_count"]
                         }
 
-                    data = {
-                        "company": company.name,
-                        "company_name": company.page_name,
-                        "logo": company.logo,
-                        "avg_price": activity_category_detail["avg_price"],
-                        "max_price": activity_category_detail["max_price"],
-                        "min_price": activity_category_detail["min_price"],
-                        "product_count": activity_category_detail["product_count"]
-                    }
+                        if main_company == company.name:
+                            results[0]["main_company"].append(data)
+                            main_company_avg_price = data["avg_price"]
 
-                    if main_company == company.name:
-                        results[0]["main_company"].append(data)
-                        main_company_avg_price = data["avg_price"]
-
-                    if main_company is None:
-                        main_company_avg_price = 0
-
-                    
-
-                    
-                    results[0]["data"].append(data)
-                    results[0]["pie_data"].append(data["avg_price"])
-                    results[0]["pie_labels"].append(data["company_name"])
+                        if main_company is None:
+                            main_company_avg_price = 0
+                        
+                        results[0]["data"].append(data)
+                        results[0]["pie_data"].append(data["avg_price"])
+                        results[0]["pie_labels"].append(data["company_name"])
 
                 for p_data in results[0]["pie_data"]:
 
