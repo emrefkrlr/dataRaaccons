@@ -11,7 +11,8 @@ from companies.service import CompaniesService
 
 def activity_categorry_list(request, activity):
 
-    auth_user = Authantication.getInstance().getUser()
+    auth_user = request.user.id
+    print(auth_user)
     activity = ActivitiesService().get_activity(activity=activity)
 
     context = {
@@ -21,6 +22,7 @@ def activity_categorry_list(request, activity):
     if auth_user:
 
         user_info = UserService().get_user(auth_user)
+        print("\n\n User İnfo:", user_info)
 
         if user_info["dashboard_status"]:
 
@@ -49,7 +51,8 @@ def activity_categorry_list(request, activity):
 
 def product_lists(request, activity_category):
 
-    auth_user = Authantication.getInstance().getUser()
+    auth_user = request.user.id
+    print(auth_user)
     activity_category = ActivitiesService().get_activity_category_by_name(activity_category=activity_category)
 
     
@@ -60,6 +63,7 @@ def product_lists(request, activity_category):
     if auth_user:
 
         user_info = UserService().get_user(auth_user)
+        print("\n\n User İnfo:", user_info)
 
         if user_info["dashboard_status"]:
 
@@ -98,7 +102,8 @@ def product_lists(request, activity_category):
 def product_deatil(request, id):
 
 
-    auth_user = Authantication.getInstance().getUser()
+    auth_user = request.user.id
+    print(auth_user)
     product = ProductsService().get_product_by_id(id=id)
     activity = ActivitiesService().get_activity(activity=product.activity)
     activity_category = ActivitiesService().get_activity_category_by_name(activity_category=product.activity_category)
@@ -115,7 +120,7 @@ def product_deatil(request, id):
         user_info = UserService().get_user(auth_user)
 
         if user_info["dashboard_status"]:
-
+            print("\n\n User İnfo:", user_info)
             menues = LayoutService().get_menues(auth_user)
             context["menues"] = menues
             context["user_info"] = user_info
