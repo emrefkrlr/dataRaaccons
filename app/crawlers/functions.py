@@ -18,7 +18,7 @@ def char_to_replace_separated_by_dots(s):
 
 def clear_price_text(s):
 
-    remove_list = [" ", "\n", "Sepette", "Satış fiyatı", "YENİ", "Satışfiyatı", "/Kg", "/KG", "/kg", "KG", "Kg", "kg", "2Al1Öde", "YeniÜrün", "2si%70", "2si%50"]
+    remove_list = [" ", "\n", "Sepette", "Satış fiyatı", "YENİ", "Satışfiyatı", "/Kg", "/KG", "/kg", "KG", "Kg", "kg", "2Al1Öde", "YeniÜrün", "2si%70", "2si%50", "3Al2Öde", "6Al5Öde", "2si%36", "4Al3Öde"]
 
     for remove in remove_list:
 
