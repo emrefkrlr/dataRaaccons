@@ -1,6 +1,7 @@
 from crawlers.scraper import *
 from crawlers import functions
 import uuid
+import random
 
 
 class CarrefoursaCrawler(object):
@@ -12,10 +13,18 @@ class CarrefoursaCrawler(object):
             url = url.format(page)
 
         scraper = Scraper()
+        cookies={
+            "JSESSIONID": "93CE1BDF25E55D081EB8{}F63F872FC".format(random.randint(100, 999)),
+            "_sgf_session_id": "30763{}01566720".format(random.randint(100, 999)),
+            "_gcl_au": "1.1.161861142.1664363778",
+            "FCookie": "{}9052501.47873.0000".format(random.randint(100, 999)),
+            "TS0185e4f2": "0196b91184f7b5375c730b09c69e56bffd89e3b6af7820eeded1c4a8ee5187601a065a83596e1f67fc6d73db4e7fc6a8517eb34c1bab1181e86bac474a2d9963e96b2e8872fc700f5caf1dd839cb15827d127f22f91d85b126ef98e02a7c798ec5b7812555dde435e4c12fb9387a8652824584041db7dc8b3bcfa017673fd75fad0f1980df",
+            "scarab.visitor": "%2260D3BFDBF91CD{}%22".format(random.randint(100, 999))
+        }
 
         try:
 
-            response_get = scraper.GET(url=url)
+            response_get = scraper.GET(url=url, cookies=cookies)
 
             time.sleep(5)
 
@@ -89,7 +98,7 @@ class CarrefoursaCrawler(object):
             # assignment articles
             product_detail = {
                 'product_id': str(uuid.uuid4().hex),
-                'category': page_category,
+                'sub_category': page_category,
                 'product_name': articleName,
                 'product_url': 'https://www.carrefoursa.com' + articleURL,
                 'measurement_value': articleMeas,
