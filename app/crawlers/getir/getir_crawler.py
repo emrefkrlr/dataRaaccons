@@ -65,7 +65,10 @@ class GetirCrawler(object):
                     
                     articleName = product[eval(p4)]
                     articleURL = "https://getir.com/urun/" + product[eval(p6)]
-                    articleMeas = product[eval(p7)]
+                    try:
+                        articleMeas = product[eval(p7)]
+                    except Exception as e:
+                        articleMeas = "None"
                     articleImage = product[eval(p8)]
                     articlePrice = float(product[eval(p9)])
                     translated_article_name = translator.translate(articleName, dest='tr')

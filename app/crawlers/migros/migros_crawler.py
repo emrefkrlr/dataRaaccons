@@ -79,7 +79,11 @@ class MigrosCrawler(object):
 
                     else:
 
-                        articleMeas = product[eval(p11)][eval(p12)][eval(p13)]
+                        try:
+                            articleMeas = product[eval(p11)][eval(p12)][eval(p13)]
+                        except Exception as e:
+                            articleMeas = articleName
+
                         
                 # assignment articles
                 product_detail = {
