@@ -72,6 +72,7 @@ def activity_category_dashboard(request, activity, activity_category):
     # check_product_count = ProductsService().count_of_products_by_filter({'status': 1})
 
     auth_user = request.user.id
+    print(auth_user)
     activity = ActivitiesService().get_activity(activity=activity)
     context = {
         "title": "{} | RaccoonAnalytic Your smart assistant with data solutions.".format(activity.name)
@@ -113,6 +114,7 @@ def activity_category_dashboard(request, activity, activity_category):
 
         else:
             # Expire Olmuş sayfa tasarla
+            print("Expire olmuş..{}".format(auth_user))
             page = redirect('index')
         
         response = page
