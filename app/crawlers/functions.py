@@ -4,7 +4,7 @@ def char_to_replace(s):
     
     result = s.translate(char_to_replace).strip().replace(' ', '')
     
-    return result
+    return result if result != '' else 0
 
 
 def char_to_replace_separated_by_dots(s):

@@ -2,6 +2,8 @@ from crawlers.scraper import *
 from crawlers import functions
 import uuid
 import json
+from googletrans import Translator
+
 
 class GetirCrawler(object):
 
@@ -13,7 +15,8 @@ class GetirCrawler(object):
         
         scraper = Scraper()
         cookies={
-            "language": "tr"
+            "language": "tr",
+            "countryCode": "TR"
         }
         
         try:
@@ -33,6 +36,7 @@ class GetirCrawler(object):
     
     def html_parser(self, html, crawler_config):
 
+        translator = Translator()
         p1 = crawler_config.p1
         p2 = crawler_config.p2
         p3 = crawler_config.p3
@@ -44,32 +48,33 @@ class GetirCrawler(object):
         p9 = crawler_config.p9
         p10 = crawler_config.p10
         products_and_price = []
-
         body = json.loads(html.content)
 
         try:
 
-            sub_categories = body["data"]["category"]["subCategories"]
+            sub_categories = body[eval(p1)][eval(p2)][eval(p3)]
 
             for sub_category in sub_categories:
 
-                sub_category_name = sub_category["name"]
-
-                products = sub_category["products"]
+                sub_category_name = sub_category[eval(p4)]
+                translated_sub_category = translator.translate(sub_category_name, dest='tr')
+                products = sub_category[eval(p5)]
 
                 for product in products:
                     # get articles
-                    articleName = product["name"]
-                    articleURL = "https://getir.com/urun/" + product["slug"]
-                    articleMeas = product["shortDescription"]
-                    articleImage = product["squareThumbnailURL"]
-                    articlePrice = float(product["price"])
+                    
+                    articleName = product[eval(p4)]
+                    articleURL = "https://getir.com/urun/" + product[eval(p6)]
+                    articleMeas = product[eval(p7)]
+                    articleImage = product[eval(p8)]
+                    articlePrice = float(product[eval(p9)])
+                    translated_article_name = translator.translate(articleName, dest='tr')
 
                     # assignment articles
                     product_detail = {
                         'product_id': str(uuid.uuid4().hex),
-                        'sub_category': sub_category_name,
-                        'product_name': articleName,
+                        'sub_category': translated_sub_category.text.capitalize(),
+                        'product_name': translated_article_name.text.capitalize(),
                         'product_url': articleURL,
                         'measurement_value': articleMeas,
                         'currenct_unit': 'tl',
@@ -80,6 +85,6 @@ class GetirCrawler(object):
                     products_and_price.append(product_detail)
         
         except Exception as e:
-            print("Articles error: {}".format(e))
+            print("GetirCrawler Articles error: {}".format(e))
     
         return products_and_price if products_and_price else False

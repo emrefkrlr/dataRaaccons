@@ -58,9 +58,9 @@ class SokCrawler(object):
             for i in body[eval(p1)][eval(p2)]:
                 # get articles
                 articleName = i[eval(p3)]
-                articleURL = "https://www.sokmarket.com.tr/" + i[eval(p4)] + "-p-" + str(i[eval(p5)])
+                articleURL = "https://www.sokmarket.com.tr/" + i[eval(p4)] if i[eval(p4)] else '' + "-p-" + str(i[eval(p5)]) if i[eval(p5)] else ''
                 articleMeas = i[eval(p6)][eval(p7)]
-                articleImage = i[eval(p8)][eval(p9)] + i[eval(p10)][0][eval(p11)]
+                articleImage = i[eval(p8)][eval(p9)] + i[eval(p10)][0][eval(p11)] if i[eval(p10)][0][eval(p11)] else ''
                 articlePrice = float(i[eval(p12)][eval(p13)])
                 page_category = i[eval(p14)]
                 
