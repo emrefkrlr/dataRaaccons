@@ -64,7 +64,7 @@ class A101Crawler(object):
 
             try:
                 # editing articles
-                articleName = articleName.text.strip() if articleName else None
+                articleName = articleName.text.strip() if articleName else "None"
                 articleMeas_get = articleName.split(" ")
                 articleMeas = articleMeas_get[-2] + " " + articleMeas_get[-1]
                 articleURL = articleURL["href"] if articleURL else "None"

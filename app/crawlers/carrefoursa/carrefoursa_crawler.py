@@ -72,7 +72,7 @@ class CarrefoursaCrawler(object):
 
             try:
                 # editing articles
-                articleName = articleName.text.strip() if articleName else None
+                articleName = articleName.text.strip() if articleName else "None"
                 articleImage = articleImage["src"] if articleImage else None
                 articleURL = articleURL["href"] if articleURL else "None"
 
