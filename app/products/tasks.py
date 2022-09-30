@@ -51,21 +51,23 @@ def insert_new_products_task():
                             if type(product_and_price) is list and product_and_price is not None:
 
                                 for product_info in product_and_price:
+                                    
                                     try:
                                         ProductsService().insert_new_products(
                                             company = Companies.objects.get(name=crawler.company),
                                             activity = Activities.objects.get(name=crawler.activity),
                                             activity_category = ActivityCategory.objects.get(name=crawler.activity_category),
-                                            product_name = product_info["product_name"],
+                                            product_name = product_info["product_name"] if product_info["product_name"] else "None",
                                             price = product_info["price"],
                                             page_category = str(crawler.page_category),
-                                            sub_category = product_info["sub_category"] if product_info["sub_category"] else "None",
+                                            sub_category = product_info["sub_category"] if product_info["sub_category"] else product_info["category"],
                                             product_url = product_info["product_url"] if product_info["product_url"] else None,
                                             image = product_info["image"] if product_info["image"] else None
                                         )
                                     except Exception as e:
 
-                                        print("Insert Error: {} - {} - {}".format(e, crawler.company, product_info["product_name"]))
+                                        print("Insert Error: {} - {} - {} - {}".format(e, crawler.company, product_info["product_name"], crawler.activity_category))
+                                        continue
 
                             #for data from not paging    
                             else:
@@ -78,16 +80,17 @@ def insert_new_products_task():
                                             company = Companies.objects.get(name=crawler.company),
                                             activity = Activities.objects.get(name=crawler.activity),
                                             activity_category = ActivityCategory.objects.get(name=crawler.activity_category),
-                                            product_name = product_and_price["product_name"],
+                                            product_name = product_and_price["product_name"] if product_and_price["product_name"] else "None",
                                             price = product_and_price["price"],
                                             page_category = str(crawler.page_category),
-                                            sub_category = product_and_price["sub_category"] if product_and_price["sub_category"] else "None",
+                                            sub_category = product_and_price["sub_category"] if product_and_price["sub_category"] else product_and_price["category"],
                                             product_url = product_and_price["product_url"] if product_and_price["product_url"] else None,
                                             image = product_and_price["image"] if product_and_price["image"] else None
                                         )
                                     except Exception as e:
 
-                                        print("Insert Error: {} - {} - {}".format(e, crawler.company, product_and_price["product_name"]))
+                                        print("Insert Error: {} - {} - {} - {}".format(e, crawler.company, product_and_price["product_name"], crawler.activity_category))
+                                        continue
 
                     # If table is not empty, add products without checking           
                     else:
@@ -107,16 +110,17 @@ def insert_new_products_task():
                                                 company = Companies.objects.get(name=crawler.company),
                                                 activity = Activities.objects.get(name=crawler.activity),
                                                 activity_category = ActivityCategory.objects.get(name=crawler.activity_category),
-                                                product_name = product_info["product_name"],
+                                                product_name = product_info["product_name"] if product_info["product_name"] else "None",
                                                 price = product_info["price"],
                                                 page_category = str(crawler.page_category),
-                                                sub_category = product_info["sub_category"] if product_info["sub_category"] else "None",
+                                                sub_category = product_info["sub_category"] if product_info["sub_category"] else product_info["category"],
                                                 product_url = product_info["product_url"] if product_info["product_url"] else None,
                                                 image = product_info["image"] if product_info["image"] else None
                                             )
                                         except Exception as e:
 
-                                            print("Insert Error: {} - {} - {}".format(e, crawler.company, product_info["product_name"]))
+                                            print("Insert Error: {} - {} - {} - {}".format(e, crawler.company, product_info["product_name"], crawler.activity_category))
+                                            continue
                                     else:
 
                                         ProductsService().update_or_create_products(price = product_info["price"])   
@@ -133,17 +137,18 @@ def insert_new_products_task():
                                                 company = Companies.objects.get(name=crawler.company),
                                                 activity = Activities.objects.get(name=crawler.activity),
                                                 activity_category = ActivityCategory.objects.get(name=crawler.activity_category),
-                                                product_name = product_and_price["product_name"],
+                                                product_name = product_and_price["product_name"] if product_and_price["product_name"] else "None",
                                                 price = product_and_price["price"],
                                                 page_category = str(crawler.page_category),
-                                                sub_category = product_and_price["sub_category"] if product_and_price["sub_category"] else "None",
+                                                sub_category = product_and_price["sub_category"] if product_and_price["sub_category"] else product_and_price["category"],
                                                 product_url = product_and_price["product_url"] if product_and_price["product_url"] else None,
                                                 image = product_and_price["image"] if product_and_price["image"] else None
                                             )
                                         
                                         except Exception as e:
 
-                                            print("Insert Error: {} - {} - {}".format(e, crawler.company, product_and_price["product_name"]))
+                                            print("Insert Error: {} - {} - {} - {}".format(e, crawler.company, product_and_price["product_name"], crawler.activity_category))
+                                            continue
                                     else:
 
                                         ProductsService().update_or_create_products(price = product_and_price["price"])
@@ -155,7 +160,7 @@ def insert_new_products_task():
         print("Celery insert_new_products_task done....", now)
 
     except Exception as e:
-        print("\ninsert_new_products_task Exeption: \n{}".format(e))
+        print("\ninsert_new_products_task Exeption: {}".format(e))
 
 
 @shared_task
