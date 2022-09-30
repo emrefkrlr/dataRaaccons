@@ -4,7 +4,6 @@ from layout.layout_service import LayoutService
 from package.service import PackageService
 from products.service import ProductsService
 from companies.service import CompaniesService
-from products.tasks import insert_new_products_task
 
 # Create your views here.
 
@@ -19,8 +18,6 @@ def index(request):
     context['product_count'] = ProductsService().count_of_products_by_filter({'status': 1})
     context['company_count'] = CompaniesService().get_all_companies()
     context['sub_category_count'] = ProductsService().get_unique_sub_categories_by_filter({'status': 1})
-
-    insert_new_products_task()
 
     if user:
         context['dashboard_url'] = True
