@@ -64,7 +64,7 @@ class MetroMarketCrawler(object):
 
             try:
                 # editing articles
-                articleName = articleName.text.strip() if articleName else None
+                articleName = articleName.text.strip() if articleName else "None"
                 articleMeas = articleMeas.text.strip() if articleMeas else None
                 articleURL = articleURL["href"] if articleURL else "None"
                 
