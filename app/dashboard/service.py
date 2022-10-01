@@ -388,12 +388,14 @@ class DashboardService(object):
             # BEGIN: Recent Price Info
             
             data = MongoService().get_avg_data(collection=activity, query=recent_price_query)
+
+            print(data)
             
             if len(data) > 0:
                 
                 price_info = {
-                    "min_price": round(min(float(data[0]["minPrice"])), 3) if type(data[0]["minPrice"]) == list else data[0]["minPrice"],
-                    "max_price": round(max(float(data[0]["maxPrice"])), 3) if type(data[0]["maxPrice"]) == list else data[0]["maxPrice"],
+                    "min_price": round(min(float(data[0]["minPrice"])), 3) if type(data[0]["minPrice"]) == list else float(data[0]["minPrice"]),
+                    "max_price": round(max(float(data[0]["maxPrice"])), 3) if type(data[0]["maxPrice"]) == list else float(data[0]["maxPrice"]),
                     "avg_price": round(float(data[0]["averagePrice"]), 3) if data[0]["averagePrice"] else None,
                     "product_count": data[0]["count"] if data[0]["count"] else None,
                 }
@@ -413,8 +415,8 @@ class DashboardService(object):
             if len(previous_data) > 0:
 
                 previous_price_info = {
-                    "min_price": round(min(float(previous_data[0]["minPrice"])), 3) if type(previous_data[0]["minPrice"]) == list else previous_data[0]["minPrice"],
-                    "max_price": round(max(float(previous_data[0]["maxPrice"])), 3) if type(previous_data[0]["maxPrice"]) == list else previous_data[0]["maxPrice"],
+                    "min_price": round(min(float(previous_data[0]["minPrice"])), 3) if type(previous_data[0]["minPrice"]) == list else float(previous_data[0]["minPrice"]),
+                    "max_price": round(max(float(previous_data[0]["maxPrice"])), 3) if type(previous_data[0]["maxPrice"]) == list else float(previous_data[0]["maxPrice"]),
                     "avg_price": round(float(previous_data[0]["averagePrice"]), 3) if previous_data[0]["averagePrice"] else None,
                     "product_count": previous_data[0]["count"] if previous_data[0]["count"] else None,
                 }
@@ -424,9 +426,9 @@ class DashboardService(object):
                 previous_price_info = { "min_price": 0, "max_price": 0, "avg_price": 0, "product_count": 0}
 
             price_ratio = {
-                "min_price": math_functions.rate_of_change(last=previous_price_info["min_price"], now=price_info["min_price"]),
-                "max_price": math_functions.rate_of_change(last=previous_price_info["max_price"], now=price_info["max_price"]),
-                "avg_price": math_functions.rate_of_change(last=previous_price_info["avg_price"], now=price_info["avg_price"])
+                "min_price": math_functions.rate_of_change(last=previous_price_info["min_price"], now=float(price_info["min_price"])),
+                "max_price": math_functions.rate_of_change(last=previous_price_info["max_price"], now=float(price_info["max_price"])),
+                "avg_price": math_functions.rate_of_change(last=previous_price_info["avg_price"], now=float(price_info["avg_price"]))
             }
 
             results[0]["price_information"].append(previous_price_info)
@@ -522,8 +524,8 @@ class DashboardService(object):
             if len(data) > 0:
                 
                 price_info = {
-                    "min_price": round(min(float(data[0]["minPrice"])), 3) if type(data[0]["minPrice"]) == list else data[0]["minPrice"],
-                    "max_price": round(max(float(data[0]["maxPrice"])), 3) if type(data[0]["maxPrice"]) == list else data[0]["maxPrice"],
+                    "min_price": round(min(float(data[0]["minPrice"])), 3) if type(data[0]["minPrice"]) == list else float(data[0]["minPrice"]),
+                    "max_price": round(max(float(data[0]["maxPrice"])), 3) if type(data[0]["maxPrice"]) == list else float(data[0]["maxPrice"]),
                     "avg_price": round(float(data[0]["averagePrice"]), 3) if data[0]["averagePrice"] else None,
                     "product_count": data[0]["count"] if data[0]["count"] else None,
                 }
@@ -545,8 +547,8 @@ class DashboardService(object):
             if len(previous_data) > 0:
 
                 previous_price_info = {
-                    "min_price": round(min(float(previous_data[0]["minPrice"])), 3) if type(previous_data[0]["minPrice"]) == list else previous_data[0]["minPrice"],
-                    "max_price": round(max(float(previous_data[0]["maxPrice"])), 3) if type(previous_data[0]["maxPrice"]) == list else previous_data[0]["maxPrice"],
+                    "min_price": round(min(float(previous_data[0]["minPrice"])), 3) if type(previous_data[0]["minPrice"]) == list else float(previous_data[0]["minPrice"]),
+                    "max_price": round(max(float(previous_data[0]["maxPrice"])), 3) if type(previous_data[0]["maxPrice"]) == list else float(previous_data[0]["maxPrice"]),
                     "avg_price": round(float(previous_data[0]["averagePrice"]), 3) if previous_data[0]["averagePrice"] else None,
                     "product_count": previous_data[0]["count"] if previous_data[0]["count"] else None,
                 }
@@ -557,9 +559,9 @@ class DashboardService(object):
 
             
             price_ratio = {
-                "min_price": math_functions.rate_of_change(last=previous_price_info["min_price"], now=price_info["min_price"]),
-                "max_price": math_functions.rate_of_change(last=previous_price_info["max_price"], now=price_info["max_price"]),
-                "avg_price": math_functions.rate_of_change(last=previous_price_info["avg_price"], now=price_info["avg_price"])
+                "min_price": math_functions.rate_of_change(last=previous_price_info["min_price"], now=float(price_info["min_price"])),
+                "max_price": math_functions.rate_of_change(last=previous_price_info["max_price"], now=float(price_info["max_price"])),
+                "avg_price": math_functions.rate_of_change(last=previous_price_info["avg_price"], now=float(price_info["avg_price"]))
             }
 
             results[0]["price_information"].append(previous_price_info)
@@ -570,7 +572,7 @@ class DashboardService(object):
             return results
 
         except Exception as e:
-            print("DashboardService all_comparative_statistics_data_for_activities Exception: {}".format(e))
+            print("DashboardService comparative_statistics_on_activity_for_the_main_company Exception: {}".format(e))
 
 
     def average_prices_of_companies_by_activities(self, activity, activity_category=None, main_company=None):
@@ -630,8 +632,8 @@ class DashboardService(object):
                             activity_category_detail = {
                                 "activity_category": get_activity_category.name if activity_category else activity,
                                 "product_count": get_activities_statistics_data[0]["count"],
-                                "min_price": round(min(float(get_activities_statistics_data[0]["minPrice"])), 3) if type(get_activities_statistics_data[0]["minPrice"]) == list else get_activities_statistics_data[0]["minPrice"],
-                                "max_price": round(max(float(get_activities_statistics_data[0]["maxPrice"])), 3) if type(get_activities_statistics_data[0]["maxPrice"]) == list else get_activities_statistics_data[0]["maxPrice"],
+                                "min_price": round(min(float(get_activities_statistics_data[0]["minPrice"])), 3) if type(get_activities_statistics_data[0]["minPrice"]) == list else float(get_activities_statistics_data[0]["minPrice"]),
+                                "max_price": round(max(float(get_activities_statistics_data[0]["maxPrice"])), 3) if type(get_activities_statistics_data[0]["maxPrice"]) == list else float(get_activities_statistics_data[0]["maxPrice"]),
                                 "avg_price": round(float(get_activities_statistics_data[0]["averagePrice"]), 3) if get_activities_statistics_data[0]["averagePrice"] else 0,
                                 }
 

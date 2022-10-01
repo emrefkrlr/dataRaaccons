@@ -1,14 +1,8 @@
 from django.shortcuts import render,redirect
-from django.http import HttpResponse
 from dashboard.service import DashboardService
 from authentication.service import UserService, Authantication
 from layout.layout_service import LayoutService
 from activities.service import ActivitiesService
-from products.service import ProductsService
-from datetime import datetime, timedelta
-from mongo.services import MongoService
-import products.tasks as p_tasks
-
 
 # Create your views here.
 
@@ -23,7 +17,6 @@ def activity_overview_dashboard(request, activity):
     if auth_user:
 
         user_info = UserService().get_user(auth_user)
-        print("\n\n User İnfo:", user_info)
 
         if user_info["dashboard_status"]:
 
@@ -72,7 +65,6 @@ def activity_category_dashboard(request, activity, activity_category):
     # check_product_count = ProductsService().count_of_products_by_filter({'status': 1})
 
     auth_user = request.user.id
-    print(auth_user)
     activity = ActivitiesService().get_activity(activity=activity)
     context = {
         "title": "{} | RaccoonAnalytic Your smart assistant with data solutions.".format(activity.name)
@@ -81,7 +73,6 @@ def activity_category_dashboard(request, activity, activity_category):
     if auth_user:
 
         user_info = UserService().get_user(auth_user)
-        print("\n\n User İnfo:", user_info)
 
         if user_info["dashboard_status"]:
                 

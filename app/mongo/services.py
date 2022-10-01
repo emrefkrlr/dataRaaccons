@@ -596,7 +596,9 @@ class MongoService(object):
 
 			current_date = datetime.now()
 
-			query_match = {}
+			query_match = {
+				
+			}
 			query = [{ "$unwind": "$products_and_price", "$unwind": "$products_and_price"}, {"$match": query_match}]
 			
 			if activity:
@@ -609,6 +611,7 @@ class MongoService(object):
 				query_match["products_and_price.sub_category"] = str(sub_category)
 
 				query_get_id = {
+					
 					"$group": 
 					{
 						"_id": "$products_and_price.{}".format(get_id), 
