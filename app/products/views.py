@@ -12,7 +12,6 @@ from companies.service import CompaniesService
 def activity_categorry_list(request, activity):
 
     auth_user = request.user.id
-    print(auth_user)
     activity = ActivitiesService().get_activity(activity=activity)
 
     context = {
@@ -22,7 +21,6 @@ def activity_categorry_list(request, activity):
     if auth_user:
 
         user_info = UserService().get_user(auth_user)
-        print("\n\n User İnfo:", user_info)
 
         if user_info["dashboard_status"]:
 
@@ -52,10 +50,7 @@ def activity_categorry_list(request, activity):
 def product_lists(request, activity_category):
 
     auth_user = request.user.id
-    print(auth_user)
     activity_category = ActivitiesService().get_activity_category_by_name(activity_category=activity_category)
-
-    
     context = {
         "title": "{} | RaccoonAnalytic Your smart assistant with data solutions.".format(activity_category)
     }
@@ -63,7 +58,6 @@ def product_lists(request, activity_category):
     if auth_user:
 
         user_info = UserService().get_user(auth_user)
-        print("\n\n User İnfo:", user_info)
 
         if user_info["dashboard_status"]:
 

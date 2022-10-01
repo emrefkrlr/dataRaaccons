@@ -13,13 +13,14 @@ def index(request):
         'dashboard_url': False
     }
 
-    user = Authantication.getInstance().getUser()
+    user = request.user.id
     context['packages'] = PackageService().get_all_packages()
     context['product_count'] = ProductsService().count_of_products_by_filter({'status': 1})
     context['company_count'] = CompaniesService().get_all_companies()
     context['sub_category_count'] = ProductsService().get_unique_sub_categories_by_filter({'status': 1})
 
     if user:
+        
         context['dashboard_url'] = True
         menu = LayoutService().get_menues(user)
         context['menu'] = menu[0]["menu"][0]["main_menu"]
