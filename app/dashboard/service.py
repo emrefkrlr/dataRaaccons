@@ -388,8 +388,6 @@ class DashboardService(object):
             # BEGIN: Recent Price Info
             
             data = MongoService().get_avg_data(collection=activity, query=recent_price_query)
-
-            print(data)
             
             if len(data) > 0:
                 
