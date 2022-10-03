@@ -10,6 +10,7 @@ register = template.Library()
 def custom_index(indexable, i):
     #if i > 11:
     #    i = 0
+    print("\n\n\n INDEX : {}\n\n\n".format(i))
     return indexable[i]
 
 @register.filter
