@@ -8,7 +8,7 @@ register = template.Library()
 
 @register.filter(name='custom_index')
 def custom_index(indexable, i):
-    if i > 14:
+    if i > 11:
         i = 0
     return indexable[i]
 
