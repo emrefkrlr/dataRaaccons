@@ -231,7 +231,7 @@ class DashboardService(object):
 
             results = [{
                 "label": "Product Distrubition of Companies",
-                "pie_colors": ["bg-info", "bg-success", "bg-primary", "bg-danger", "bg-blue", "bg-pink", "bg-green", "bg-gray-dark", "bg-purple", "bg-orange", "bg-cyan", "bg-gray", "bg-yellow", "--bs-teal", "--bs-gray-700", "--bs-secondary-rgb", "--bs-indigo", "--bs-gray-400", "--bs-warning-rgb"],
+                "pie_colors": ["bg-info", "bg-success", "bg-primary", "bg-danger", "bg-BurlyWood", "bg-pink", "bg-green", "bg-gray-dark", "bg-purple", "bg-orange", "bg-DarkSlateGrey", "bg-gray", "bg-yellow", "bg-Sienna", "bg.Khaki", "--bs-secondary-rgb", "--bs-indigo", "--bs-gray-400", "--bs-warning-rgb"],
                 "pie_data": [],
                 "pie_labels": [],
                 "data": [],

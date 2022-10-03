@@ -11184,6 +11184,22 @@ fieldset:disabled .btn {
     background-color: #7E8299 !important
 }
 
+.bg-BurlyWood {
+    background-color: #DEB887 !important
+}
+
+.bg-DarkSlateGrey {
+    background-color: #2F4F4F !important
+}
+
+.bg-Sienna {
+    background-color: #A0522D !important
+}
+
+.bg.Khaki {
+    background-color: #F0E68C !important
+}
+
 .bg-body {
     --bs-bg-opacity: 1;
     background-color: rgba(var(--bs-body-bg-rgb), var(--bs-bg-opacity))!important
