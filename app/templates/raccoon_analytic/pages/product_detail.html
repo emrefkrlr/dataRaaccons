@@ -86,7 +86,8 @@
                                     </div>
                                     <!--end::Number-->
                                     <!--begin::Label-->
-                                    <div class="fw-bold fs-6 text-gray-400">{{product.sub_category|replace_and_capitalize}} avg. price </div>
+                                    <div class="fw-bold fs-6 text-gray-400">{{activity_category_name|replace_and_capitalize}} avg. price </div>
+                                    <!--<div class="fw-bold fs-6 text-gray-400">{{product.sub_category|replace_and_capitalize}} avg. price </div>-->
                                     <!--end::Label-->
                                 </div>
                                 <!--end::Stat-->
@@ -105,15 +106,17 @@
                                         <!--end::Svg Icon-->
                                         {% else %}
                                         <!--begin::Svg Icon | path: assets/media/icons/duotune/arrows/arr003.svg-->
-                                        <span class="svg-icon svg-icon-3 svg-icon-success me-2">
+                                        <span class="svg-icon svg-icon-3 svg-icon-danger me-2">
+                                            <!--begin::Svg Icon | path: assets/media/icons/duotune/arrows/arr004.svg-->
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                                <path d="M13 9.59998V21C13 21.6 12.6 22 12 22C11.4 22 11 21.6 11 21V9.59998H13Z" fill="currentColor"/>
-                                                <path opacity="0.3" d="M4 9.60002H20L12.7 2.3C12.3 1.9 11.7 1.9 11.3 2.3L4 9.60002Z" fill="currentColor"/>
+                                                <path d="M13 14.4V3C13 2.4 12.6 2 12 2C11.4 2 11 2.4 11 3V14.4H13Z" fill="currentColor"/>
+                                                <path opacity="0.3" d="M4 14.4H20L12.7 21.7C12.3 22.1 11.7 22.1 11.3 21.7L4 14.4Z" fill="currentColor"/>
                                             </svg>
+                                            <!--end::Svg Icon-->
                                         </span>
                                         <!--end::Svg Icon-->
                                         {% endif %}
-                                        <div class="fs-4 fw-bolder" data-kt-countup="true" data-kt-countup-value="{{product.price|safe}}" data-kt-countup-prefix="&#8378;">{{product.price|safe}}</div>
+                                        <div class="fs-4 fw-bolder" data-kt-countup="true" data-kt-countup-prefix="&#8378;"> &#8378 {{product.price}}</div>
                                     </div>
                                     <!--end::Number-->
                                     <!--begin::Label-->
@@ -210,7 +213,7 @@
             <!--begin::Card body-->
             <div class="card-body pt-0">
                 <!--begin::Table-->
-                <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_ecommerce_report_views_table">
+                <table class="table align-middle table-row-dashed fs-6 gy-5"  id="kt_ecommerce_report_views_table">
                     <!--begin::Table head-->
                     <thead>
                         <!--begin::Table row-->
@@ -218,7 +221,8 @@
                             <th class="min-w-125px">Product</th>
                             <th class="text-end min-w-125px">Sub Category</th>
                             <th class="text-end min-w-100px">Company</th>
-                            <th class="text-end min-w-125px">Price</th>
+                            <th class="text-end min-w-125px" aria-sort="descending">Price</th>
+                            
                         </tr>
                         <!--end::Table row-->
                     </thead>
