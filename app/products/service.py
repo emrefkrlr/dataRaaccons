@@ -207,7 +207,7 @@ class ProductMatchesService(ProductsService):
                 product = self.get_product_by_id(id=product.second_product_id)
 
                 produts.append(product)
-
+            
             return produts if len(produts) > 0 else False
 
         except Exception as e:

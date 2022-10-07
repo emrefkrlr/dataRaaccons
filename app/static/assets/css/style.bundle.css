@@ -11200,6 +11200,10 @@ fieldset:disabled .btn {
     background-color: #F0E68C !important
 }
 
+.bg-LightSteelBlue {
+    background-color: #B0C4DE !important
+}
+
 .bg-body {
     --bs-bg-opacity: 1;
     background-color: rgba(var(--bs-body-bg-rgb), var(--bs-bg-opacity))!important

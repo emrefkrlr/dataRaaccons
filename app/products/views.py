@@ -97,13 +97,9 @@ def product_deatil(request, id):
 
 
     auth_user = request.user.id
-    print(auth_user)
     product = ProductsService().get_product_by_id(id=id)
     activity = ActivitiesService().get_activity(activity=product.activity)
     activity_category = ActivitiesService().get_activity_category_by_name(activity_category=product.activity_category)
-
-    
-    
 
     context = {
         "title": "{} | RaccoonAnalytic Your smart assistant with data solutions.".format(product.product_name)
@@ -114,7 +110,7 @@ def product_deatil(request, id):
         user_info = UserService().get_user(auth_user)
 
         if user_info["dashboard_status"]:
-            print("\n\n User İnfo:", user_info)
+    
             menues = LayoutService().get_menues(auth_user)
             context["menues"] = menues
             context["user_info"] = user_info
@@ -125,8 +121,8 @@ def product_deatil(request, id):
             context["activity_category_name"] = activity_category.name
 
             # PRODUCT STATISTICS
-            mongo_query = MongoService().avg_price_query_generator(get_id="sub_category", activity=activity, activity_category=activity_category, sub_category=product.sub_category)
-
+            mongo_query = MongoService().avg_price_query_generator(get_id="sub_category", activity=activity, activity_category=activity_category)
+            #, sub_category=product.sub_category
             activity_category_product_statistics_data = MongoService().get_avg_data(collection=activity, query=mongo_query)
 
             if len(activity_category_product_statistics_data) > 0:
@@ -149,11 +145,11 @@ def product_deatil(request, id):
 
             context["activity_category_detail"] = activity_category_detail
 
-
             # MATCHES PRODUCTS
 
             matches_products = ProductMatchesService().get_product_matches_products(id=product.id)
-
+            matches_products.sort(key=lambda x: x.price, reverse=True)
+            
             if matches_products:
                 context["matches_products"] = matches_products
 
