@@ -8,6 +8,7 @@ from mongo.services import MongoService
 from products.service import ProductsService
 from products.models import Products
 from companies.models import Companies
+from companies.service import CompaniesService
 from activities.models import Activities, ActivityCategory
 from products.product_matches import jaro_winkler_distance
 
@@ -37,7 +38,7 @@ def insert_new_products_task():
                 username='root', password='root', collection=str(activity.name), query=query)
 
                 # get products on postgresql
-                products = ProductsService().get_products(filter={'company__name': str(crawler.company), 'activity': activity.id, 'activity_category': ActivityCategory.objects.get(name=crawler.activity_category).id, 'status': 1})
+                products = ProductsService().get_products(filter={'company__name': str(crawler.company), 'activity': activity.id, 'activity_category': ActivityCategory.objects.get(name=crawler.activity_category).id, 'status': 1}).values_list("product_name", "price")
 
                 # find new products and save them in product table
                 if get_mongo_data is not None and get_mongo_data["products_and_price"] is not None and len(get_mongo_data["products_and_price"]) > 0 :
@@ -102,56 +103,74 @@ def insert_new_products_task():
 
                                 for product_info in product_and_price:
 
-                                    if product_info["product_name"] not in products:
+                                    if (product_info["product_name"],product_info["price"])  not in products:
 
                                         try:
 
-                                            ProductsService().insert_new_products(
-                                                company = Companies.objects.get(name=crawler.company),
-                                                activity = Activities.objects.get(name=crawler.activity),
-                                                activity_category = ActivityCategory.objects.get(name=crawler.activity_category),
-                                                product_name = product_info["product_name"] if product_info["product_name"] else "None",
-                                                price = product_info["price"],
-                                                page_category = str(crawler.page_category),
-                                                sub_category = product_info["sub_category"] if product_info["sub_category"] else product_info["category"],
-                                                product_url = product_info["product_url"] if product_info["product_url"] else None,
-                                                image = product_info["image"] if product_info["image"] else None
-                                            )
+                                            record = ProductsService().get_product_by_filter(filter={'company__name': str(crawler.company), 'activity': activity.id, 'activity_category': ActivityCategory.objects.get(name=crawler.activity_category).id, "product_name": product_info["product_name"] ,'status': 1})
+
+                                            if record:
+
+                                                record.price = product_info["price"]
+                                                record.product_url = product_info["product_url"]
+                                                record.image = product_info["image"]
+                                                record.save()
+                                            
+                                            else:
+
+                                                ProductsService().insert_new_products(
+                                                    company = Companies.objects.get(name=crawler.company),
+                                                    activity = Activities.objects.get(name=crawler.activity),
+                                                    activity_category = ActivityCategory.objects.get(name=crawler.activity_category),
+                                                    product_name = product_info["product_name"] if product_info["product_name"] else "None",
+                                                    price = product_info["price"],
+                                                    page_category = str(crawler.page_category),
+                                                    sub_category = product_info["sub_category"] if product_info["sub_category"] else product_info["category"],
+                                                    product_url = product_info["product_url"] if product_info["product_url"] else None,
+                                                    image = product_info["image"] if product_info["image"] else None
+                                                )
+
                                         except Exception as e:
 
                                             print("Insert Error: {} - {} - {} - {}".format(e, crawler.company, product_info["product_name"], crawler.activity_category))
                                             continue
-                                    else:
-
-                                        ProductsService().update_or_create_products(price = product_info["price"])   
-
+                                    
                             # for data from not paging
                             else:
 
                                 if product_and_price is not None:                                  
 
-                                    if product_and_price["product_name"] not in products:
+                                    if (product_and_price["product_name"], product_and_price["price"]) not in products:
 
                                         try:
-                                            ProductsService().insert_new_products(
-                                                company = Companies.objects.get(name=crawler.company),
-                                                activity = Activities.objects.get(name=crawler.activity),
-                                                activity_category = ActivityCategory.objects.get(name=crawler.activity_category),
-                                                product_name = product_and_price["product_name"] if product_and_price["product_name"] else "None",
-                                                price = product_and_price["price"],
-                                                page_category = str(crawler.page_category),
-                                                sub_category = product_and_price["sub_category"] if product_and_price["sub_category"] else product_and_price["category"],
-                                                product_url = product_and_price["product_url"] if product_and_price["product_url"] else None,
-                                                image = product_and_price["image"] if product_and_price["image"] else None
-                                            )
+
+                                            record = ProductsService().get_product_by_filter(filter={'company__name': str(crawler.company), 'activity': activity.id, 'activity_category': ActivityCategory.objects.get(name=crawler.activity_category).id, "product_name": product_and_price["product_name"] ,'status': 1})
+
+                                            if record:
+                                                
+                                                record.price = product_and_price["price"]
+                                                record.product_url = product_and_price["product_url"]
+                                                record.image = product_and_price["image"]
+                                                record.save()
+                                            
+                                            else:
+
+                                                ProductsService().insert_new_products(
+                                                    company = Companies.objects.get(name=crawler.company),
+                                                    activity = Activities.objects.get(name=crawler.activity),
+                                                    activity_category = ActivityCategory.objects.get(name=crawler.activity_category),
+                                                    product_name = product_and_price["product_name"] if product_and_price["product_name"] else "None",
+                                                    price = product_and_price["price"],
+                                                    page_category = str(crawler.page_category),
+                                                    sub_category = product_and_price["sub_category"] if product_and_price["sub_category"] else product_and_price["category"],
+                                                    product_url = product_and_price["product_url"] if product_and_price["product_url"] else None,
+                                                    image = product_and_price["image"] if product_and_price["image"] else None
+                                                )
                                         
                                         except Exception as e:
 
                                             print("Insert Error: {} - {} - {} - {}".format(e, crawler.company, product_and_price["product_name"], crawler.activity_category))
                                             continue
-                                    else:
-
-                                        ProductsService().update_or_create_products(price = product_and_price["price"])
                                     
                 else:
                     continue

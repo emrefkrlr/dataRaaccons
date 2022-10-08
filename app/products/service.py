@@ -1,8 +1,32 @@
+from unittest import result
 from products.models import Products, ProductMatches
 from datetime import datetime, timedelta
 
 
 class ProductsService(object):
+
+    def get_product_by_filter(self, filter):
+
+        try:
+            if bool(filter):
+
+                try:
+
+                    results = Products.objects.get(**filter)
+
+                except Exception as e:
+
+                    print("get_product_by_filter Ürün bulunamadı", filter)
+
+                    results = False
+            else:
+                raise Exception('dictionary is null')
+
+            return results
+        
+        except Exception as e:
+            print("\get_product_by_filter Exeption: \n{}".format(e))
+
 
     def get_products(self, filter):
         
