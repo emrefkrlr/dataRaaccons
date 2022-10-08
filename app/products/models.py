@@ -19,8 +19,8 @@ class Products(models.Model):
     product_url = models.TextField(null=True, blank=True)
     image = models.TextField(null=True, blank=True)
     status = models.BooleanField(default=1)
-    created_at = models.DateTimeField(auto_created=True, verbose_name='Created Date', editable=False, null=True, blank=None)
-    updated_at = models.DateTimeField(auto_now_add=True, verbose_name='Updated Date', editable=False, null=True, blank=None)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Created Date', editable=False, null=True, blank=None)
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Updated Date', editable=False, null=True, blank=None)
 
     class Meta:
 	
@@ -50,8 +50,8 @@ class ProductMatches(models.Model):
     matches_activity = models.ForeignKey(Activities, null=None, related_name='ProductMatches_matches_activity', on_delete=models.CASCADE)
     matched_score = models.FloatField(null=None, blank=False, verbose_name='Matched Score')    
     status = models.BooleanField(default=1)
-    created_at = models.DateTimeField(auto_created=True, verbose_name='Created Date', editable=False, null=True, blank=None)
-    updated_at = models.DateTimeField(auto_now_add=True, verbose_name='Updated Date', editable=False, null=True, blank=None)
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name='Created Date', editable=False, null=True, blank=None)
+    updated_at = models.DateTimeField(auto_now=True, verbose_name='Updated Date', editable=False, null=True, blank=None)
 
     class Meta:
 	
