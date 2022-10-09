@@ -673,14 +673,15 @@ class MongoService(object):
 					previous_date = current_date - timedelta(days= 30)
 				
 				else:
-					
 					previous_date = current_date - timedelta(days= 7)
-
-				query_match["info.crawled_time"] = {"$gt": str(current_date), "$lt": str(previous_date)}
+				
+				start_date = datetime(previous_date.year, previous_date.month, previous_date.day, 9, 0 )
+				end_date = datetime(previous_date.year, previous_date.month, previous_date.day + 1, 8, 0)
+				query_match["info.crawled_time"] = {"$gt": str(start_date), "$lt": str(end_date)}
 				
 			else:
 
-				query_match["info.crawled_time"] = {"$gt": str(current_date  - timedelta(days= 365))}
+				query_match["info.crawled_time"] = {"$gt": str(current_date  - timedelta(days= 1))}
 				
 			
 			query.append(query_get_id)
