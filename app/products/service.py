@@ -128,7 +128,7 @@ class ProductsService(object):
 
                 results = results = Products.objects.filter(**filter).distinct('sub_category').values("sub_category")
             
-            return results if results else False
+            return results if results else None
            
                 
         except Exception as e:
