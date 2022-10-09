@@ -546,6 +546,8 @@ class MongoService(object):
 					previous_date = current_date - timedelta(days= 365)
 
 			
+				start_date = datetime(previous_date.year, previous_date.month, previous_date.day, 9, 0 )
+				end_date = datetime(previous_date.year, previous_date.month, previous_date.day + 1, 8, 0)
 
 				my_client = MongoService().get_db_handle(db_name, host, port, username, password)
 				dbname = my_client[0]
@@ -556,7 +558,7 @@ class MongoService(object):
 						"$unwind": "$products_and_price",
 					},
 					{
-						"$match": {"info.activity": str(activity), "info.crawled_time" : {"$gt": str(current_date), "$lt": str(previous_date)}},
+						"$match": {"info.activity": str(activity), "info.crawled_time" : {"$gt": str(start_date), "$lt": str(end_date)}},
 					},
 					{
 						"$group": 
@@ -680,8 +682,8 @@ class MongoService(object):
 				query_match["info.crawled_time"] = {"$gt": str(start_date), "$lt": str(end_date)}
 				
 			else:
-
-				query_match["info.crawled_time"] = {"$gt": str(current_date  - timedelta(days= 1))}
+				start_date = datetime(current_date.year, current_date.month, current_date.day - 1, 8, 0 )
+				query_match["info.crawled_time"] = {"$gt": str(start_date)}
 				
 			
 			query.append(query_get_id)
