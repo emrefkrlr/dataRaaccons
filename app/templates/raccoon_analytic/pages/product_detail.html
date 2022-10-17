@@ -82,11 +82,11 @@
                                             </svg>
                                         </span>
                                         <!--end::Svg Icon-->
-                                        <div class="fs-4 fw-bolder" data-kt-countup="true" data-kt-countup-value="{{activity_category_detail.avg_price}}" data-kt-countup-prefix="&#8378;"> {{activity_category_detail.avg_price}} </div>
+                                        <div class="fs-4 fw-bolder" data-kt-countup="true" data-kt-countup-value="{{activity_category_detail.price__avg}}" data-kt-countup-prefix="&#8378;"> {{activity_category_detail.price__avg}} </div>
                                     </div>
                                     <!--end::Number-->
                                     <!--begin::Label-->
-                                    <div class="fw-bold fs-6 text-gray-400">{{activity_category_name|replace_and_capitalize}} avg. price </div>
+                                    <div class="fw-bold fs-6 text-gray-400">{{activity_sub_category_name|replace_and_capitalize}} avg. price </div>
                                     <!--<div class="fw-bold fs-6 text-gray-400">{{product.sub_category|replace_and_capitalize}} avg. price </div>-->
                                     <!--end::Label-->
                                 </div>
@@ -95,7 +95,7 @@
                                 <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                                     <!--begin::Number-->
                                     <div class="d-flex align-items-center">
-                                        {% if product.price > activity_category_detail.avg_price %}
+                                        {% if product.price > activity_category_detail.price__avg %}
                                         <!--begin::Svg Icon | path: assets/media/icons/duotune/arrows/arr003.svg-->
                                         <span class="svg-icon svg-icon-3 svg-icon-success me-2">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -251,7 +251,7 @@
                             <!--end::Product=-->
                             <!--begin::SKU=-->
                             <td class="text-end pe-0">
-                                <span class="fw-bolder"> {{product.sub_category|replace_and_capitalize}} </span>
+                                <span class="fw-bolder"> {{product.activity_sub_category}} </span>
                             </td>
                             <!--end::SKU=-->
 

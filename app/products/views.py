@@ -100,6 +100,8 @@ def product_deatil(request, id):
     product = ProductsService().get_product_by_id(id=id)
     activity = ActivitiesService().get_activity(activity=product.activity)
     activity_category = ActivitiesService().get_activity_category_by_name(activity_category=product.activity_category)
+    activity_category_sub_name = ActivitiesService().get_activity_sub_category_by_name(activity=activity, activity_category=activity_category, activity_sub_category=product.activity_sub_category)
+    
 
     context = {
         "title": "{} | RaccoonAnalytic Your smart assistant with data solutions.".format(product.product_name)
@@ -119,36 +121,23 @@ def product_deatil(request, id):
             context["package_type"] = user_info["package_type"]
             context["product"] = product
             context["activity_category_name"] = activity_category.name
+            context["activity_sub_category_name"] = str(activity_category_sub_name)
 
             # PRODUCT STATISTICS
-            mongo_query = MongoService().avg_price_query_generator(get_id="sub_category", activity=activity, activity_category=activity_category)
-            #, sub_category=product.sub_category
-            activity_category_product_statistics_data = MongoService().get_avg_data(collection=activity, query=mongo_query)
-
-            if len(activity_category_product_statistics_data) > 0:
-                
-                activity_category_detail = {
-                    "product_count": activity_category_product_statistics_data[0]["count"],
-                    "min_price": round(min(activity_category_product_statistics_data[0]["minPrice"]), 3) if type(activity_category_product_statistics_data[0]["minPrice"]) == list else activity_category_product_statistics_data[0]["minPrice"],
-                    "max_price": round(max(activity_category_product_statistics_data[0]["maxPrice"]), 3) if type(activity_category_product_statistics_data[0]["maxPrice"]) == list else activity_category_product_statistics_data[0]["maxPrice"],
-                    "avg_price": round(activity_category_product_statistics_data[0]["averagePrice"], 3) if activity_category_product_statistics_data[0]["averagePrice"] else None,
-                }
-
-            else:
-
-                activity_category_detail = {
-                    "product_count": 0,
-                    "min_price": 0,
-                    "max_price": 0,
-                    "avg_price": 0,
-                }
-
-            context["activity_category_detail"] = activity_category_detail
+            activity_sub_category_avg_price = ProductsService().get_activity_sub_category_descriptive_statistics(activity=activity, activity_category=activity_category, activity_sub_category=activity_category_sub_name)
+            
+            context["activity_category_detail"] = {
+                "price__avg": round(activity_sub_category_avg_price["price__avg"], 3) if activity_sub_category_avg_price["price__avg"] else 0,
+                "price__min": round(activity_sub_category_avg_price["price__min"], 3) if activity_sub_category_avg_price["price__min"] else 0,
+                "price__max": round(activity_sub_category_avg_price["price__max"], 3) if activity_sub_category_avg_price["price__max"] else 0,
+                "price__count": round(activity_sub_category_avg_price["price__count"], 3) if activity_sub_category_avg_price["price__count"] else 0,
+            }
 
             # MATCHES PRODUCTS
 
             matches_products = ProductMatchesService().get_product_matches_products(id=product.id)
-            matches_products.sort(key=lambda x: x.price, reverse=True)
+            if matches_products:
+                matches_products.sort(key=lambda x: x.price, reverse=True)
             
             if matches_products:
                 context["matches_products"] = matches_products

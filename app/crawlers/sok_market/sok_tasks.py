@@ -30,22 +30,39 @@ class SokMarketTasks(object):
                             'page_name': str(crawler.page_name),
                             'page_category': str(crawler.page_category),
                             'page_url': str(crawler.page_url),
-                            'crawled_time': str(datetime.datetime.utcnow())
+                            'crawled_time': str(datetime.datetime.now()),
                         },
                     }
 
                     data['products_and_price'] = []
+                    
+                    if crawler.page_numbers >= 1:
 
-                    innerHTML = sok_crawler.SokCrawler().get_innerHTML(crawler.page_url)
-                    products_and_price = sok_crawler.SokCrawler().html_parser(innerHTML, get_crawler_config, crawler.page_category)
+                        for page in range(1, crawler.page_numbers + 1):
+
+                            innerHTML = sok_crawler.SokCrawler().get_innerHTML(crawler.page_url, page)
+                            products_and_price = sok_crawler.SokCrawler().html_parser(innerHTML, get_crawler_config, crawler.page_category)
                     
-                    if products_and_price:
+                            if products_and_price:
                             
-                        data['products_and_price'] = products_and_price
+                                data['products_and_price'] = data['products_and_price'] + products_and_price
                     
+                            else:
+
+                                print("sok_crawler_tasks products_and_price is False...")
+
                     else:
 
-                        print("sok_crawler_tasks products_and_price is False...")
+                        innerHTML = sok_crawler.SokCrawler().get_innerHTML(crawler.page_url)
+                        products_and_price = sok_crawler.SokCrawler().html_parser(innerHTML, get_crawler_config, crawler.page_category)
+
+                        if products_and_price:
+                            
+                            data['products_and_price'] = products_and_price
+                    
+                        else:
+
+                            print("sok_crawler_tasks products_and_price is False...")
 
                     if data['products_and_price']:
 

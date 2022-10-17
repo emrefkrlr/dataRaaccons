@@ -9,7 +9,7 @@ from products.service import ProductsService
 from products.models import Products
 from companies.models import Companies
 from companies.service import CompaniesService
-from activities.models import Activities, ActivityCategory
+from activities.models import Activities, ActivityCategory, ActivitySubCategory
 from products.product_matches import jaro_winkler_distance
 
 
@@ -44,6 +44,7 @@ def insert_new_products_task():
                 if get_mongo_data is not None and get_mongo_data["products_and_price"] is not None and len(get_mongo_data["products_and_price"]) > 0 :
                     
                     # If table is empty, add products without checking
+                    
                     if len(products) == 0:
 
                         for product_and_price in get_mongo_data["products_and_price"]:
@@ -57,7 +58,8 @@ def insert_new_products_task():
                                         ProductsService().insert_new_products(
                                             company = Companies.objects.get(name=crawler.company),
                                             activity = Activities.objects.get(name=crawler.activity),
-                                            activity_category = ActivityCategory.objects.get(name=crawler.activity_category),
+                                            activity_category = ActivitySubCategory.objects.filter(name="check")[0],
+                                            activity_sub_category = ActivitySubCategory.objects.get(name="check"),
                                             product_name = product_info["product_name"] if product_info["product_name"] else "None",
                                             price = product_info["price"],
                                             page_category = str(crawler.page_category),
@@ -81,6 +83,7 @@ def insert_new_products_task():
                                             company = Companies.objects.get(name=crawler.company),
                                             activity = Activities.objects.get(name=crawler.activity),
                                             activity_category = ActivityCategory.objects.get(name=crawler.activity_category),
+                                            activity_sub_category = ActivitySubCategory.objects.filter(name="check")[0],
                                             product_name = product_and_price["product_name"] if product_and_price["product_name"] else "None",
                                             price = product_and_price["price"],
                                             page_category = str(crawler.page_category),
@@ -122,6 +125,7 @@ def insert_new_products_task():
                                                     company = Companies.objects.get(name=crawler.company),
                                                     activity = Activities.objects.get(name=crawler.activity),
                                                     activity_category = ActivityCategory.objects.get(name=crawler.activity_category),
+                                                    activity_sub_category = ActivitySubCategory.objects.filter(name="check")[0],
                                                     product_name = product_info["product_name"] if product_info["product_name"] else "None",
                                                     price = product_info["price"],
                                                     page_category = str(crawler.page_category),
@@ -159,6 +163,7 @@ def insert_new_products_task():
                                                     company = Companies.objects.get(name=crawler.company),
                                                     activity = Activities.objects.get(name=crawler.activity),
                                                     activity_category = ActivityCategory.objects.get(name=crawler.activity_category),
+                                                    activity_sub_category = ActivitySubCategory.objects.filter(name="check")[0],
                                                     product_name = product_and_price["product_name"] if product_and_price["product_name"] else "None",
                                                     price = product_and_price["price"],
                                                     page_category = str(crawler.page_category),
@@ -227,8 +232,6 @@ def product_matches_task():
                             matched_score = score
                             )
                     
-                        if insert is not True:
-                            raise Exception('insert_new_products_task Exception: Postgre insert failed \n First Product: {} \n Second Product: {} \nActivity: {} \n '.format(first.second_product_id, second.second_product_id,activity))
 
         print("Celery product_matches_task done....", now)
 

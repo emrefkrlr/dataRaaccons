@@ -3,7 +3,8 @@ from itertools import product
 from pyexpat import model
 from django.db import models
 from companies.models import Companies
-from activities.models import Activities, ActivityCategory
+from activities.models import Activities, ActivityCategory, ActivitySubCategory
+from smart_selects.db_fields import ChainedForeignKey
 # Create your models here.
 
 
@@ -11,7 +12,9 @@ class Products(models.Model):
     
     company = models.ForeignKey(Companies, null=None, related_name='prodcut_company_name', on_delete=models.CASCADE)
     activity = models.ForeignKey(Activities, null=None, related_name='product_activitiy_name', on_delete=models.CASCADE)
-    activity_category = models.ForeignKey(ActivityCategory, null=None, related_name='product_main_category_name', on_delete=models.CASCADE)
+    activity_category = ChainedForeignKey(ActivityCategory, chained_field="activity", chained_model_field="activity", show_all=False, auto_choose=True, default=1)
+    #activity_category = models.ForeignKey(ActivityCategory, null=None, related_name='product_main_category_name', on_delete=models.CASCADE)
+    activity_sub_category = ChainedForeignKey(ActivitySubCategory, chained_field="activity_category", chained_model_field="activity_category", show_all=False, auto_choose=True, default=1)
     product_name = models.CharField(max_length=250, null=False, blank=None, verbose_name='Product Name')
     price = models.FloatField(null=True, blank=True, verbose_name="Product Price")
     page_category = models.CharField(max_length=250, null=False, blank=None, verbose_name='Page Category Name')
