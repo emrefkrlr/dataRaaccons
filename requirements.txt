@@ -9,7 +9,6 @@ dnspython
 django-jazzmin
 django-smart-selects
 fake-useragent
-undetected-chromedriver
 requests==2.18.4
 random_user_agent==1.0.1
 beautifulsoup4==4.11.1
