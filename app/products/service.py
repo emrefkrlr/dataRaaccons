@@ -1,6 +1,7 @@
 from unittest import result
 from products.models import Products, ProductMatches
 from datetime import datetime, timedelta
+from django.db.models import Count, Max, Min, Avg
 
 
 class ProductsService(object):
@@ -165,7 +166,7 @@ class ProductsService(object):
         
         except Exception as e:
 
-            print("ProductService get_companies_in_activity Exception: {} Activity: {}".format(e, activity))
+            print("ProductService get_companies_in_activity Exception: {} Activity: {}".format(e, activity_category))
 
 
 
@@ -214,6 +215,97 @@ class ProductsService(object):
         
 
         return last_update.updated_at
+
+
+
+
+
+
+    def get_activity_descriptive_statistics(self, activity):
+
+        try:
+            
+            result = Products.objects.filter(activity=activity).aggregate(Avg("price"), Min("price"), Max("price"), Count("price"))
+            return result if result else False
+        except Exception as e:
+            print("get_activity_descriptive_statistics exception: {}".format(e))
+
+
+
+    def get_activity_category_descriptive_statistics(self, activity, activity_category):
+
+        try:
+            
+            result = Products.objects.filter(activity=activity, activity_category=activity_category).aggregate(Avg("price"), Min("price"), Max("price"), Count("price"))
+
+            return result if result else False
+
+        except Exception as e:
+            print("get_activity_category_descriptive_statistics exception: {}".format(e))
+
+    def get_activity_sub_category_descriptive_statistics(self, activity, activity_category, activity_sub_category):
+        try:
+            
+            result = Products.objects.filter(activity=activity, activity_category=activity_category, activity_sub_category=activity_sub_category).aggregate(Avg("price"), Min("price"), Max("price"), Count("price"))
+
+            return result if result else False
+
+        except Exception as e:
+            print("get_activity_category_descriptive_statistics exception: {}".format(e))
+
+
+
+    def get_company_activity_descriptive_statistics(self, activity ,company):
+
+        try:
+
+            result = Products.objects.filter(activity=activity, company=company).aggregate(Avg("price"), Min("price"), Max("price"), Count("price"))
+
+            return result if result else False
+
+        except Exception as e:
+            print("get_company_activity_category_descriptive_statistics exception: {}".format(e))
+
+
+
+    def get_company_activity_category_descriptive_statistics(self, activity, activity_category ,company):
+
+        try:
+
+            #result = Products.objects.values('activity_category').filter(
+            #    company=company, 
+            #    activity=activity
+            #    ).annotate(
+            #        Avg("price"), 
+            #        Min("price"), 
+            #        Max("price"), 
+            #        Count("price")
+            #        )
+
+            result = Products.objects.filter(activity=activity, activity_category=activity_category, company=company).aggregate(Avg("price"), Min("price"), Max("price"), Count("price"))
+
+            return result if result else False
+
+        except Exception as e:
+            print("get_company_activity_category_descriptive_statistics exception: {}".format(e))
+
+
+    def get_company_activity_sub_category_descriptive_statistics(self, activity, activity_category, activity_sub_category, company):
+
+        try:
+
+            result = Products.objects.filter(activity=activity, activity_category=activity_category, activity_sub_category=activity_sub_category, company=company).aggregate(Avg("price"), Min("price"), Max("price"), Count("price"))
+
+            return result if result else False
+
+        except Exception as e:
+
+            print("get_company_activity_sub_category_descriptive_statistics exception: {}".format(e))
+
+
+
+
+
 
     
 class ProductMatchesService(ProductsService):

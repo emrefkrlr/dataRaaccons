@@ -1,7 +1,5 @@
 from itertools import product
-from re import T
 from shutil import ExecError
-from unittest import result
 from products.service import ProductsService
 from companies.service import CompaniesService
 from activities.service import ActivitiesService
@@ -9,103 +7,61 @@ from mongo.services import MongoService
 from vendor.math import math_functions
 from statistics import mean
 import json
-import datetime
 
 
 class DashboardService(object):
 
-
-
-
-    def get_general_statistics(self, activity, activity_category=None):
-
-        results = {}
-
-        if activity_category:
-
-            cuurent_data = self.get_activity_category_based_descriptive_statistics_data(activity=activity, activity_category=activity_category)
-            previous_data = self.get_activity_category_based_descriptive_statistics_data(activity=activity, activity_category=activity_category, previous=True)
-            
-
-        else:
-
-            cuurent_data = self.get_activity_based_descriptive_statistics_data(activity=activity)
-            previous_data = self.get_activity_based_descriptive_statistics_data(activity=activity, previous=True)
-
-        results["current_data"] = cuurent_data
-        results["previous_data"] = previous_data if previous_data["success"] else {"success": False}
-
-        return results
-
-
-    def get_companies_statistics(self, activity, activity_category=None):
-
-        results={}
-
-        if activity_category:
-
-            cuurent_data = self.get_companies_all_statistics_data(activity=activity, activity_category=activity_category)
-            previous_data = self.get_companies_all_statistics_data(activity=activity, activity_category=activity_category, previous=True)
-
-        else:
-
-            cuurent_data = self.get_companies_all_statistics_data(activity=activity)
-            previous_data = self.get_companies_all_statistics_data(activity=activity, previous=True)
-
-
-        results["current_data"] = cuurent_data
-        results["previous_data"] = previous_data if previous_data["success"] else {"success": False}
-
-        return results
-
-
-    def get_main_company_statistics(self, main_company, activity, activity_category=None):
-
-        results={}
-
-        if activity_category:
-
-            cuurent_data = self.main_company_statstics_data(main_company=main_company, activity=activity, activity_category=activity_category)
-            previous_data = self.main_company_statstics_data(main_company=main_company, activity=activity, activity_category=activity_category, previous=True)
-
-        else:
-
-            cuurent_data = self.main_company_statstics_data(main_company=main_company, activity=activity)
-            previous_data = self.main_company_statstics_data(main_company=main_company, activity=activity, previous=True)
-
-
-        results["current_data"] = cuurent_data
-        results["previous_data"] = previous_data 
-
-        return results
-
-
-
-    def get_activity_based_descriptive_statistics_data(self, activity, previous=False):
+    def get_activity_based_descriptive_statistics(self, activity):
 
         results = {
-            "avg_price_label": "Price information",
-            "avg_price_sub_label": "Price information for {}.".format(activity),
-            "company_count_label": "Number of company in the {}.".format(activity),
-            "product_count_label": "Number of products in the {}.".format(activity),
-            "data": [],
+            "label": "Price information",
+            "sub_label": "Price information for {}.".format(activity),
+            "current_data": [],
+            "previous_data": []
         }
+
+        # Current Data
+
+        try:
+            
+            current_mongo_data = MongoService().find_one(collection="dashboard", query={"name": "activity_based_descriptive_statistics"})
+
+            for activity_data in current_mongo_data["data"]:
+
+                if activity_data["activity"] == str(activity):
+
+                    results["current_data"].append(activity_data["statistics"][0])
+                    results["success"] = True
+
+                    break
+        
+        except Exception as e:
+
+            results["success"] = False
+
+            print("get_activity_based_descriptive_statistics get current_mongo_data error: {}".format(e))
+
+        # data from a week ago
 
         try:
 
-            if previous:
-                previous_query = MongoService().get_previous_statistics(name="activity_based_descriptive_statistics", week=True)
-                mongo_data = MongoService().find_one(collection="dashboard", query=previous_query)
-            else:
-                mongo_data = MongoService().find_one(collection="dashboard", query={"name": "activity_based_descriptive_statistics"})
-                
-            if mongo_data is not None:
-                for activity_data in mongo_data["data"]:
+            previous_query = MongoService().get_previous_statistics(collection="dashboard", name="activity_based_descriptive_statistics", week=True)
+            previous_mongo_data = MongoService().find_one(collection="dashboard", query=previous_query)
+
+            if previous_mongo_data is not None:
+
+                for activity_data in previous_mongo_data["data"]:
+
                     if activity_data["activity"] == str(activity):
-                        results["data"].append(activity_data["statistics"][0])
+
+                        results["previous_data"].append(activity_data["statistics"][0])
+                        results["success"] = True
+
                         break
+
             else:
-                results["data"].append({
+                
+                results["previous_data"].append({
                     "company_count":0,
                     "product_count":0,
                     "product_min_price":0,
@@ -113,45 +69,70 @@ class DashboardService(object):
                     "product_avg_price":0
                 })
 
-            results["success"] = True
-            results["cache"] = False
+        except Exception as e:
 
+            print("get_activity_category_based_descriptive_statistics get previous_mongo_data error: {}".format(e))
+
+        return results
+
+
+    def get_activity_category_based_descriptive_statistics(self, activity, activity_category):
+
+        results = {
+            "label": "Price information",
+            "sub_label": "Price information for {}.".format(activity_category.lower()),
+            "current_data": [],
+            "previous_data": []
+        }
+
+        # Current Data
+        
+        try:
+            
+            current_mongo_data = MongoService().find_one(collection="dashboard", query={"name": "activity_category_based_descriptive_statistics"})
+
+            for activity_data in current_mongo_data["data"]:
+
+                if activity_data["activity"] == str(activity):
+
+                    for activity_category_data in activity_data["statistics"]:
+
+                        if activity_category_data["activity_category"] == str(activity_category):
+
+                            results["current_data"].append(activity_category_data)
+                            results["success"] = True
+
+                            break
+        
         except Exception as e:
 
             results["success"] = False
-            results["cache"] = False
-            print("get_activity_based_descriptive_statistics error: {}".format(e))
-            
-        return results
 
-        
-    def get_activity_category_based_descriptive_statistics_data(self, activity, activity_category, previous=False):
-        
-        results = {
-            "avg_price_label": "Price information",
-            "avg_price_sub_label": "Price information for {}.".format(activity_category),
-            "company_count_label": "Number of company in the {}.".format(activity_category),
-            "product_count_label": "Number of products in the {}.".format(activity_category),
-            "data": [],
-        }
+            print("get_activity_category_based_descriptive_statistics get current_mongo_data error: {}".format(e))
+
+        # data from a week ago
 
         try:
 
-            if previous:
-                previous_query = MongoService().get_previous_statistics(name="activity_category_based_descriptive_statistics", week=True)
-                mongo_data = MongoService().find_one(collection="dashboard", query=previous_query)
-            else:
-                mongo_data = MongoService().find_one(collection="dashboard", query={"name": "activity_category_based_descriptive_statistics"})
+            previous_query = MongoService().get_previous_statistics(collection="dashboard", name="activity_category_based_descriptive_statistics", week=True)
+            previous_mongo_data = MongoService().find_one(collection="dashboard", query=previous_query)
 
-            if mongo_data is not None:
-                for activity_data in mongo_data["data"]:
+            if previous_mongo_data is not None:
+
+                for activity_data in previous_mongo_data["data"]:
+
                     if activity_data["activity"] == str(activity):
+
                         for activity_category_data in activity_data["statistics"]:
+
                             if activity_category_data["activity_category"] == str(activity_category):
-                                results["data"].append(activity_category_data)
+
+                                results["previous_data"].append(activity_category_data)
                                 break
+
             else:
-                results["data"].append({
+                
+                results["previous_data"].append({
                     "activity_category":str(activity_category),
                     "company_count":0,
                     "product_count":0,
@@ -160,467 +141,188 @@ class DashboardService(object):
                     "product_avg_price":0
                 })
 
-            results["success"] = True
-            results["cache"] = False
-
         except Exception as e:
 
-            results["success"] = False
-            results["cache"] = False
-            print("get_activity_category_based_descriptive_statistics error: {}".format(e))
-        
+            print("get_activity_category_based_descriptive_statistics get previous_mongo_data error: {}".format(e))
+
         return results
 
-
-    def get_companies_all_statistics_data(self, activity, activity_category=None, previous=False):
+    def get_companies_all_statistics(self, activity, activity_category=None, activity_sub_category=None, main_company=None):
 
         results = {
-            "data_table_label": "Descriptive statistics for companies",
-            "product_count_label": "Product distribution of companies.",
-            "average_price_label": "Average prices of companies",
-            "chart_data": [],
-            "chart_company": [],
-            "chart_product_count": [],
-            "chart_avg_price": [],
-            "chart_colors": ["bg-info", "bg-success", "bg-primary", "bg-danger", "bg-BurlyWood", "bg-pink", "bg-green", "bg-gray-dark", "bg-purple", "bg-orange", "bg-DarkSlateGrey", "bg-gray", "bg-yellow", "bg-Sienna", "bg.Khaki", "--bs-secondary-rgb", "--bs-indigo", "--bs-gray-400", "--bs-warning-rgb"],
+            "all_companies_data": {
+                "data_table": [],
+                "data_product_count_by_companies": [],
+                "data_avg_price_by_companies": [],
+                "data_pie": [],
+                "data_pie_product_count":[],
+                "data_pie_label":[]
+            },
+
+            "main_company_data": {
+                "data_table": [],
+                "data_product_count_by_companies": [],
+                "data_avg_price_by_companies": [],
+                "data_pie_product_count":[],
+                "data_pie_label":[]
+            },
             
         }
-
+        
+        current_activity_data = None
+        
         try:
 
-            if previous:
-                previous_query = MongoService().get_previous_statistics(name="companies_all_statistics", week=True)
-                mongo_data = MongoService().find_one(collection="dashboard", query=previous_query)
-            else:
-                mongo_data = MongoService().find_one(collection="dashboard", query={"name": "companies_all_statistics"})
+            current_mongo_data = MongoService().find_one(collection="dashboard", query={"name": "companies_all_statistics"})
+            
+            if current_mongo_data is not None:
 
-            if mongo_data:
-                # get companies statistics
-                for activity_data in mongo_data["data"]:
+                for activity_data in current_mongo_data["data"]:
+
                     if activity_data["activity"] == str(activity):
-                        company_data = activity_data["statistics"]
-                        results["main_data"] = company_data
+
+                        current_activity_data = activity_data["statistics"]
+
                         break
 
-                if activity_category:
-                    results["data_table_sub_label"] = "Category based statistics of companies for {}.".format(activity_category)
-                    results["product_count_sub_label"] = "Product distribution of companies in {}.".format(activity_category)
-                    results["average_price_sub_label"] = "Average prices of companies in category {}.".format(activity_category)
-                    for activity_categories_data in company_data:
-                        for activity_category_data in activity_categories_data["activity_categories_data"]:
-                            if activity_category_data["activity_category"] == str(activity_category):
-                                activity_categories_data["activity_category_data"] = activity_category_data
-                                results["chart_data"].append({
-                                    "company_name": activity_categories_data["company_name"],
-                                    "product_count": activity_category_data["product_count"],
-                                    "avg_price": activity_category_data["product_avg_price"],
-                                })
-                else:
-                    results["data_table_sub_label"] = "Category based statistics of companies for {}.".format(activity)
-                    results["product_count_sub_label"] = "Product distribution of companies in {}.".format(activity)
-                    results["average_price_sub_label"] = "Average prices of companies in category {}.".format(activity)
-                    for activity_categories_data in company_data:
-                        results["chart_data"].append({
-                            "company_name": activity_categories_data["company_name"],
-                            "product_count": activity_categories_data["product_count"],
-                            "avg_price": activity_categories_data["product_avg_price"],
-                        })
-
-                #pie data
-                results["chart_data"] = sorted(results["chart_data"], key=lambda x: x['product_count'], reverse=True)
-
-                for chart_data in results["chart_data"]:
-                    results["chart_company"].append(chart_data["company_name"])
-                    results["chart_product_count"].append(chart_data["product_count"])
-                    results["chart_avg_price"].append(chart_data["avg_price"])
-                    
-                results["success"] = True
-                results["cache"] = False
-            
-            else:                
-                results["success"] = False
-                results["cache"] = False
-
         except Exception as e:
+            print("get_companies_all_statistics get current_mongo_data error: {}".format(e))
 
-            results["success"] = False
-            results["cache"] = False
-            print("get_companies_all_statistics_data error: {}".format(e))
+        
+        if current_activity_data:
 
-        return results
-
-
-    def main_company_statstics_data(self, main_company, activity, activity_category=None, previous=False):
-
-        results = {
-            "chart_company": [],
-            "chart_product_count": [],
-            "chart_avg_price": [],
-        }
-
-        try:
-
-            if previous:
-                previous_query = MongoService().get_previous_statistics(name="companies_all_statistics", week=True)
-                mongo_data = MongoService().find_one(collection="dashboard", query=previous_query)
-            else:
-                mongo_data = MongoService().find_one(collection="dashboard", query={"name": "companies_all_statistics"})
-
-            if mongo_data:
-                # get companies statistics
-                for activity_data in mongo_data["data"]:
-                    if activity_data["activity"] == str(activity):
-                        for companies_data in activity_data["statistics"]:
-                            if companies_data["company"] == str(main_company):
-                                main_company_data = companies_data
-                                results["main_data"] = main_company_data
-                                break
-
-                if activity_category:
-                    for activity_category_data in main_company_data["activity_categories_data"]:
-                        if activity_category_data["activity_category"] == str(activity_category):
-                            main_company_data["activity_category_data"] = activity_category_data
-                            results["chart_company"].append(main_company_data["company_name"])
-                            results["chart_product_count"].append(activity_category_data["product_count"])
-                            companies = ProductsService().get_companies(activity=activity).count()
-                            for i in range(companies):
-                                results["chart_avg_price"].append(activity_category_data["product_avg_price"])
-                else:
-                    results["chart_company"].append(main_company_data["company_name"])
-                    results["chart_product_count"].append(main_company_data["product_count"])
-                    companies = ProductsService().get_companies(activity=activity).count()
-                    for i in range(companies):
-                        results["chart_avg_price"].append(main_company_data["product_avg_price"])
-            
-                results["success"] = True
-                results["cache"] = False
-
-            else:
-                results["main_data"] = {
-                    "company":"migros_sanal_market",
-                    "company_name":"Migros",
-                    "logo":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlGHpmJZVOeEFIZs3WtHeLJE6WbcJB0LruzLSBZW-ceSGn3-RzyykpEhN437-1aU3i0nQ&usqp=CAU",
-                    "product_count":0,
-                    "product_min_price":0,
-                    "product_max_price":0,
-                    "product_avg_price":0,
-                    "activity_category_data":{
-                        "activity_category":"Meyve ve Sebze",
-                        "product_count":0,
-                        "product_min_price":0,
-                        "product_max_price":0,
-                        "product_avg_price":0,
-                    }
+            for get_activity_statistics in current_activity_data:
+                
+                # data_table
+                company_section = {
+                    "company_name": get_activity_statistics["company_name"],
+                    "company_logo": get_activity_statistics["logo"],
+                    "comany_html_id": get_activity_statistics["company"],
+                    "data": []
                 }
-                results["success"] = False
-                results["cache"] = False
 
-        except Exception as e:
+                if activity_category:
 
-            results["success"] = False
-            results["cache"] = False
-            print("get_companies_all_statistics_data error: {}".format(e))
+                    for activity_category_details in get_activity_statistics["activity_categories_data"]:
+
+                        if activity_category_details["activity_category"] == str(activity_category):
+
+                            # data_product_count_by_companies
+                            company_proucts = {
+                                "company_name": get_activity_statistics["company_name"],
+                                "company_logo": get_activity_statistics["logo"],
+                                "comany_html_id": get_activity_statistics["company"],
+                                "product_count": activity_category_details["product_count"]
+                            }
+                            # data_product_count_by_companies
+                            results["all_companies_data"]["data_product_count_by_companies"].append(company_proucts)
+                            
+                            # data_pie
+                            if activity_category_details["product_count"] > 0:
+
+                                # data_pie
+                                results["all_companies_data"]["data_pie"].append({
+                                    "company_name": get_activity_statistics["company_name"],
+                                    "product_count": activity_category_details["product_count"]
+                                })
+
+                                if main_company and main_company == get_activity_statistics["company"]:
+
+                                    # data_pie_product_count
+                                    results["main_company_data"]["data_pie_product_count"].append(activity_category_details["product_count"])
+
+                                    # data_pie_label
+                                    results["main_company_data"]["data_pie_label"].append(get_activity_statistics["company_name"])
 
 
-        return results
 
+                            # data_avg_price_by_companies
+                            company_avg_price = {
+                                "company_name": get_activity_statistics["company_name"],
+                                "company_logo": get_activity_statistics["logo"],
+                                "comany_html_id": get_activity_statistics["company"],
+                                "avg_price": activity_category_details["product_avg_price"]
+                            }
+                            
+                            # data_avg_price_by_companies
+                            results["all_companies_data"]["data_avg_price_by_companies"].append(company_avg_price)
 
-
-
-
-
-
-
-
-
-
-
-
-
-    def get_companies_all_statistics123(self, activity, activity_category=None, activity_sub_category=None, main_company=None):
-
-        cache_cuurent_main_company_data = MongoService().find_one(collection="cache", query={"name": "get_companies_all_statistics", "activity": str(activity), "activity_category": str(activity_category)})
-        
-        if cache_cuurent_main_company_data:
-
-            results = cache_cuurent_main_company_data
-        
-        else:
-            results = {
-                "name": "get_companies_all_statistics",
-                "activity": str(activity),
-                "activity_category": str(activity_category),
-                "company": str(main_company),
-                "created_date": str(datetime.datetime.now()),
-                "expired_at": str(datetime.datetime.now() + datetime.timedelta(hours = int(6))),
-                "all_companies_data": {
-                    "data_table": [],
-                    "data_product_count_by_companies": [],
-                    "data_avg_price_by_companies": [],
-                    "data_pie": [],
-                    "data_pie_product_count":[],
-                    "data_pie_label":[],
-                    "data_pie_avg_price":[],
-                    "data_pie_avg_price_label":[],
-                    "pie_colors": ["bg-info", "bg-success", "bg-primary", "bg-danger", "bg-BurlyWood", "bg-pink", "bg-green", "bg-gray-dark", "bg-purple", "bg-orange", "bg-DarkSlateGrey", "bg-gray", "bg-yellow", "bg-Sienna", "bg.Khaki", "--bs-secondary-rgb", "--bs-indigo", "--bs-gray-400", "--bs-warning-rgb"],
-                },
-
-                "main_company_data": {
-                    "data_table": [],
-                    "data_product_count_by_companies": [],
-                    "data_avg_price_by_companies": [],
-                    "data_pie_product_count":[],
-                    "data_pie_label":[],
-                    "data_pie_avg_price":[],
-                    "data_pie_avg_price_label":[]
-                },
-                "main_company": False
-                
-            }
-            
-            current_activity_data = None
-            
-            try:
-
-                current_mongo_data = MongoService().find_one(collection="dashboard", query={"name": "companies_all_statistics"})
-                
-                if current_mongo_data is not None:
-
-                    for activity_data in current_mongo_data["data"]:
-
-                        if activity_data["activity"] == str(activity):
-
-                            current_activity_data = activity_data["statistics"]
+                            # data_table
+                            details_data = activity_category_details["activity_sub_categories_data"]
 
                             break
 
-            except Exception as e:
-                print("get_companies_all_statistics get current_mongo_data error: {}".format(e))
-
-            
-            if current_activity_data:
-
-                for get_activity_statistics in current_activity_data:
-                    
+                else:
                     # data_table
-                    company_section = {
+                    details_data = get_activity_statistics["activity_categories_data"]
+
+                    # data_product_count_by_companies
+                    company_proucts = {
                         "company_name": get_activity_statistics["company_name"],
                         "company_logo": get_activity_statistics["logo"],
                         "comany_html_id": get_activity_statistics["company"],
-                        "data": []
+                        "product_count": get_activity_statistics["product_count"]
                     }
+                    # data_product_count_by_companies
+                    results["all_companies_data"]["data_product_count_by_companies"].append(company_proucts)
 
-                    if activity_category:
+                    if get_activity_statistics["product_count"] > 0:
 
-                        for activity_category_details in get_activity_statistics["activity_categories_data"]:
-
-                            if activity_category_details["activity_category"] == str(activity_category):
-
-                                # data_product_count_by_companies
-                                company_proucts = {
-                                    "company_name": get_activity_statistics["company_name"],
-                                    "company_logo": get_activity_statistics["logo"],
-                                    "comany_html_id": get_activity_statistics["company"],
-                                    "product_count": activity_category_details["product_count"]
-                                }
-                                # data_product_count_by_companies
-                                results["all_companies_data"]["data_product_count_by_companies"].append(company_proucts)
-                                
-                                # data_pie
-                                if activity_category_details["product_count"] > 0:
-
-                                    # data_pie
-                                    results["all_companies_data"]["data_pie"].append({
-                                        "company_name": get_activity_statistics["company_name"],
-                                        "product_count": activity_category_details["product_count"]
-                                    })
-
-                                    if main_company and main_company == get_activity_statistics["company"]:
-
-                                        # data_pie_product_count
-                                        results["main_company_data"]["data_pie_product_count"].append(activity_category_details["product_count"])
-
-                                        # data_pie_label
-                                        results["main_company_data"]["data_pie_label"].append(get_activity_statistics["company_name"])
-
-
-
-                                # data_avg_price_by_companies
-                                company_avg_price = {
-                                    "company_name": get_activity_statistics["company_name"],
-                                    "company_logo": get_activity_statistics["logo"],
-                                    "comany_html_id": get_activity_statistics["company"],
-                                    "avg_price": activity_category_details["product_avg_price"],
-                                    "min_price": activity_category_details["product_min_price"],
-                                    "max_price": activity_category_details["product_max_price"],
-                                }
-                                
-                                # data_avg_price_by_companies
-                                results["all_companies_data"]["data_avg_price_by_companies"].append(company_avg_price)
-
-                                # data_pie_avg_price
-                                results["all_companies_data"]["data_pie_avg_price"].append(activity_category_details["product_avg_price"])
-                                results["all_companies_data"]["data_pie_avg_price_label"].append(get_activity_statistics["company_name"])
-
-                                # data_table
-                                details_data = activity_category_details["activity_sub_categories_data"]
-
-                                break
-
-                    else:
-                        # data_table
-                        details_data = get_activity_statistics["activity_categories_data"]
-
-                        # data_product_count_by_companies
-                        company_proucts = {
+                        # data_pie
+                        results["all_companies_data"]["data_pie"].append({
                             "company_name": get_activity_statistics["company_name"],
-                            "company_logo": get_activity_statistics["logo"],
-                            "comany_html_id": get_activity_statistics["company"],
                             "product_count": get_activity_statistics["product_count"]
-                        }
-                        # data_product_count_by_companies
-                        results["all_companies_data"]["data_product_count_by_companies"].append(company_proucts)
-
-                        if get_activity_statistics["product_count"] > 0:
-
-                            # data_pie
-                            results["all_companies_data"]["data_pie"].append({
-                                "company_name": get_activity_statistics["company_name"],
-                                "product_count": get_activity_statistics["product_count"]
-                            })
-
-                            if main_company and main_company == get_activity_statistics["company"]:
-
-                                # data_pie_product_count
-                                results["main_company_data"]["data_pie_product_count"].append(get_activity_statistics["product_count"])
-
-                                # data_pie_label
-                                results["main_company_data"]["data_pie_label"].append(get_activity_statistics["company_name"])
-
-                        # data_avg_price_by_companies
-                        company_avg_price = {
-                            "company_name": get_activity_statistics["company_name"],
-                            "company_logo": get_activity_statistics["logo"],
-                            "comany_html_id": get_activity_statistics["company"],
-                            "avg_price": get_activity_statistics["product_avg_price"],
-                            "min_price": get_activity_statistics["product_min_price"],
-                            "max_price": get_activity_statistics["product_max_price"],
-                        }
-                                
-                        # data_avg_price_by_companies
-                        results["all_companies_data"]["data_avg_price_by_companies"].append(company_avg_price)
-
-                        # data_pie_avg_price
-                        results["all_companies_data"]["data_pie_avg_price"].append(get_activity_statistics["product_avg_price"])
-                        results["all_companies_data"]["data_pie_avg_price_label"].append(get_activity_statistics["company_name"])
-
-                    for detail_data in details_data:
-                        # data_table
-                        company_section["data"].append({
-
-                            "category": detail_data["activity_category"] if activity_category is None else detail_data["activity_sub_category"],
-                            "product_count": detail_data["product_count"],
-                            "min_price": detail_data["product_min_price"],
-                            "max_price": detail_data["product_max_price"],
-                            "avg_price": detail_data["product_avg_price"],
-
                         })
-                    
+
+                        if main_company and main_company == get_activity_statistics["company"]:
+
+                            # data_pie_product_count
+                            results["main_company_data"]["data_pie_product_count"].append(get_activity_statistics["product_count"])
+
+                            # data_pie_label
+                            results["main_company_data"]["data_pie_label"].append(get_activity_statistics["company_name"])
+
+                    # data_avg_price_by_companies
+                    company_avg_price = {
+                        "company_name": get_activity_statistics["company_name"],
+                        "company_logo": get_activity_statistics["logo"],
+                        "comany_html_id": get_activity_statistics["company"],
+                        "avg_price": get_activity_statistics["product_avg_price"]
+                    }
+                            
+                    # data_avg_price_by_companies
+                    results["all_companies_data"]["data_avg_price_by_companies"].append(company_avg_price)
+
+
+                for detail_data in details_data:
                     # data_table
-                    if main_company and main_company == get_activity_statistics["company"]:
+                    company_section["data"].append({
 
-                        results["main_company_data"]["data_table"].append(company_section)
-                        results["main_company_data"]["data_product_count_by_companies"].append(company_proucts)
-                        results["main_company_data"]["data_avg_price_by_companies"].append(company_avg_price)
-                        results["main_company_data"]["data_pie_avg_price_label"].append(main_company)
-                        results["main_company"] = False
-                    
-                    results["all_companies_data"]["data_table"].append(company_section)
+                        "category": detail_data["activity_category"] if activity_category is None else detail_data["activity_sub_category"],
+                        "product_count": detail_data["product_count"],
+                        "min_price": detail_data["product_min_price"],
+                        "max_price": detail_data["product_max_price"],
+                        "avg_price": detail_data["product_avg_price"],
+
+                    })
+                
+                # data_table
+                if main_company and main_company == get_activity_statistics["company"]:
+
+                    results["main_company_data"]["data_table"].append(company_section)
+                    results["main_company_data"]["data_avg_price_by_companies"].append(company_avg_price)
+                    results["main_company_data"]["data_product_count_by_companies"].append(company_proucts)
+                
+                results["all_companies_data"]["data_table"].append(company_section)
 
 
-            results["all_companies_data"]["data_pie"] = sorted(results["all_companies_data"]["data_pie"], key=lambda x: x['product_count'], reverse=True)
+        results["all_companies_data"]["data_pie"] = sorted(results["all_companies_data"]["data_pie"], key=lambda x: x['product_count'], reverse=True)
 
-            for pie_data in results["all_companies_data"]["data_pie"]:
-                results["all_companies_data"]["data_pie_label"].append(pie_data["company_name"])
-                results["all_companies_data"]["data_pie_product_count"].append(pie_data["product_count"])
+        for pie_data in results["all_companies_data"]["data_pie"]:
+            results["all_companies_data"]["data_pie_label"].append(pie_data["company_name"])
+            results["all_companies_data"]["data_pie_product_count"].append(pie_data["product_count"])
 
-            for i in results["all_companies_data"]["data_pie_avg_price"]:
-                results["main_company_data"]["data_pie_avg_price"].append(results["main_company_data"]["data_avg_price_by_companies"][0]["avg_price"])
-            
-            mongo = MongoService().insert_one(collection="cache", document=results)
         print(results)
-        return results
-
-    def get_main_company_statistics123(self, activity, main_company, activity_category=None, activity_sub_category=None):
-
-        cache_cuurent_main_company_data = MongoService().find_one(collection="cache", query={"name": "main_company_statistics", "activity": str(activity), "activity_category": str(activity_category), "company": str(main_company),})
-        
-        if cache_cuurent_main_company_data:
-
-            pass
-        
-        else:
-
-            mongo_data = {
-
-                "name": "main_company_statistics",
-                "activity": str(activity),
-                "activity_category": str(activity_category),
-                "company": str(main_company),
-                "created_date": str(datetime.datetime.now()),
-                "expired_at": str(datetime.datetime.now() + datetime.timedelta(hours = int(6))),
-                "data": []
-
-            }
-
-            current_mongo_data = MongoService().find_one(collection="dashboard", query={"name": "companies_all_statistics"})
-
-            for activity_mongo_data in current_mongo_data["data"]:
-
-                if activity_mongo_data["activity"] == str(activity):
-
-                    for statistics_data in activity_mongo_data["statistics"]:
-
-                        if statistics_data["company"] == str(main_company):
-
-                            main_company_data = statistics_data
-
-                            break
-            
-            if activity_category:
-
-                for activity_category_data in main_company_data["activity_categories_data"]:
-
-                    if activity_category_data["activity_category"] == str(activity_category):
-
-                        main_company_data["activity_category_data"] = activity_category_data
-                        main_company_data["data_pie_product_count"] = [activity_category_data["product_count"]]
-                        main_company_data["data_pie_label"] = [main_company_data["company_name"]]
-                        main_company_data["data_pie_avg_price"] = []
-                        main_company_data["data_pie_avg_price_label"] = [main_company_data["company_name"]]
-
-                        companies = ProductsService().get_companies(activity=activity).count()
-                        
-                        for i in range(companies):
-                            main_company_data["data_pie_avg_price"].append(activity_category_data["product_avg_price"])
-                        
-            else:
-
-                main_company_data["data_pie_product_count"] = [main_company_data["product_count"]]
-                main_company_data["data_pie_label"] = [main_company_data["company_name"]]
-                main_company_data["data_pie_avg_price"] = []
-                main_company_data["data_pie_avg_price_label"] = [main_company_data["company_name"]]
-
-                companies = ProductsService().get_companies(activity=activity).count()
-                        
-                for i in range(companies):
-                    main_company_data["data_pie_avg_price"].append(main_company_data["product_avg_price"])
-            
-            mongo_data["data"].append(main_company_data)
-            mongo = MongoService().insert_one(collection="cache", document=mongo_data)
-
-            return main_company_data
-        
         
 
         

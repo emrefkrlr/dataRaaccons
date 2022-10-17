@@ -6,8 +6,8 @@ from products.models import Products, ProductMatches
 @admin.register(Products)
 class ProductsAdmin(admin.ModelAdmin):
 
-  list_display = ['company', 'activity', 'activity_category', 'product_name', 'sub_category', 'price']
-  list_filter = ['company', 'activity', 'activity_category','sub_category']
+  list_display = ['company', 'activity', 'activity_category', "activity_sub_category", 'product_name', 'sub_category', 'price']
+  list_filter = ['company', 'activity', 'activity_category', "activity_sub_category", 'sub_category']
 
     
   class Meta:

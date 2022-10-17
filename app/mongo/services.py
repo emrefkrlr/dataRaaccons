@@ -20,6 +20,28 @@ class MongoService(object):
 			print("\nExeption get_db_handle: \n{}".format(e))
 
 
+	def delete_collection(self, collection):
+
+		try:
+		
+			my_client = self.get_db_handle()
+			dbname = my_client[0]
+			collection_name = dbname[str(collection)]
+			
+			if collection_name.drop():
+
+				return True
+
+			else:
+
+				return False
+
+		except Exception as e:
+			print("\nExeption: \n{}".format(e))
+
+
+
+
 	def insert_one(self, collection, document):
 		
 		try:
@@ -49,7 +71,7 @@ class MongoService(object):
 			print("\nExeption: \n{}".format(e))
 
 	
-	def find_one(self, db_name, host, port, username, password, collection, query=None):
+	def find_one(self, collection, db_name=None, host=None, port=None, username=None, password=None, query=None):
 		
 		try:
 			my_client = self.get_db_handle()
@@ -62,7 +84,7 @@ class MongoService(object):
 			print("\nExeption: \n{}".format(e))
 
 
-	def find(self, db_name, host, port, username, password, collection, query=None, distinct=None):
+	def find(self, collection, db_name=None, host=None, port=None, username=None, password=None, query=None, distinct=None):
 		
 		try:
 			my_client = self.get_db_handle()
@@ -509,6 +531,51 @@ class MongoService(object):
 
 		except Exception as e:
 			print("Mongo Service get_activity_based_average_prices_for_the_company Exception: \n{}".format(e))
+
+
+	# Emre Yeni
+
+	def get_previous_statistics(self, name, year=False, month=False, week=False):
+		
+
+		if [year,month, week].count(True) > 1:
+
+				return False
+
+		else:
+
+			current_date = datetime.now()
+
+			if year:
+
+				previous_date = current_date - timedelta(days= 365)
+
+			elif month:
+
+				previous_date = current_date - timedelta(days= 30)
+
+			elif week:
+
+				previous_date = current_date - timedelta(days= 7)
+				
+			else:
+
+				previous_date = current_date - timedelta(days= 1)
+
+			
+			start_date = datetime(previous_date.year, previous_date.month, previous_date.day, 0, 1 )
+			end_date = datetime(previous_date.year, previous_date.month, previous_date.day, 23, 59)
+			#query_match["time"] = {"$gt": str(start_date), "$lt": str(end_date)}
+		
+		query = {
+			"name": str(name),
+			"time": {"$gt": str(start_date), "$lt": str(end_date)}
+		}
+
+		return query
+
+
+		
 
 
 

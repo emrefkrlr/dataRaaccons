@@ -29,7 +29,7 @@ class A101Tasks(object):
                             'page_name': str(crawler.page_name),
                             'page_category': str(crawler.page_category),
                             'page_url': str(crawler.page_url),
-                            'crawled_time': str(datetime.datetime.utcnow())
+                            'crawled_time': str(datetime.datetime.now()),
                         },
                     }
 

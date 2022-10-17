@@ -1,5 +1,5 @@
 from django.contrib import admin
-from activities.models import Activities, ActivityCategory, ActivitySubCategory, MappingSubCategory
+from activities.models import Activities, ActivityCategory, ActivitySubCategory
 
 # Register your models here.
 
@@ -35,14 +35,3 @@ class ActivitySubCategoryAdmin(admin.ModelAdmin):
     
   class Meta:
     model = ActivitySubCategory
-
-
-@admin.register(MappingSubCategory)
-class MappingSubCategoryAdmin(admin.ModelAdmin):
-
-  list_display = ['mapping_activity_category', 'mapping_activity_sub_category', 'mongo_sub_category']
-  list_filter = ['mapping_activity_category', 'mapping_activity_sub_category', 'mongo_sub_category', 'status']
-
-    
-  class Meta:
-    model = MappingSubCategory

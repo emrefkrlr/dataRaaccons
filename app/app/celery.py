@@ -206,11 +206,12 @@ app.conf.beat_schedule = {
         'schedule': crontab(minute=30, hour='8'),
     },
 
-    'add-ayin_1_ve_3_haftasi_insert_new_sub_category': {
-        'task': 'activities.tasks.insert_new_sub_category',
-        'schedule': crontab(0, 0, day_of_month='1-7,15-21'),
-        
+    'add-every-8-20-dashbord_descriptive_statistics_task': {
+        'task': 'dashboard.tasks.dashbord_descriptive_statistics_task',
+        'schedule': crontab(minute=20, hour='8'),
     },
+
+
 
 
     #-------------------------------------------------------------#

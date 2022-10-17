@@ -1,5 +1,5 @@
 from unicodedata import name
-from activities.models import Activities, ActivityCategory, MappingSubCategory, ActivitySubCategory
+from activities.models import Activities, ActivityCategory, ActivitySubCategory
 
 
 class ActivitiesService(object):
@@ -69,34 +69,17 @@ class ActivitiesService(object):
         except Exception as e:
             print("ActivitiesService get_activity_category Exception: \n{}".format(e))
 
-    def get_activity_sub_category_by_name(self, activity_sub_category):
+    def get_activity_sub_category_by_name(self, activity, activity_category, activity_sub_category):
 
         try:
             
-            activity_sub_category = ActivitySubCategory.objects.get(status=1, name=activity_sub_category)
+            activity_sub_category = ActivitySubCategory.objects.get(status=1, activity=activity, activity_category=activity_category, name=activity_sub_category)
 
             # return activity category
             return activity_sub_category if activity_sub_category else False
 
         except Exception as e:
             print("ActivitiesService get_activity_category Exception: \n{}".format(e))
-
-
-    def get_mapping_activity_sub_categories_by_activity(self, activity):
-
-        try:
-
-            mapping_activity_sub_category = MappingSubCategory.objects.filter(status=1, mapping_activity=activity)
-        
-        except Exception as e:
-
-            print("get_mapping_activity_sub_categories_by_activity", e)
-
-            mapping_activity_sub_category = False
-
-        return mapping_activity_sub_category
-
-
 
     def get_personal_activities(self):
 
@@ -110,18 +93,17 @@ class ActivitiesService(object):
             print(" ActivitiesService get_personal_activities Exception: {}".format(e))
 
 
-    def insert_sub_category(self, **params):
+    def get_activity_sub_categories(self, activity_category):
 
         try:
-            insert = MappingSubCategory.objects.get_or_create(**params)
-            
-            if insert:
-                return True
-            else:
-                raise Exception('insert failed.')
+
+            activity_sub_categories = ActivitySubCategory.objects.filter(activity_category=activity_category)
+
+            return activity_sub_categories if activity_sub_categories else False
 
         except Exception as e:
-            print("\ninsert_new_products Exeption: \n{}".format(e))
+            print(" ActivitiesService get_activity_sub_categories Exception: {}".format(e))
+
 
 
 
