@@ -49,17 +49,39 @@ def insert_new_products_task():
 
                         for product_and_price in get_mongo_data["products_and_price"]:
                             
+                            matched_activity_sub_category = False
+
                             #for data from paging
                             if type(product_and_price) is list and product_and_price is not None:
 
                                 for product_info in product_and_price:
-                                    
+
+                                    activity_sub_categories = ActivitiesService().get_activity_sub_categories(activity_category=ActivityCategory.objects.get(name=crawler.activity_category))
+
+                                    for activity_sub_category in activity_sub_categories:
+
+                                        match_score = jaro_winkler_distance.get_jaro_distance(str(activity_sub_category), product_info["sub_category"], winkler=True)
+
+                                        if match_score > 0.75:
+
+                                            matched_activity_sub_category = str(activity_sub_category)
+
+                                    if matched_activity_sub_category:
+
+                                        recort_sub_category = ActivitySubCategory.objects.get(name=matched_activity_sub_category)
+
+                                    else:
+
+                                        recort_sub_category = ActivitySubCategory.objects.filter(name="check")[0]
+
+
+
                                     try:
                                         ProductsService().insert_new_products(
                                             company = Companies.objects.get(name=crawler.company),
                                             activity = Activities.objects.get(name=crawler.activity),
-                                            activity_category = ActivitySubCategory.objects.filter(name="check")[0],
-                                            activity_sub_category = ActivitySubCategory.objects.get(name="check"),
+                                            activity_category = ActivityCategory.objects.get(name=crawler.activity_category),
+                                            activity_sub_category = recort_sub_category,
                                             product_name = product_info["product_name"] if product_info["product_name"] else "None",
                                             price = product_info["price"],
                                             page_category = str(crawler.page_category),
@@ -76,6 +98,25 @@ def insert_new_products_task():
                             else:
 
                                 if product_and_price is not None:
+
+                                    activity_sub_categories = ActivitiesService().get_activity_sub_categories(activity_category=ActivityCategory.objects.get(name=crawler.activity_category))
+
+                                    for activity_sub_category in activity_sub_categories:
+
+                                        match_score = jaro_winkler_distance.get_jaro_distance(str(activity_sub_category), product_and_price["sub_category"], winkler=True)
+
+                                        if match_score > 0.75:
+
+                                            matched_activity_sub_category = str(activity_sub_category)
+
+                                    if matched_activity_sub_category:
+
+                                        recort_sub_category = ActivitySubCategory.objects.get(name=matched_activity_sub_category)
+
+                                    else:
+
+                                        recort_sub_category = ActivitySubCategory.objects.filter(name="check")[0]
+
                                     
                                     try:
                                         # insert data
@@ -83,7 +124,7 @@ def insert_new_products_task():
                                             company = Companies.objects.get(name=crawler.company),
                                             activity = Activities.objects.get(name=crawler.activity),
                                             activity_category = ActivityCategory.objects.get(name=crawler.activity_category),
-                                            activity_sub_category = ActivitySubCategory.objects.filter(name="check")[0],
+                                            activity_sub_category = recort_sub_category,
                                             product_name = product_and_price["product_name"] if product_and_price["product_name"] else "None",
                                             price = product_and_price["price"],
                                             page_category = str(crawler.page_category),
@@ -121,11 +162,29 @@ def insert_new_products_task():
                                             
                                             else:
 
+                                                activity_sub_categories = ActivitiesService().get_activity_sub_categories(activity_category=ActivityCategory.objects.get(name=crawler.activity_category))
+
+                                                for activity_sub_category in activity_sub_categories:
+
+                                                    match_score = jaro_winkler_distance.get_jaro_distance(str(activity_sub_category), product_info["sub_category"], winkler=True)
+
+                                                    if match_score > 0.75:
+
+                                                        matched_activity_sub_category = str(activity_sub_category)
+
+                                                if matched_activity_sub_category:
+
+                                                    recort_sub_category = ActivitySubCategory.objects.get(name=matched_activity_sub_category)
+
+                                                else:
+
+                                                    recort_sub_category = ActivitySubCategory.objects.filter(name="check")[0]
+
                                                 ProductsService().insert_new_products(
                                                     company = Companies.objects.get(name=crawler.company),
                                                     activity = Activities.objects.get(name=crawler.activity),
                                                     activity_category = ActivityCategory.objects.get(name=crawler.activity_category),
-                                                    activity_sub_category = ActivitySubCategory.objects.filter(name="check")[0],
+                                                    activity_sub_category = recort_sub_category,
                                                     product_name = product_info["product_name"] if product_info["product_name"] else "None",
                                                     price = product_info["price"],
                                                     page_category = str(crawler.page_category),
@@ -159,11 +218,29 @@ def insert_new_products_task():
                                             
                                             else:
 
+                                                activity_sub_categories = ActivitiesService().get_activity_sub_categories(activity_category=ActivityCategory.objects.get(name=crawler.activity_category))
+
+                                                for activity_sub_category in activity_sub_categories:
+
+                                                    match_score = jaro_winkler_distance.get_jaro_distance(str(activity_sub_category), product_and_price["sub_category"], winkler=True)
+
+                                                    if match_score > 0.75:
+
+                                                        matched_activity_sub_category = str(activity_sub_category)
+
+                                                if matched_activity_sub_category:
+
+                                                    recort_sub_category = ActivitySubCategory.objects.get(name=matched_activity_sub_category)
+
+                                                else:
+
+                                                    recort_sub_category = ActivitySubCategory.objects.filter(name="check")[0]
+
                                                 ProductsService().insert_new_products(
                                                     company = Companies.objects.get(name=crawler.company),
                                                     activity = Activities.objects.get(name=crawler.activity),
                                                     activity_category = ActivityCategory.objects.get(name=crawler.activity_category),
-                                                    activity_sub_category = ActivitySubCategory.objects.filter(name="check")[0],
+                                                    activity_sub_category = recort_sub_category,
                                                     product_name = product_and_price["product_name"] if product_and_price["product_name"] else "None",
                                                     price = product_and_price["price"],
                                                     page_category = str(crawler.page_category),
