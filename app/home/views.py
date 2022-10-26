@@ -18,7 +18,7 @@ def index(request):
     context['product_count'] = ProductsService().count_of_products_by_filter({'status': 1})
     context['company_count'] = CompaniesService().get_all_companies()
     context['sub_category_count'] = ProductsService().get_unique_sub_categories_by_filter({'status': 1})
-    
+
     if user:
         
         context['dashboard_url'] = True

@@ -19,9 +19,6 @@ def activity_overview_dashboard(request, activity):
         user_info = UserService().get_user(auth_user)
 
         if user_info["dashboard_status"]:
-
-            
-
             menues = LayoutService().get_menues(auth_user)
             context["menues"] = menues
             context["last_update"] = DashboardService().get_last_update_activity_date(activity=activity)
