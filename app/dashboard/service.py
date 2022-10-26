@@ -196,6 +196,7 @@ class DashboardService(object):
 
             if mongo_data:
                 # get companies statistics
+                print("\n----------", mongo_data["time"])
                 for activity_data in mongo_data["data"]:
                     if activity_data["activity"] == str(activity):
                         company_data = activity_data["statistics"]
