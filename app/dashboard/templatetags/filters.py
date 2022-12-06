@@ -20,17 +20,20 @@ def remove_substr(string, char):
 
 
 @register.filter
-def change_of_rate(main, general):
+def change_of_rate(current, previous):
 
-    ratio = math_functions.rate_of_change(last=main, now=general)
+    print("Current", current)
+    print("Previous", previous)
+
+    ratio = math_functions.rate_of_change(current=current, previous=previous)
     
     return ratio
 
 
 @register.filter
-def rate(main, p2):
+def rate(divisor, base):
 
-    rate = math_functions.rate(p1=main, p2=p2)
+    rate = math_functions.rate(divisor=divisor, base=base)
     
     return rate
 

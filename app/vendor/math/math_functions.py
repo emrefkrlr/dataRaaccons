@@ -1,18 +1,18 @@
-def rate_of_change(last, now):
+def rate_of_change(current, previous):
 
 
-    last = last if last != 0 else 1
-    now = now if now != 0 else 1
+    previous = previous if previous != 0 else 0.0000001
+    current = current if current != 0 else 0.0000001
     
-    rate = ((now-last)/last)*100
+    rate = ((current-previous)/previous)*100
 
     return round(rate,2)
 
 
-def rate(p1, p2):
+def rate(divisor, base):
 
-    p2 = p2 if p2 != 0 else 1
-    rate = (p1/p2)*100
+    base = base if base != 0 else 1
+    rate = (divisor/base)*100
 
     return round(rate,2)
 

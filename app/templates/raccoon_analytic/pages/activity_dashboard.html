@@ -684,7 +684,7 @@
                                 <div class="d-flex align-items-center mb-2">
                                     <!--begin::Title-->
                                     <span class="fs-2hx fw-bolder text-gray-800 me-2 lh-1 ls-n2">{{ general_statistics.current_data.data.0.product_count| safe }}</span>
-                                    
+
                                     <!--end::Title-->
                                     <!--begin::Label-->
                                     {% if general_statistics.current_data.data.0.product_count > general_statistics.previous_data.data.0.product_count %}
@@ -828,7 +828,7 @@
                                                     {% else %}
                                                     <span class="badge badge-lg badge-danger align-self-center px-2">
                                                     {% endif %}
-                                                    {{ general_statistics.previous_data.data.0.product_count|change_of_rate:general_statistics.current_data.data.0.product_count }}%
+                                                    {{ general_statistics.current_data.data.0.product_count|change_of_rate:general_statistics.previous_data.data.0.product_count}}%
                                                     </span>
                                                 </div>
                                                 <!--end::Info-->
@@ -857,7 +857,7 @@
                                                     {% else %}
                                                     <span class="badge badge-lg badge-danger align-self-center px-2">
                                                     {% endif %}
-                                                    {{ general_statistics.previous_data.data.0.product_avg_price|change_of_rate:general_statistics.current_data.data.0.product_avg_price }}%
+                                                    {{ general_statistics.current_data.data.0.product_avg_price|change_of_rate:general_statistics.previous_data.data.0.product_avg_price }}%
                                                     </span>
                                                 </div>
                                                 <!--end::Info-->
@@ -886,7 +886,7 @@
                                                     {% else %}
                                                     <span class="badge badge-lg badge-danger align-self-center px-2">
                                                     {% endif %}
-                                                    {{ general_statistics.previous_data.data.0.product_max_price|change_of_rate:general_statistics.current_data.data.0.product_max_price }}%
+                                                    {{ general_statistics.current_data.data.0.product_max_price|change_of_rate:general_statistics.previous_data.data.0.product_max_price }}%
                                                     </span>
                                                 </div>
                                                 <!--end::Info-->
@@ -910,12 +910,12 @@
                                                     <span class="text-dark fw-boldest fs-4">{{ general_statistics.current_data.data.0.product_min_price }}</span>
                                                     <span class="fw-bold fs-4 text-gray-600 mx-1 pt-1">/</span>
                                                     <span class="text-gray-600 fw-bold fs-5 me-3 pt-2">{{ general_statistics.previous_data.data.0.product_min_price }}</span>
-                                                    {% if general_statistics.previous_data.data.0.product_min_price > general_statistics.current_data.data.0.product_min_price %}
+                                                    {% if general_statistics.current_data.data.0.product_min_price > general_statistics.previous_data.data.0.product_min_price %}
                                                     <span class="badge badge-lg badge-success align-self-center px-2">
                                                     {% else %}
                                                     <span class="badge badge-lg badge-danger align-self-center px-2">
                                                     {% endif %}
-                                                    {{ general_statistics.previous_data.data.0.product_min_price|change_of_rate:general_statistics.current_data.data.0.product_min_price }}%
+                                                    {{ general_statistics.current_data.data.0.product_min_price|change_of_rate:general_statistics.previous_data.data.0.product_min_price }}%
                                                     </span>
                                                 </div>
                                                 <!--end::Info-->
@@ -995,7 +995,7 @@
                                                     {% else %}
                                                     <span class="badge badge-lg badge-danger align-self-center px-2">
                                                     {% endif %}
-                                                    {{ main_company_statistics.previous_data.main_data.activity_category_data.product_count|change_of_rate:main_company_statistics.current_data.main_data.activity_category_data.product_count }}%
+                                                    {{ main_company_statistics.current_data.main_data.activity_category_data.product_count|change_of_rate:main_company_statistics.previous_data.main_data.activity_category_data.product_count }}%
                                                     </span>
 
                                                     {% else %}
@@ -1009,7 +1009,7 @@
                                                     {% else %}
                                                     <span class="badge badge-lg badge-danger align-self-center px-2">
                                                     {% endif %}
-                                                    {{ main_company_statistics.previous_data.main_data.product_count|change_of_rate:main_company_statistics.current_data.main_data.product_count }}%
+                                                    {{ main_company_statistics.current_data.main_data.product_count|change_of_rate:main_company_statistics.previous_data.main_data.product_count }}%
                                                     </span>
 
 
@@ -1045,7 +1045,7 @@
                                                    {% else %}
                                                    <span class="badge badge-lg badge-danger align-self-center px-2">
                                                    {% endif %}
-                                                   {{ main_company_statistics.previous_data.main_data.activity_category_data.product_avg_price|change_of_rate:main_company_statistics.current_data.main_data.activity_category_data.product_avg_price }}%
+                                                   {{ main_company_statistics.current_data.main_data.activity_category_data.product_avg_price|change_of_rate:main_company_statistics.previous_data.main_data.activity_category_data.product_avg_price }}%
                                                    </span>
 
                                                    {% else %}
@@ -1059,7 +1059,7 @@
                                                    {% else %}
                                                    <span class="badge badge-lg badge-danger align-self-center px-2">
                                                    {% endif %}
-                                                   {{ main_company_statistics.previous_data.main_data.product_avg_price|change_of_rate:main_company_statistics.current_data.main_data.product_avg_price }}%
+                                                   {{ main_company_statistics.current_data.main_data.product_avg_price|change_of_rate:main_company_statistics.previous_data.main_data.product_avg_price }}%
                                                    </span>
 
 
@@ -1095,7 +1095,7 @@
                                                    {% else %}
                                                    <span class="badge badge-lg badge-danger align-self-center px-2">
                                                    {% endif %}
-                                                   {{ main_company_statistics.previous_data.main_data.activity_category_data.product_max_price|change_of_rate:main_company_statistics.current_data.main_data.activity_category_data.product_max_price }}%
+                                                   {{ main_company_statistics.current_data.main_data.activity_category_data.product_max_price|change_of_rate:main_company_statistics.previous_data.main_data.activity_category_data.product_max_price }}%
                                                    </span>
 
                                                    {% else %}
@@ -1109,7 +1109,7 @@
                                                    {% else %}
                                                    <span class="badge badge-lg badge-danger align-self-center px-2">
                                                    {% endif %}
-                                                   {{ main_company_statistics.previous_data.main_data.product_max_price|change_of_rate:main_company_statistics.current_data.main_data.product_max_price }}%
+                                                   {{ main_company_statistics.current_data.main_data.product_max_price|change_of_rate:main_company_statistics.previous_data.main_data.product_max_price }}%
                                                    </span>
 
 
@@ -1144,7 +1144,7 @@
                                                    {% else %}
                                                    <span class="badge badge-lg badge-danger align-self-center px-2">
                                                    {% endif %}
-                                                   {{ main_company_statistics.previous_data.main_data.activity_category_data.product_min_price|change_of_rate:main_company_statistics.current_data.main_data.activity_category_data.product_min_price }}%
+                                                   {{ main_company_statistics.current_data.main_data.activity_category_data.product_min_price|change_of_rate:main_company_statistics.previous_data.main_data.activity_category_data.product_min_price }}%
                                                    </span>
 
                                                    {% else %}
@@ -1158,7 +1158,7 @@
                                                    {% else %}
                                                    <span class="badge badge-lg badge-danger align-self-center px-2">
                                                    {% endif %}
-                                                   {{ main_company_statistics.previous_data.main_data.product_min_price|change_of_rate:main_company_statistics.current_data.main_data.product_min_price }}%
+                                                   {{ main_company_statistics.current_data.main_data.product_min_price|change_of_rate:main_company_statistics.previous_data.main_data.product_min_price }}%
                                                    </span>
 
 
@@ -1227,30 +1227,29 @@
                                                 <div class="d-flex align-items-center">
                                                      <!--begin::ACTIVITY_CATEGORY-->
                                                    {% if main_company_statistics.current_data.main_data.activity_category_data %}
-
                                                    <span class="text-dark fw-boldest fs-4">{{ main_company_statistics.current_data.main_data.activity_category_data.product_count }}</span>
                                                    <span class="fw-bold fs-4 text-gray-600 mx-1 pt-1">/</span>
                                                    <span class="text-gray-600 fw-bold fs-5 me-3 pt-2">{{ general_statistics.current_data.data.0.product_count }}</span>
                                                    {% if main_company_statistics.current_data.main_data.activity_category_data.product_count > general_statistics.current_data.data.0.product_count %}
-                                                   <span class="badge badge-lg badge-success align-self-center px-2">
+                                                   <span class="badge badge-lg badge-info align-self-center px-2">
                                                    {% else %}
-                                                   <span class="badge badge-lg badge-danger align-self-center px-2">
+                                                   <span class="badge badge-lg badge-info align-self-center px-2">
                                                    {% endif %}
-                                                   {{ main_company_statistics.current_data.main_data.activity_category_data.product_count|change_of_rate:general_statistics.current_data.data.0.product_count }}%
+                                                   {{ main_company_statistics.current_data.main_data.activity_category_data.product_count|rate:general_statistics.current_data.data.0.product_count }}%
                                                    </span>
 
                                                    {% else %}
                                                    <!--begin::ACTIVITY-->
-
+                                                   
                                                    <span class="text-dark fw-boldest fs-4">{{ main_company_statistics.current_data.main_data.product_count }}</span>
                                                    <span class="fw-bold fs-4 text-gray-600 mx-1 pt-1">/</span>
                                                    <span class="text-gray-600 fw-bold fs-5 me-3 pt-2">{{ general_statistics.current_data.data.0.product_count }}</span>
                                                    {% if main_company_statistics.current_data.main_data.product_count > general_statistics.current_data.data.0.product_count %}
-                                                   <span class="badge badge-lg badge-success align-self-center px-2">
+                                                   <span class="badge badge-lg badge-info align-self-center px-2">
                                                    {% else %}
-                                                   <span class="badge badge-lg badge-danger align-self-center px-2">
+                                                   <span class="badge badge-lg badge-info align-self-center px-2">
                                                    {% endif %}
-                                                   {{ main_company_statistics.current_data.main_data.product_count|change_of_rate:general_statistics.current_data.data.0.product_count }}%
+                                                   {{ main_company_statistics.current_data.main_data.product_count|rate:general_statistics.current_data.data.0.product_count }}%
                                                    </span>
 
 
